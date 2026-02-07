@@ -343,7 +343,8 @@ const BrowsePage = ({ onNavigate, selectedAge, onAgeChange }) => {
               fontSize: '0.95em',
               fontFamily: "'Playfair Display', serif"
             }}>
-              {currentAnxiety.description}
+              {/* ✅  content and description  */}
+              {currentAnxiety.content || currentAnxiety.description}
             </p>
           </div>
 
