@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { User, Heart, BookOpen, Briefcase } from 'lucide-react';
-import { mockData } from '../data/mockData';
 
 function SteampunkClock({ age = 25, onAgeChange }) {
   const [isDragging, setIsDragging] = useState(false);
@@ -11,10 +10,10 @@ function SteampunkClock({ age = 25, onAgeChange }) {
     const centerY = rect.height / 2;
     const clickX = e.clientX - rect.left;
     const clickY = e.clientY - rect.top;
-    
+
     let angle = Math.atan2(clickY - centerY, clickX - centerX) * 180 / Math.PI + 90;
     if (angle < 0) angle += 360;
-    
+
     // Convert angle to age (0° = 10, 360° = 100)
     const newAge = Math.min(100, Math.max(10, Math.round(10 + (angle / 360) * 90)));
     if (onAgeChange) onAgeChange(newAge);
@@ -29,8 +28,7 @@ function SteampunkClock({ age = 25, onAgeChange }) {
       if (!isDragging) return;
       const clock = document.querySelector('.age-selector-clock');
       if (clock) {
-        const rect = clock.getBoundingClientRect();
-        handleClockClick({ currentTarget: clock, clientX: e.clientX, clientY: e.clientY, target: clock });
+        handleClockClick({ currentTarget: clock, clientX: e.clientX, clientY: e.clientY });
       }
     };
 
@@ -49,19 +47,16 @@ function SteampunkClock({ age = 25, onAgeChange }) {
     };
   }, [isDragging]);
 
-  // Generate age markers (10, 20, 30, ... 100)
   const ageMarkers = Array.from({ length: 10 }, (_, i) => 10 + i * 10);
-  
-  // Convert age to degrees (10 = 0°, 100 = 360°)
   const ageDegrees = ((age - 10) / 90) * 360;
 
   return (
-    <div 
+    <div
       className="age-selector-clock"
       onClick={handleClockClick}
       onMouseDown={handleMouseDown}
-      style={{ 
-        cursor: isDragging ? 'grabbing' : 'grab', 
+      style={{
+        cursor: isDragging ? 'grabbing' : 'grab',
         userSelect: 'none',
         width: '250px',
         height: '250px',
@@ -76,7 +71,6 @@ function SteampunkClock({ age = 25, onAgeChange }) {
         margin: '0 auto'
       }}
     >
-      {/* 年龄刻度标记 */}
       {ageMarkers.map((ageMarker, index) => {
         const angle = (index * 36 - 90) * Math.PI / 180;
         const radius = 35;
@@ -104,8 +98,7 @@ function SteampunkClock({ age = 25, onAgeChange }) {
         );
       })}
 
-      {/* 年龄指针 */}
-      <div 
+      <div
         style={{
           position: 'absolute',
           width: '4px',
@@ -121,9 +114,8 @@ function SteampunkClock({ age = 25, onAgeChange }) {
           borderRadius: '10px'
         }}
       ></div>
-      
-      {/* 中心圆点 */}
-      <div 
+
+      <div
         style={{
           position: 'absolute',
           width: '45px',
@@ -152,8 +144,27 @@ const BrowsePage = ({ onNavigate, selectedAge, onAgeChange }) => {
   const [age, setAge] = useState(25);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Filter anxieties by age (±3 years range)
-  const filteredAnxieties = mockData.filter(item => 
+  const [anxieties, setAnxieties] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('http://127.0.0.1:5000/api/get_all_cards')
+      .then(res => {
+        if (!res.ok) throw new Error("Failed to fetch");
+        return res.json();
+      })
+      .then(data => {
+        console.log("Success! Data from backend:", data);
+        setAnxieties(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("Error connecting to backend:", err);
+        setLoading(false);
+      });
+  }, []);
+
+  const filteredAnxieties = anxieties.filter(item =>
     Math.abs(item.age - age) <= 3
   );
 
@@ -203,7 +214,7 @@ const BrowsePage = ({ onNavigate, selectedAge, onAgeChange }) => {
         </p>
       </div>
 
-      {/* 时钟年龄选择器 */}
+      {/*Clock*/}
       <div style={{
         background: 'linear-gradient(138deg, #f5f0e8, #e8dbc1)',
         padding: '30px',
@@ -228,7 +239,7 @@ const BrowsePage = ({ onNavigate, selectedAge, onAgeChange }) => {
             Turn the Temporal Dial
           </span>
         </div>
-        
+
         <SteampunkClock age={age} onAgeChange={handleAgeChange} />
 
         <div style={{
@@ -242,7 +253,12 @@ const BrowsePage = ({ onNavigate, selectedAge, onAgeChange }) => {
         </div>
       </div>
 
-      {currentAnxiety ? (
+      {/* ✅ Loading */}
+      {loading ? (
+        <div style={{ textAlign: 'center', color: '#c5a059', fontSize: '1.2em', marginTop: '20px' }}>
+          Connecting to Archives...
+        </div>
+      ) : currentAnxiety ? (
         <div style={{
           background: 'linear-gradient(142deg, #f5f0e8, #e8dbc1)',
           padding: '25px',
@@ -289,13 +305,13 @@ const BrowsePage = ({ onNavigate, selectedAge, onAgeChange }) => {
                   color: '#8a6d3b'
                 }}>
                   {currentAnxiety.age} years · {
-                    currentAnxiety.gender === 'male' ? 'Male' : 
-                    currentAnxiety.gender === 'female' ? 'Female' : 'Other'
+                    currentAnxiety.gender === 'male' ? 'Male' :
+                      currentAnxiety.gender === 'female' ? 'Female' : 'Other'
                   }
                 </p>
               </div>
             </div>
-            
+
             <div style={{
               display: 'flex',
               alignItems: 'center',
@@ -305,6 +321,10 @@ const BrowsePage = ({ onNavigate, selectedAge, onAgeChange }) => {
               borderRadius: '20px',
               border: '1px solid #8a6d3b'
             }}>
+              {currentAnxiety.tag === 'Academic' ?
+                <BookOpen style={{ width: '16px', height: '16px', color: '#0f0b08' }} /> :
+                <Briefcase style={{ width: '16px', height: '16px', color: '#0f0b08' }} />
+              }
               <span style={{
                 fontSize: '0.85em',
                 fontWeight: 'bold',
@@ -323,7 +343,8 @@ const BrowsePage = ({ onNavigate, selectedAge, onAgeChange }) => {
               fontSize: '0.95em',
               fontFamily: "'Playfair Display', serif"
             }}>
-              {currentAnxiety.confession}
+              {/* ✅  content and description  */}
+              {currentAnxiety.content || currentAnxiety.description}
             </p>
           </div>
 
@@ -360,7 +381,7 @@ const BrowsePage = ({ onNavigate, selectedAge, onAgeChange }) => {
             >
               Previous
             </button>
-            
+
             <div style={{
               fontSize: '0.85em',
               color: '#8a6d3b',
@@ -368,7 +389,7 @@ const BrowsePage = ({ onNavigate, selectedAge, onAgeChange }) => {
             }}>
               {currentIndex + 1} / {filteredAnxieties.length}
             </div>
-            
+
             <button
               onClick={handleNext}
               style={{
