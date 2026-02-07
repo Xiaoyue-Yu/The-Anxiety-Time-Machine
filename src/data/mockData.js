@@ -1,98 +1,103 @@
+export const ANXIETY_TYPES = [
+  { id: 1, label: 'Career & Ambition', icon: 'briefcase', category: 'career' },
+  { id: 2, label: 'Love & Solitude', icon: 'heart', category: 'love' },
+  { id: 3, label: 'Health & Vitality', icon: 'activity', category: 'health' },
+  { id: 4, label: 'Identity & Purpose', icon: 'compass', category: 'identity' },
+  { id: 5, label: 'Family & Kinship', icon: 'users', category: 'family' },
+  { id: 6, label: 'Mortality & Time', icon: 'clock', category: 'mortality' },
+  { id: 7, label: 'Wealth & Security', icon: 'shield', category: 'wealth' },
+  { id: 8, label: 'Social Belonging', icon: 'share2', category: 'social' }
+];
+
 export const mockData = [
   {
     id: 1,
-    nickname: "Dream Chaser",
+    pseudonym: "Wandering Scholar",
     age: 18,
     gender: "male",
-    tag: "Academic",
-    description: "After the college entrance exam, my parents want me to study medicine, but I'm really passionate about art and design. I don't know how to choose, feeling lost..."
+    tags: ["Identity & Purpose"],
+    confession: "After the examination of entrance, my progenitors decree I should study medicine. Yet my heart yearns for the arts and design. This conflict renders me utterly lost, caught between filial duty and personal inclination..."
   },
   {
     id: 2,
-    nickname: "Lost Youth",
+    pseudonym: "Weary Soul",
     age: 25,
     gender: "female",
-    tag: "Career",
-    description: "I've been working at a big tech company for three years, working overtime until late at night every day. I feel like my body and mind can't take it anymore. I want to quit but worry I won't find a better job, and I still have rent to pay..."
+    tags: ["Career & Ambition"],
+    confession: "For three years, I have laboured within the great technological enterprise, toiling until the witching hours each day. My corporeal form and spirit wane. I desire liberation, yet fear the abyss of unemployment and destitution..."
   },
   {
     id: 3,
-    nickname: "Striver",
+    pseudonym: "Ambitious Dreamer",
     age: 30,
     gender: "male",
-    tag: "Career",
-    description: "I've saved some money and really want to start a business, but my family is against it, saying it's too risky. I'm 30 now, if I don't try now it'll be too late, but I'm also afraid of failing..."
+    tags: ["Wealth & Security"],
+    confession: "I have amassed modest capital and harbor aspirations to establish my own venture. Yet my family voices their opposition, deeming it perilous. At thirty summers, I sense time's relentless march. Should I surrender to prudence or grasp at fortune?"
   },
   {
     id: 4,
-    nickname: "Working Mom",
+    pseudonym: "Mother of Two",
     age: 35,
     gender: "female",
-    tag: "Career",
-    description: "After having a baby and returning to work, I found that I can't keep up with the team's pace anymore. I want to balance family and career, but I always feel like I'm neglecting one for the other, it's exhausting..."
+    tags: ["Family & Kinship"],
+    confession: "Since the arrival of offspring and return to labour, I find myself perpetually inadequate. Family demands and professional obligations war within me. Each moment spent with child is a moment stolen from work, and vice versa..."
   },
   {
     id: 5,
-    nickname: "Middle-aged Uncle",
+    pseudonym: "Middle-aged Sentinel",
     age: 45,
     gender: "male",
-    tag: "Career",
-    description: "The company is starting layoffs. At my age, if I get laid off, can I still find a job? My child is going to college, and the mortgage isn't paid off yet. The pressure is huge..."
+    tags: ["Mortality & Time"],
+    confession: "The enterprise speaks of retrenchment. At my age, should I be cast aside, can I find employment anew? My offspring approaches university, the mortgage remains unsatisfied. The burden of providence weighs heavily upon my shoulders..."
   },
   {
     id: 6,
-    nickname: "Pre-retirement",
+    pseudonym: "Twilight Wanderer",
     age: 58,
     gender: "male",
-    tag: "Career",
-    description: "I have two more years until retirement, and I'm suddenly afraid of life after retirement. I've worked all my life, suddenly don't know what to do after retiring, feeling like I've lost my purpose..."
+    tags: ["Mortality & Time"],
+    confession: "Two summers hence, I shall retire by statute. Yet suddenly, I am seized with dread of the great cessation. I have laboured all my days—what remains when labour ceases? Shall I fade into obscurity and purposelessness?"
   },
   {
     id: 7,
-    nickname: "Golden Years",
-    age: 65,
+    pseudonym: "Fragile Heart",
+    age: 22,
     gender: "female",
-    tag: "Academic",
-    description: "My grandson doesn't like studying, always playing on his phone. I want to help tutor him, but I realize I can't keep up with the times, and I don't know how to guide kids nowadays..."
+    tags: ["Love & Solitude"],
+    confession: "My acquaintance has declared attachment of a romantic persuasion. Though I do regard him with affection, the prospect of union and entanglement fills me with trepidation. What if I disappoint him? What if I am incapable of the devotion he requires?"
   },
   {
     id: 8,
-    nickname: "College Freshman",
-    age: 19,
-    gender: "female",
-    tag: "Academic",
-    description: "Just started college and found that I don't like my major at all. I want to change majors but my family doesn't agree, saying this major is easier to find work. Should I stick to my own ideas?"
+    pseudonym: "Solitary Scholar",
+    age: 28,
+    gender: "male",
+    tags: ["Social Belonging"],
+    confession: "Society deems me peculiar in my scholarly pursuits and unconventional interests. At gatherings, I feel perpetually estranged, observing others with envy as they navigate effortless fellowship. Am I fundamentally unfit for companionship?"
   },
   {
     id: 9,
-    nickname: "Grad Student",
-    age: 24,
-    gender: "male",
-    tag: "Academic",
-    description: "In my second year of grad school, I found that I'm completely uninterested in my advisor's research direction, but I've already invested so much time. Should I keep going or drop out?"
+    pseudonym: "Ailing Vessel",
+    age: 42,
+    gender: "female",
+    tags: ["Health & Vitality"],
+    confession: "The physicians have detected an irregularity within my corporeal form. Each day, I catalogue my symptoms with growing alarm. I fear the deterioration of my vessel, the slow erosion of my vigour. How shall I fulfill my duties if my body betrays me?"
   },
   {
     id: 10,
-    nickname: "Career Changer",
-    age: 28,
+    pseudonym: "Searching Soul",
+    age: 31,
     gender: "female",
-    tag: "Career",
-    description: "I want to switch from a traditional industry to tech, but I have zero foundation and I'm not young anymore. All job postings require experience. How should I start?"
+    tags: ["Identity & Purpose"],
+    confession: "I have been wed for five years, yet still I do not know who I am apart from my husband's expectations. Each choice I make is measured against propriety and his preferences. I am haunted by the woman I might have become..."
   },
   {
     id: 11,
-    nickname: "Failed Entrepreneur",
-    age: 32,
+    pseudonym: "Restless Heir",
+    age: 35,
     gender: "male",
-    tag: "Career",
-    description: "My startup failed, I'm in debt, and I dare not tell my family. Friends all advise me to find a job, but I'm really not willing to give up just like this..."
-  },
-  {
-    id: 12,
-    nickname: "Middle Manager",
-    age: 40,
-    gender: "male",
-    tag: "Career",
-    description: "Working as middle management in a company, pressure from the boss above and complaints from employees below. Want to move up but positions are limited, want to switch jobs but worried about age. Feeling trapped..."
+    tags: ["Career & Ambition", "Family & Kinship"],
+    confession: "My progenitors have entrusted me with the family enterprise, expecting me to perpetuate their legacy. Yet I harbour desires to pursue entirely different endeavours. The weight of their expectation is suffocating, yet abandonment feels like the gravest betrayal..."
   }
 ];
+
+export const getTags = () => ANXIETY_TYPES;

@@ -1,25 +1,25 @@
 import React, { useState } from 'react';
-import { BookOpen, Briefcase, Heart, Users, User, Home, MessageCircle, Brain, DollarSign } from 'lucide-react';
+import { ANXIETY_TYPES } from '../data/mockData';
 
 const RegisterPage = ({ onNavigate }) => {
   const [formData, setFormData] = useState({
-    nickname: '',
-    password: '',
+    pseudonym: '',
+    cipher: '',
     age: '',
     gender: 'male',
-    tag: [],
-    description: ''
+    tags: [],
+    confession: ''
   });
   const [error, setError] = useState('');
 
   const handleSubmit = async () => {
-    if (!formData.nickname || !formData.password || !formData.age || !formData.description) {
-      setError('Please fill in all fields (including password)');
+    if (!formData.pseudonym || !formData.cipher || !formData.age || !formData.confession) {
+      setError('All fields must be completed to sign the registry.');
       return;
     }
 
-    if (formData.tag.length === 0) {
-      setError('Please select at least one anxiety type');
+    if (formData.tags.length === 0) {
+      setError('Thou must select at least one solicitude to record.');
       return;
     }
 
@@ -28,23 +28,27 @@ const RegisterPage = ({ onNavigate }) => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          ...formData,
-          age: parseInt(formData.age)
+          nickname: formData.pseudonym,
+          password: formData.cipher,
+          age: parseInt(formData.age),
+          gender: formData.gender,
+          tag: formData.tags,
+          description: formData.confession
         }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        alert("Registration successful! Please log in.");
+        alert("Thy confession hath been sealed within the Temporium archives.");
         onNavigate('login');
       } else {
-        setError(data.message || 'Registration failed.');
+        setError(data.message || 'The registry hath rejected thy inscription.');
       }
 
     } catch (err) {
       console.error(err);
-      setError('Unable to connect to the server.');
+      setError('Alas, the temporal connection hath failed. Please endeavour anew.');
     }
   };
   return (
@@ -58,7 +62,7 @@ const RegisterPage = ({ onNavigate }) => {
         textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)',
         letterSpacing: '2px'
       }}>
-        Record Your Confession
+        New Soul: Sign the Registry
       </h2>
 
       <p style={{
@@ -69,7 +73,7 @@ const RegisterPage = ({ onNavigate }) => {
         fontStyle: 'italic',
         letterSpacing: '1px'
       }}>
-        PERSPECTIVE: UNKNOWN ARCHIVER
+        LET THY IDENTITY BE RECORDED
       </p>
 
       {error && (
@@ -89,12 +93,12 @@ const RegisterPage = ({ onNavigate }) => {
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '20px', marginBottom: '30px' }}>
         <div>
-          <label style={{ fontFamily: "'Playfair Display', serif", color: '#8a6d3b', fontWeight: '600', marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', fontSize: '0.9em' }}>Name</label>
+          <label style={{ fontFamily: "'Playfair Display', serif", color: '#8a6d3b', fontWeight: '600', marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', fontSize: '0.9em' }}>Pseudonym</label>
           <input
             type="text"
-            value={formData.nickname}
-            onChange={(e) => setFormData({ ...formData, nickname: e.target.value })}
-            placeholder="Your name"
+            value={formData.pseudonym}
+            onChange={(e) => setFormData({ ...formData, pseudonym: e.target.value })}
+            placeholder="Your secret name"
             style={{
               fontFamily: "'Playfair Display', serif",
               background: 'linear-gradient(135deg, #f5f0e8, #e8dbc1)',
@@ -110,12 +114,12 @@ const RegisterPage = ({ onNavigate }) => {
         </div>
 
         <div>
-          <label style={{ fontFamily: "'Playfair Display', serif", color: '#8a6d3b', fontWeight: '600', marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', fontSize: '0.9em' }}>Password</label>
+          <label style={{ fontFamily: "'Playfair Display', serif", color: '#8a6d3b', fontWeight: '600', marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', fontSize: '0.9em' }}>Cipher</label>
           <input
             type="password"
-            value={formData.password}
-            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-            placeholder="Set password"
+            value={formData.cipher}
+            onChange={(e) => setFormData({ ...formData, cipher: e.target.value })}
+            placeholder="Create a secret cipher"
             style={{
               fontFamily: "'Playfair Display', serif",
               background: 'linear-gradient(135deg, #f5f0e8, #e8dbc1)',
@@ -180,71 +184,51 @@ const RegisterPage = ({ onNavigate }) => {
 
       <div style={{ marginBottom: '30px' }}>
         <label style={{ fontFamily: "'Playfair Display', serif", color: '#c5a059', fontWeight: '600', marginBottom: '15px', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', fontSize: '1em' }}>
-          Category of Concern <span style={{ fontSize: '0.8em', color: '#8a6d3b' }}>(Select up to 3)</span>
+          Solicitudes Afflicting Thy Soul <span style={{ fontSize: '0.8em', color: '#8a6d3b' }}>(Select thy concerns)</span>
         </label>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '10px' }}>
-          {['Academic', 'Career', 'Relationship', 'Life', 'Friendship', 'Family', 'Self-Identity', 'Health', 'Social Skills', 'Mental Health', 'Money'].map((anxiety) => {
-            const icons = {
-              'Academic': <BookOpen className="w-4 h-4 mr-2" />,
-              'Career': <Briefcase className="w-4 h-4 mr-2" />,
-              'Relationship': <Heart className="w-4 h-4 mr-2" />,
-              'Life': <Home className="w-4 h-4 mr-2" />,
-              'Friendship': <Users className="w-4 h-4 mr-2" />,
-              'Family': <Home className="w-4 h-4 mr-2" />,
-              'Self-Identity': <User className="w-4 h-4 mr-2" />,
-              'Health': <Heart className="w-4 h-4 mr-2" />,
-              'Social Skills': <MessageCircle className="w-4 h-4 mr-2" />,
-              'Mental Health': <Brain className="w-4 h-4 mr-2" />,
-              'Money': <DollarSign className="w-4 h-4 mr-2" />
-            };
-
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '12px' }}>
+          {ANXIETY_TYPES.map((anxiety) => {
             return (
-              <label key={anxiety} style={{
+              <label key={anxiety.id} style={{
                 display: 'flex',
                 alignItems: 'center',
-                padding: '10px',
+                flexDirection: 'column',
+                padding: '15px',
                 borderRadius: '2px',
-                border: `2px solid ${formData.tag.includes(anxiety) ? '#c5a059' : '#b8956a'}`,
-                backgroundColor: formData.tag.includes(anxiety) ? 'rgba(197, 160, 89, 0.25)' : 'transparent',
+                border: `2px solid ${formData.tags.includes(anxiety.label) ? '#c5a059' : '#b8956a'}`,
+                backgroundColor: formData.tags.includes(anxiety.label) ? 'rgba(197, 160, 89, 0.25)' : 'transparent',
                 cursor: 'pointer',
                 transition: 'all 0.3s ease',
-                color: formData.tag.includes(anxiety) ? '#8a6d3b' : '#5a5a5a',
-                fontSize: '0.85em'
+                color: formData.tags.includes(anxiety.label) ? '#8a6d3b' : '#5a5a5a',
+                fontSize: '0.85em',
+                textAlign: 'center'
               }}>
                 <input
                   type="checkbox"
-                  value={anxiety}
-                  checked={formData.tag.includes(anxiety)}
+                  value={anxiety.label}
+                  checked={formData.tags.includes(anxiety.label)}
                   onChange={(e) => {
                     const value = e.target.value;
-                    const newTags = formData.tag.includes(value)
-                      ? formData.tag.filter(t => t !== value)
-                      : formData.tag.length < 3
-                        ? [...formData.tag, value]
-                        : formData.tag;
-                    setFormData({ ...formData, tag: newTags });
+                    const newTags = formData.tags.includes(value)
+                      ? formData.tags.filter(t => t !== value)
+                      : [...formData.tags, value];
+                    setFormData({ ...formData, tags: newTags });
                   }}
-                  style={{ marginRight: '6px', width: '14px', height: '14px', cursor: 'pointer' }}
+                  style={{ marginBottom: '8px', width: '16px', height: '16px', cursor: 'pointer' }}
                 />
-                {icons[anxiety]}
-                <span>{anxiety}</span>
+                <span style={{ fontWeight: '600', fontSize: '0.9em' }}>{anxiety.label}</span>
               </label>
             );
           })}
         </div>
-        {formData.tag.length === 3 && (
-          <p style={{ marginTop: '12px', fontSize: '0.85em', color: '#8a6d3b', fontStyle: 'italic' }}>
-            Maximum entries recorded
-          </p>
-        )}
       </div>
 
       <div style={{ marginBottom: '30px' }}>
-        <label style={{ fontFamily: "'Playfair Display', serif", color: '#c5a059', fontWeight: '600', marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', fontSize: '0.95em' }}>Your Confession</label>
+        <label style={{ fontFamily: "'Playfair Display', serif", color: '#c5a059', fontWeight: '600', marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', fontSize: '0.95em' }}>Thy Confession</label>
         <textarea
-          value={formData.description}
-          onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-          placeholder="Let the archive hear your words..."
+          value={formData.confession}
+          onChange={(e) => setFormData({ ...formData, confession: e.target.value })}
+          placeholder="Unburden thy solicitudes within these temporal archives. Let thy words be witnessed by time itself..."
           rows="10"
           style={{
             fontFamily: "'Playfair Display', serif",
@@ -322,7 +306,7 @@ const RegisterPage = ({ onNavigate }) => {
             e.target.style.transform = 'translateY(0)';
           }}
         >
-          Submit Confession
+          Seal Entry
         </button>
       </div>
     </div>

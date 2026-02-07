@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 
 const LoginPage = ({ onNavigate }) => {
-  const [nickname, setNickname] = useState('');
-  const [password, setPassword] = useState('');
+  const [pseudonym, setPseudonym] = useState('');
+  const [cipher, setCipher] = useState('');
   const [error, setError] = useState('');
 
   const handleLogin = async () => {
-    if (!nickname || !password) {
-      setError('Please enter your name and password.');
+    if (!pseudonym || !cipher) {
+      setError('Your pseudonym and cipher must be provided to access the archives.');
       return;
     }
 
@@ -16,23 +16,23 @@ const LoginPage = ({ onNavigate }) => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          nickname: nickname,
-          password: password
+          nickname: pseudonym,
+          password: cipher
         }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        localStorage.setItem('user_nickname', nickname);
+        localStorage.setItem('user_nickname', pseudonym);
         localStorage.setItem('user_id', data.user_id);
         onNavigate('browse');
       } else {
-        setError(data.message || 'Login failed. Please check your name and password.');
+        setError(data.message || 'The cipher thou hast provided doth not align with our records.');
       }
     } catch (err) {
       console.error(err);
-      setError('Unable to connect to the server.');
+      setError('Alas, the temporal connection hath failed. Please endeavour anew.');
     }
   };
 
@@ -47,7 +47,7 @@ const LoginPage = ({ onNavigate }) => {
         textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)',
         letterSpacing: '2px'
       }}>
-        Access Archives
+        Returning Soul
       </h2>
 
       <p style={{
@@ -58,7 +58,7 @@ const LoginPage = ({ onNavigate }) => {
         fontStyle: 'italic',
         letterSpacing: '1px'
       }}>
-        AUTHENTICATE YOUR IDENTITY
+        VERIFY THY CREDENTIALS
       </p>
 
       {error && (
@@ -78,12 +78,12 @@ const LoginPage = ({ onNavigate }) => {
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
         <div>
-          <label style={{ fontFamily: "'Playfair Display', serif", color: '#8a6d3b', fontWeight: '600', marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', fontSize: '0.9em' }}>Name</label>
+          <label style={{ fontFamily: "'Playfair Display', serif", color: '#8a6d3b', fontWeight: '600', marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', fontSize: '0.9em' }}>Pseudonym</label>
           <input
             type="text"
-            value={nickname}
-            onChange={(e) => setNickname(e.target.value)}
-            placeholder="Your name"
+            value={pseudonym}
+            onChange={(e) => setPseudonym(e.target.value)}
+            placeholder="Your secret name"
             style={{
               fontFamily: "'Playfair Display', serif",
               background: 'linear-gradient(138deg, #f5f0e8, #e8dbc1)',
@@ -99,12 +99,12 @@ const LoginPage = ({ onNavigate }) => {
         </div>
 
         <div>
-          <label style={{ fontFamily: "'Playfair Display', serif", color: '#8a6d3b', fontWeight: '600', marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', fontSize: '0.9em' }}>Password</label>
+          <label style={{ fontFamily: "'Playfair Display', serif", color: '#8a6d3b', fontWeight: '600', marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', fontSize: '0.9em' }}>Cipher</label>
           <input
             type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Your password"
+            value={cipher}
+            onChange={(e) => setCipher(e.target.value)}
+            placeholder="Your secret cipher"
             style={{
               fontFamily: "'Playfair Display', serif",
               background: 'linear-gradient(138deg, #f5f0e8, #e8dbc1)',
@@ -179,12 +179,12 @@ const LoginPage = ({ onNavigate }) => {
               e.target.style.transform = 'translateY(0)';
             }}
           >
-            Login
+            Seal Entry
           </button>
         </div>
 
         <div style={{ marginTop: '20px', borderTop: '2px dashed #c5a059', paddingTop: '20px', textAlign: 'center' }}>
-          <span style={{ color: '#8a6d3b', fontSize: '0.9em' }}>No record yet?</span>
+          <span style={{ color: '#8a6d3b', fontSize: '0.9em' }}>A newcomer to the Temporium?</span>
           <button
             onClick={() => onNavigate('register')}
             style={{
@@ -200,7 +200,7 @@ const LoginPage = ({ onNavigate }) => {
             onMouseEnter={(e) => e.target.style.color = '#d4af5a'}
             onMouseLeave={(e) => e.target.style.color = '#c5a059'}
           >
-            Create One
+            Commence Thy Registration
           </button>
         </div>
       </div>
