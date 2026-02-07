@@ -1,38 +1,54 @@
 import React, { useState } from 'react';
-import { mockData } from '../data/mockData';
 
-const LoginPage = ({ onNavigate, onLogin }) => {
+const LoginPage = ({ onNavigate }) => {
   const [nickname, setNickname] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handleLogin = () => {
-    if (!nickname) {
-      setError('Please enter your nickname');
+  const handleLogin = async () => {
+    if (!nickname || !password) {
+      setError('Please enter your nickname and password.');
       return;
     }
-    
-    // Simple validation: check if user exists in mock data
-    const user = mockData.find(item => item.nickname === nickname);
-    
-    if (user) {
-      onLogin(user);
-      onNavigate('browse');
-    } else {
-      setError('User does not exist, please register first');
+
+    try {
+      const response = await fetch('http://127.0.0.1:5000/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nickname: nickname,
+          password: password
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+
+        localStorage.setItem('user_nickname', nickname);
+        localStorage.setItem('user_id', data.user_id);
+
+        onNavigate('browse');
+      } else {
+        setError(data.message || 'Login failed. Please check your username and password.');
+      }
+    } catch (err) {
+      console.error(err);
+      setError('Unable to connect to the server.');
     }
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center p-4">
       <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8">
-        <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">Login</h2>
-        
+        <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center\">Login</h2>
+
         {error && (
           <div className="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
             {error}
           </div>
         )}
-        
+
         <div className="space-y-6">
           <div>
             <label className="block text-gray-700 font-semibold mb-2">Nickname</label>
@@ -41,6 +57,17 @@ const LoginPage = ({ onNavigate, onLogin }) => {
               value={nickname}
               onChange={(e) => setNickname(e.target.value)}
               placeholder="Enter your nickname"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+            />
+          </div>
+
+          <div>
+            <label className="block text-gray-700 font-semibold mb-2">Password</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter your password"
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
           </div>
@@ -60,18 +87,18 @@ const LoginPage = ({ onNavigate, onLogin }) => {
             </button>
           </div>
         </div>
-        
+
         <div className="mt-6 text-center">
           <span className="text-gray-600">Don't have an account?</span>
           <button
             onClick={() => onNavigate('register')}
-            className="text-purple-600 hover:text-purple-700 font-semibold ml-2"
+            className="text-purple-600 hover:text-purple-800 font-semibold ml-2"
           >
-            Register Now
+            Register
           </button>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 
