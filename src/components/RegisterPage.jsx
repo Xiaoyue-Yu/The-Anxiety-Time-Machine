@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BookOpen, Briefcase } from 'lucide-react';
+import { BookOpen, Briefcase, Heart, Users, User, Home, MessageCircle, Brain, DollarSign } from 'lucide-react';
 
 const RegisterPage = ({ onNavigate }) => {
   const [formData, setFormData] = useState({
@@ -7,7 +7,7 @@ const RegisterPage = ({ onNavigate }) => {
     password: '',
     age: '',
     gender: 'male',
-    tag: 'Academic',
+    tag: [],
     description: ''
   });
   const [error, setError] = useState('');
@@ -15,6 +15,11 @@ const RegisterPage = ({ onNavigate }) => {
   const handleSubmit = async () => {
     if (!formData.nickname || !formData.password || !formData.age || !formData.description) {
       setError('Please fill in all fields (including password)');
+      return;
+    }
+
+    if (formData.tag.length === 0) {
+      setError('Please select at least one anxiety type');
       return;
     }
 
@@ -104,33 +109,233 @@ const RegisterPage = ({ onNavigate }) => {
           </div>
 
           <div>
-            <label className="block text-gray-700 font-semibold mb-2">Type of Anxiety</label>
-            <div className="flex gap-4">
-              <label className={`flex-1 flex items-center justify-center p-4 rounded-lg border-2 cursor-pointer transition duration-200 ${formData.tag === 'Academic' ? 'border-purple-600 bg-purple-50 text-purple-700' : 'border-gray-200 hover:border-purple-200'}`}>
+            <label className="block text-gray-700 font-semibold mb-2">
+              Type of Anxiety <span className="text-sm text-gray-500">(Select up to 3)</span>
+            </label>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+              <label className={`flex items-center p-3 rounded-lg border-2 cursor-pointer transition duration-200 ${formData.tag.includes('Academic') ? 'border-purple-600 bg-purple-50 text-purple-700' : 'border-gray-200 hover:border-purple-200'}`}>
                 <input
-                  type="radio"
-                  name="tag"
+                  type="checkbox"
                   value="Academic"
-                  checked={formData.tag === 'Academic'}
-                  onChange={(e) => setFormData({ ...formData, tag: e.target.value })}
+                  checked={formData.tag.includes('Academic')}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    const newTags = formData.tag.includes(value)
+                      ? formData.tag.filter(t => t !== value)
+                      : formData.tag.length < 3
+                        ? [...formData.tag, value]
+                        : formData.tag;
+                    setFormData({ ...formData, tag: newTags });
+                  }}
                   className="mr-2"
                 />
                 <BookOpen className="w-5 h-5 mr-1" />
                 <span>Academic</span>
               </label>
-              <label className={`flex-1 flex items-center justify-center p-4 rounded-lg border-2 cursor-pointer transition duration-200 ${formData.tag === 'Career' ? 'border-purple-600 bg-purple-50 text-purple-700' : 'border-gray-200 hover:border-purple-200'}`}>
+              
+              <label className={`flex items-center p-3 rounded-lg border-2 cursor-pointer transition duration-200 ${formData.tag.includes('Career') ? 'border-purple-600 bg-purple-50 text-purple-700' : 'border-gray-200 hover:border-purple-200'}`}>
                 <input
-                  type="radio"
-                  name="tag"
+                  type="checkbox"
                   value="Career"
-                  checked={formData.tag === 'Career'}
-                  onChange={(e) => setFormData({ ...formData, tag: e.target.value })}
+                  checked={formData.tag.includes('Career')}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    const newTags = formData.tag.includes(value)
+                      ? formData.tag.filter(t => t !== value)
+                      : formData.tag.length < 3
+                        ? [...formData.tag, value]
+                        : formData.tag;
+                    setFormData({ ...formData, tag: newTags });
+                  }}
                   className="mr-2"
                 />
                 <Briefcase className="w-5 h-5 mr-1" />
                 <span>Career</span>
               </label>
+
+              <label className={`flex items-center p-3 rounded-lg border-2 cursor-pointer transition duration-200 ${formData.tag.includes('Relationship') ? 'border-purple-600 bg-purple-50 text-purple-700' : 'border-gray-200 hover:border-purple-200'}`}>
+                <input
+                  type="checkbox"
+                  value="Relationship"
+                  checked={formData.tag.includes('Relationship')}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    const newTags = formData.tag.includes(value)
+                      ? formData.tag.filter(t => t !== value)
+                      : formData.tag.length < 3
+                        ? [...formData.tag, value]
+                        : formData.tag;
+                    setFormData({ ...formData, tag: newTags });
+                  }}
+                  className="mr-2"
+                />
+                <Heart className="w-5 h-5 mr-1" />
+                <span>Relationship</span>
+              </label>
+
+              <label className={`flex items-center p-3 rounded-lg border-2 cursor-pointer transition duration-200 ${formData.tag.includes('Life') ? 'border-purple-600 bg-purple-50 text-purple-700' : 'border-gray-200 hover:border-purple-200'}`}>
+                <input
+                  type="checkbox"
+                  value="Life"
+                  checked={formData.tag.includes('Life')}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    const newTags = formData.tag.includes(value)
+                      ? formData.tag.filter(t => t !== value)
+                      : formData.tag.length < 3
+                        ? [...formData.tag, value]
+                        : formData.tag;
+                    setFormData({ ...formData, tag: newTags });
+                  }}
+                  className="mr-2"
+                />
+                <Home className="w-5 h-5 mr-1" />
+                <span>Life</span>
+              </label>
+
+              <label className={`flex items-center p-3 rounded-lg border-2 cursor-pointer transition duration-200 ${formData.tag.includes('Friendship') ? 'border-purple-600 bg-purple-50 text-purple-700' : 'border-gray-200 hover:border-purple-200'}`}>
+                <input
+                  type="checkbox"
+                  value="Friendship"
+                  checked={formData.tag.includes('Friendship')}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    const newTags = formData.tag.includes(value)
+                      ? formData.tag.filter(t => t !== value)
+                      : formData.tag.length < 3
+                        ? [...formData.tag, value]
+                        : formData.tag;
+                    setFormData({ ...formData, tag: newTags });
+                  }}
+                  className="mr-2"
+                />
+                <Users className="w-5 h-5 mr-1" />
+                <span>Friendship</span>
+              </label>
+
+              <label className={`flex items-center p-3 rounded-lg border-2 cursor-pointer transition duration-200 ${formData.tag.includes('Family') ? 'border-purple-600 bg-purple-50 text-purple-700' : 'border-gray-200 hover:border-purple-200'}`}>
+                <input
+                  type="checkbox"
+                  value="Family"
+                  checked={formData.tag.includes('Family')}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    const newTags = formData.tag.includes(value)
+                      ? formData.tag.filter(t => t !== value)
+                      : formData.tag.length < 3
+                        ? [...formData.tag, value]
+                        : formData.tag;
+                    setFormData({ ...formData, tag: newTags });
+                  }}
+                  className="mr-2"
+                />
+                <Home className="w-5 h-5 mr-1" />
+                <span>Family</span>
+              </label>
+
+              <label className={`flex items-center p-3 rounded-lg border-2 cursor-pointer transition duration-200 ${formData.tag.includes('Self-Identity') ? 'border-purple-600 bg-purple-50 text-purple-700' : 'border-gray-200 hover:border-purple-200'}`}>
+                <input
+                  type="checkbox"
+                  value="Self-Identity"
+                  checked={formData.tag.includes('Self-Identity')}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    const newTags = formData.tag.includes(value)
+                      ? formData.tag.filter(t => t !== value)
+                      : formData.tag.length < 3
+                        ? [...formData.tag, value]
+                        : formData.tag;
+                    setFormData({ ...formData, tag: newTags });
+                  }}
+                  className="mr-2"
+                />
+                <User className="w-5 h-5 mr-1" />
+                <span>Self-Identity</span>
+              </label>
+
+              <label className={`flex items-center p-3 rounded-lg border-2 cursor-pointer transition duration-200 ${formData.tag.includes('Health') ? 'border-purple-600 bg-purple-50 text-purple-700' : 'border-gray-200 hover:border-purple-200'}`}>
+                <input
+                  type="checkbox"
+                  value="Health"
+                  checked={formData.tag.includes('Health')}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    const newTags = formData.tag.includes(value)
+                      ? formData.tag.filter(t => t !== value)
+                      : formData.tag.length < 3
+                        ? [...formData.tag, value]
+                        : formData.tag;
+                    setFormData({ ...formData, tag: newTags });
+                  }}
+                  className="mr-2"
+                />
+                <Heart className="w-5 h-5 mr-1" />
+                <span>Health</span>
+              </label>
+
+              <label className={`flex items-center p-3 rounded-lg border-2 cursor-pointer transition duration-200 ${formData.tag.includes('Social Skills') ? 'border-purple-600 bg-purple-50 text-purple-700' : 'border-gray-200 hover:border-purple-200'}`}>
+                <input
+                  type="checkbox"
+                  value="Social Skills"
+                  checked={formData.tag.includes('Social Skills')}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    const newTags = formData.tag.includes(value)
+                      ? formData.tag.filter(t => t !== value)
+                      : formData.tag.length < 3
+                        ? [...formData.tag, value]
+                        : formData.tag;
+                    setFormData({ ...formData, tag: newTags });
+                  }}
+                  className="mr-2"
+                />
+                <MessageCircle className="w-5 h-5 mr-1" />
+                <span>Social Skills</span>
+              </label>
+
+              <label className={`flex items-center p-3 rounded-lg border-2 cursor-pointer transition duration-200 ${formData.tag.includes('Mental Health') ? 'border-purple-600 bg-purple-50 text-purple-700' : 'border-gray-200 hover:border-purple-200'}`}>
+                <input
+                  type="checkbox"
+                  value="Mental Health"
+                  checked={formData.tag.includes('Mental Health')}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    const newTags = formData.tag.includes(value)
+                      ? formData.tag.filter(t => t !== value)
+                      : formData.tag.length < 3
+                        ? [...formData.tag, value]
+                        : formData.tag;
+                    setFormData({ ...formData, tag: newTags });
+                  }}
+                  className="mr-2"
+                />
+                <Brain className="w-5 h-5 mr-1" />
+                <span>Mental Health</span>
+              </label>
+
+              <label className={`flex items-center p-3 rounded-lg border-2 cursor-pointer transition duration-200 ${formData.tag.includes('Money') ? 'border-purple-600 bg-purple-50 text-purple-700' : 'border-gray-200 hover:border-purple-200'}`}>
+                <input
+                  type="checkbox"
+                  value="Money"
+                  checked={formData.tag.includes('Money')}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    const newTags = formData.tag.includes(value)
+                      ? formData.tag.filter(t => t !== value)
+                      : formData.tag.length < 3
+                        ? [...formData.tag, value]
+                        : formData.tag;
+                    setFormData({ ...formData, tag: newTags });
+                  }}
+                  className="mr-2"
+                />
+                <DollarSign className="w-5 h-5 mr-1" />
+                <span>Money</span>
+              </label>
             </div>
+            {formData.tag.length === 3 && (
+              <p className="mt-2 text-sm text-purple-600">Maximum of 3 types selected</p>
+            )}
           </div>
 
           <div>
