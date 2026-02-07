@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=UnifrakturMaguntia&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&display=swap');
+
 * {
   margin: 0;
   padding: 0;
@@ -5,31 +8,265 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  background-color: #2b1f17;
+  background-image: 
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 3px,
+      rgba(139, 90, 43, 0.05) 3px,
+      rgba(139, 90, 43, 0.05) 6px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 3px,
+      rgba(139, 90, 43, 0.05) 3px,
+      rgba(139, 90, 43, 0.05) 6px
+    ),
+    radial-gradient(circle at 20% 80%, rgba(139, 90, 43, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(197, 160, 89, 0.1) 0%, transparent 50%);
+  font-family: 'Playfair Display', 'IM Fell English SC', Georgia, serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: #3a3a3a;
+  min-height: 100vh;
 }
 
-/* Custom slider styling */
+/* 主容器装饰 */
+.app-container {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* 背景装饰 - 神秘光晕 */
+.cosmic-glow {
+  position: fixed;
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(circle, rgba(139, 90, 43, 0.2) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.cosmic-glow:nth-child(1) {
+  top: -200px;
+  left: -200px;
+  animation: glow-pulse 8s ease-in-out infinite;
+}
+
+.cosmic-glow:nth-child(2) {
+  bottom: -300px;
+  right: -300px;
+  animation: glow-pulse 10s ease-in-out infinite;
+}
+
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+/* 内容区域 - 羊皮纸风格 */
+.content-area {
+  position: relative;
+  z-index: 1;
+  background-color: #d4c4a8;
+  background-image: 
+    repeating-linear-gradient(
+      92deg,
+      transparent,
+      transparent 1px,
+      rgba(139, 119, 101, 0.04) 1px,
+      rgba(139, 119, 101, 0.04) 2px
+    ),
+    repeating-linear-gradient(
+      2deg,
+      transparent,
+      transparent 1px,
+      rgba(139, 119, 101, 0.04) 1px,
+      rgba(139, 119, 101, 0.04) 2px
+    ),
+    radial-gradient(ellipse 2px 2px at 15% 25%, rgba(101, 67, 33, 0.15), transparent 3px),
+    radial-gradient(ellipse 1px 1px at 65% 65%, rgba(101, 67, 33, 0.12), transparent 2px),
+    radial-gradient(ellipse 2px 1px at 85% 15%, rgba(101, 67, 33, 0.1), transparent 2px),
+    radial-gradient(ellipse at 50% 50%, #ddc9ad 0%, #d4c4a8 100%);
+  box-shadow: 
+    inset 0 0 150px rgba(43, 31, 23, 0.4),
+    0 0 120px rgba(43, 31, 23, 0.9),
+    0 25px 70px rgba(0, 0, 0, 0.7);
+  border: 4px solid;
+  border-color: #8a6d3b #7a5d2b #8a6d3b #9a7d4b;
+  border-radius: 8px 12px 6px 10px;
+  position: relative;
+  min-height: 100vh;
+  padding: 80px 40px 40px 40px;
+  transform: rotate(-0.3deg);
+}
+
+/* 装饰边框 - 黄铜金色 */
+.ornamental-border {
+  position: absolute;
+  border: 2px solid #c5a059;
+  box-shadow: 
+    inset 0 0 20px rgba(197, 160, 89, 0.3),
+    0 0 30px rgba(197, 160, 89, 0.2);
+}
+
+.ornament-top {
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  height: 50px;
+  background: linear-gradient(to right, #8a6d3b, #c5a059, #8a6d3b);
+  border-bottom: 3px double #8a6d3b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85em;
+  color: #c5a059;
+  text-transform: uppercase;
+  letter-spacing: '3px';
+  font-weight: bold;
+  border-radius: 8px 8px 0 0;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+}
+
+.ornament-bottom {
+  bottom: 15px;
+  left: 15px;
+  right: 15px;
+  height: 40px;
+  background: linear-gradient(to right, #8a6d3b, #c5a059, #8a6d3b);
+  border-top: 3px double #8a6d3b;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 -3px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* 标题风格 */
+h1, h2, h3 {
+  font-family: 'UnifrakturMaguntia', cursive;
+  color: #8a6d3b;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  letter-spacing: 2px;
+}
+
+h1 {
+  font-size: 3.5em;
+  margin-bottom: 20px;
+  font-weight: 900;
+}
+
+h2 {
+  font-size: 2em;
+  margin-bottom: 15px;
+}
+
+/* 按钮风格 */
+button {
+  font-family: 'Playfair Display', serif;
+  background: linear-gradient(135deg, #c5a059, #a68547);
+  color: #0f0b08;
+  border: 2px solid #8a6d3b;
+  padding: 12px 30px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  box-shadow: 
+    0 4px 15px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+button:hover {
+  background: linear-gradient(135deg, #d4af5a, #c5a059);
+  box-shadow: 
+    0 6px 20px rgba(197, 160, 89, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+button:active {
+  transform: translateY(0);
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* 输入框风格 */
+input, textarea, select {
+  font-family: 'Playfair Display', serif;
+  background: linear-gradient(135deg, #f5f0e8, #e8dbc1);
+  border: 2px solid #8a6d3b;
+  color: #3a3a3a;
+  padding: 10px 15px;
+  border-radius: 2px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: #c5a059;
+  box-shadow: 
+    inset 0 2px 5px rgba(0, 0, 0, 0.1),
+    0 0 10px rgba(197, 160, 89, 0.3);
+}
+
+/* 链接风格 */
+a {
+  color: #8a6d3b;
+  text-decoration: none;
+  border-bottom: 1px dashed #c5a059;
+  transition: all 0.3s ease;
+}
+
+a:hover {
+  color: #c5a059;
+  border-bottom: 1px solid #c5a059;
+}
+
+/* 错误提示风格 */
+.error-message {
+  background: linear-gradient(135deg, #8a4d4d, #6b3a3a);
+  border: 2px solid #a85555;
+  color: #f0e5d8;
+  padding: 15px;
+  border-radius: 2px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* 自定义滑块 */
 input[type="range"]::-webkit-slider-thumb {
   appearance: none;
-  width: 24px;
-  height: 24px;
-  background: #9333ea;
+  width: 20px;
+  height: 20px;
+  background: linear-gradient(135deg, #c5a059, #a68547);
   cursor: pointer;
   border-radius: 50%;
-  border: 3px solid white;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  border: 2px solid #8a6d3b;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 input[type="range"]::-moz-range-thumb {
-  width: 24px;
-  height: 24px;
-  background: #9333ea;
+  width: 20px;
+  height: 20px;
+  background: linear-gradient(135deg, #c5a059, #a68547);
   cursor: pointer;
   border-radius: 50%;
-  border: 3px solid white;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  border: 2px solid #8a6d3b;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+input[type="range"] {
+  width: 100%;
+  height: 8px;
+  background: linear-gradient(to right, #8a6d3b, #c5a059, #8a6d3b);
+  border-radius: 4px;
+  outline: none;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
 }
