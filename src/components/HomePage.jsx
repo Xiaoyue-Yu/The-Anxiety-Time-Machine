@@ -2,7 +2,7 @@ import React from 'react';
 
 const HomePage = ({ onNavigate }) => {
   return (
-    <div style={{ 
+    <div style={{
       width: '100%',
       textAlign: 'center',
       marginTop: '50px'
@@ -54,7 +54,7 @@ const HomePage = ({ onNavigate }) => {
         }}></div>
 
         {/* 按钮组 */}
-        <div style={{ 
+        <div style={{
           display: 'flex',
           flexDirection: 'column',
           gap: '20px',
@@ -91,7 +91,7 @@ const HomePage = ({ onNavigate }) => {
           >
             New Soul: Sign the Registry
           </button>
-          
+
           <button
             onClick={() => onNavigate('login')}
             style={{
@@ -123,39 +123,9 @@ const HomePage = ({ onNavigate }) => {
           >
             Returning Soul: Access Records
           </button>
-
-          <button
-            onClick={() => onNavigate('browse')}
-            style={{
-              padding: '12px 40px',
-              fontSize: '0.85em',
-              color: '#8a6d3b',
-              background: 'transparent',
-              border: '3px dashed #8a6d3b',
-              cursor: 'pointer',
-              borderRadius: '20px 15px 18px 12px',
-              transition: 'all 0.3s ease',
-              textTransform: 'uppercase',
-              letterSpacing: '1px',
-              width: '100%',
-              transform: 'rotate(-0.3deg)'
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.borderColor = '#c5a059';
-              e.target.style.color = '#c5a059';
-              e.target.style.backgroundColor = 'rgba(197, 160, 89, 0.05)';
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.borderColor = '#8a6d3b';
-              e.target.style.color = '#8a6d3b';
-              e.target.style.backgroundColor = 'transparent';
-            }}
-          >
-            The Archive: Browse Souls
-          </button>
         </div>
 
-        {/* 底部装饰文本 */}
+        {/* Bottom decorative text */}
         <div style={{
           marginTop: '60px',
           fontSize: '0.8em',

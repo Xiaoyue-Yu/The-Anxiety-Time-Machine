@@ -1,58 +1,56 @@
 import React, { useState } from 'react';
-import { ANXIETY_TYPES } from '../data/mockData';
 
 const RegisterPage = ({ onNavigate }) => {
   const [formData, setFormData] = useState({
-    pseudonym: '',
-    cipher: '',
+    name: '',
+    password: '',
     age: '',
-    gender: 'male',
-    tags: [],
-    confession: ''
+    gender: 'male'
   });
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
-    if (!formData.pseudonym || !formData.cipher || !formData.age || !formData.confession) {
-      setError('All fields must be completed to sign the registry.');
+    if (!formData.name || !formData.password || !formData.age) {
+      setError('Please complete all required fields');
       return;
     }
 
-    if (formData.tags.length === 0) {
-      setError('Thou must select at least one solicitude to record.');
-      return;
-    }
-
+    setLoading(true);
     try {
       const response = await fetch('http://127.0.0.1:5000/api/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          nickname: formData.pseudonym,
-          password: formData.cipher,
+          nickname: formData.name,
+          password: formData.password,
           age: parseInt(formData.age),
-          gender: formData.gender,
-          tag: formData.tags,
-          description: formData.confession
+          gender: formData.gender
         }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        alert("Thy confession hath been sealed within the Temporium archives.");
-        onNavigate('login');
+        localStorage.setItem('user_nickname', formData.name);
+        localStorage.setItem('user_id', data.user_id);
+        localStorage.setItem('user_age', formData.age);
+        localStorage.setItem('user_gender', formData.gender);
+        onNavigate('dashboard');
       } else {
-        setError(data.message || 'The registry hath rejected thy inscription.');
+        setError(data.message || 'Registration failed. Please try again.');
       }
 
     } catch (err) {
       console.error(err);
-      setError('Alas, the temporal connection hath failed. Please endeavour anew.');
+      setError('Connection error. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
+
   return (
-    <div style={{ padding: '50px 20px 40px 20px', maxWidth: '900px', margin: '0 auto' }}>
+    <div style={{ padding: '50px 20px 40px 20px', maxWidth: '600px', margin: '0 auto' }}>
       <h2 style={{
         fontSize: '2.2em',
         textAlign: 'center',
@@ -62,7 +60,7 @@ const RegisterPage = ({ onNavigate }) => {
         textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)',
         letterSpacing: '2px'
       }}>
-        New Soul: Sign the Registry
+        Create Your Account
       </h2>
 
       <p style={{
@@ -73,7 +71,7 @@ const RegisterPage = ({ onNavigate }) => {
         fontStyle: 'italic',
         letterSpacing: '1px'
       }}>
-        LET THY IDENTITY BE RECORDED
+        Join the Anxiety Temporium
       </p>
 
       {error && (
@@ -91,14 +89,14 @@ const RegisterPage = ({ onNavigate }) => {
         </div>
       )}
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '20px', marginBottom: '30px' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '30px' }}>
         <div>
-          <label style={{ fontFamily: "'Playfair Display', serif", color: '#8a6d3b', fontWeight: '600', marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', fontSize: '0.9em' }}>Pseudonym</label>
+          <label style={{ fontFamily: "'Playfair Display', serif", color: '#8a6d3b', fontWeight: '600', marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', fontSize: '0.9em' }}>Name</label>
           <input
             type="text"
-            value={formData.pseudonym}
-            onChange={(e) => setFormData({ ...formData, pseudonym: e.target.value })}
-            placeholder="Your secret name"
+            value={formData.name}
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            placeholder="Enter your name"
             style={{
               fontFamily: "'Playfair Display', serif",
               background: 'linear-gradient(135deg, #f5f0e8, #e8dbc1)',
@@ -114,12 +112,12 @@ const RegisterPage = ({ onNavigate }) => {
         </div>
 
         <div>
-          <label style={{ fontFamily: "'Playfair Display', serif", color: '#8a6d3b', fontWeight: '600', marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', fontSize: '0.9em' }}>Cipher</label>
+          <label style={{ fontFamily: "'Playfair Display', serif", color: '#8a6d3b', fontWeight: '600', marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', fontSize: '0.9em' }}>Password</label>
           <input
             type="password"
-            value={formData.cipher}
-            onChange={(e) => setFormData({ ...formData, cipher: e.target.value })}
-            placeholder="Create a secret cipher"
+            value={formData.password}
+            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+            placeholder="Create a secure password"
             style={{
               fontFamily: "'Playfair Display', serif",
               background: 'linear-gradient(135deg, #f5f0e8, #e8dbc1)',
@@ -182,73 +180,10 @@ const RegisterPage = ({ onNavigate }) => {
         </div>
       </div>
 
-      <div style={{ marginBottom: '30px' }}>
-        <label style={{ fontFamily: "'Playfair Display', serif", color: '#c5a059', fontWeight: '600', marginBottom: '15px', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', fontSize: '1em' }}>
-          Solicitudes Afflicting Thy Soul <span style={{ fontSize: '0.8em', color: '#8a6d3b' }}>(Select thy concerns)</span>
-        </label>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '12px' }}>
-          {ANXIETY_TYPES.map((anxiety) => {
-            return (
-              <label key={anxiety.id} style={{
-                display: 'flex',
-                alignItems: 'center',
-                flexDirection: 'column',
-                padding: '15px',
-                borderRadius: '2px',
-                border: `2px solid ${formData.tags.includes(anxiety.label) ? '#c5a059' : '#b8956a'}`,
-                backgroundColor: formData.tags.includes(anxiety.label) ? 'rgba(197, 160, 89, 0.25)' : 'transparent',
-                cursor: 'pointer',
-                transition: 'all 0.3s ease',
-                color: formData.tags.includes(anxiety.label) ? '#8a6d3b' : '#5a5a5a',
-                fontSize: '0.85em',
-                textAlign: 'center'
-              }}>
-                <input
-                  type="checkbox"
-                  value={anxiety.label}
-                  checked={formData.tags.includes(anxiety.label)}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    const newTags = formData.tags.includes(value)
-                      ? formData.tags.filter(t => t !== value)
-                      : [...formData.tags, value];
-                    setFormData({ ...formData, tags: newTags });
-                  }}
-                  style={{ marginBottom: '8px', width: '16px', height: '16px', cursor: 'pointer' }}
-                />
-                <span style={{ fontWeight: '600', fontSize: '0.9em' }}>{anxiety.label}</span>
-              </label>
-            );
-          })}
-        </div>
-      </div>
-
-      <div style={{ marginBottom: '30px' }}>
-        <label style={{ fontFamily: "'Playfair Display', serif", color: '#c5a059', fontWeight: '600', marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', fontSize: '0.95em' }}>Thy Confession</label>
-        <textarea
-          value={formData.confession}
-          onChange={(e) => setFormData({ ...formData, confession: e.target.value })}
-          placeholder="Unburden thy solicitudes within these temporal archives. Let thy words be witnessed by time itself..."
-          rows="10"
-          style={{
-            fontFamily: "'Playfair Display', serif",
-            background: 'linear-gradient(135deg, #f5f0e8, #e8dbc1)',
-            border: '2px solid #8a6d3b',
-            color: '#3a3a3a',
-            padding: '15px',
-            borderRadius: '2px',
-            width: '100%',
-            transition: 'all 0.3s ease',
-            boxShadow: 'inset 0 2px 5px rgba(0, 0, 0, 0.1)',
-            resize: 'vertical',
-            lineHeight: '1.6'
-          }}
-        />
-      </div>
-
       <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', marginTop: '40px' }}>
         <button
           onClick={() => onNavigate('home')}
+          disabled={loading}
           style={{
             padding: '12px 40px',
             fontSize: '0.9em',
@@ -256,57 +191,68 @@ const RegisterPage = ({ onNavigate }) => {
             backgroundColor: '#f5f0e8',
             color: '#8a6d3b',
             border: '3px solid #8a6d3b',
-            cursor: 'pointer',
+            cursor: loading ? 'not-allowed' : 'pointer',
             borderRadius: '18px 12px 20px 15px',
             transition: 'all 0.3s ease',
             textTransform: 'uppercase',
             letterSpacing: '1px',
             flex: 1,
-            transform: 'rotate(-0.5deg)'
+            transform: 'rotate(-0.5deg)',
+            opacity: loading ? 0.6 : 1
           }}
           onMouseEnter={(e) => {
-            e.target.style.backgroundColor = '#e8dbc1';
-            e.target.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.3)';
-            e.target.style.transform = 'translateY(-2px)';
+            if (!loading) {
+              e.target.style.backgroundColor = '#e8dbc1';
+              e.target.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.3)';
+              e.target.style.transform = 'translateY(-2px)';
+            }
           }}
           onMouseLeave={(e) => {
-            e.target.style.backgroundColor = '#f5f0e8';
-            e.target.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.2)';
-            e.target.style.transform = 'translateY(0)';
+            if (!loading) {
+              e.target.style.backgroundColor = '#f5f0e8';
+              e.target.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.2)';
+              e.target.style.transform = 'translateY(0)';
+            }
           }}
         >
-          Return
+          Cancel
         </button>
         <button
           onClick={handleSubmit}
+          disabled={loading}
           style={{
             padding: '12px 40px',
             fontSize: '0.9em',
             fontWeight: 'bold',
-            background: 'linear-gradient(135deg, #c5a059, #a68547)',
+            background: loading ? '#b8956a' : 'linear-gradient(135deg, #c5a059, #a68547)',
             color: '#0f0b08',
             border: '3px solid #8a6d3b',
-            cursor: 'pointer',
+            cursor: loading ? 'not-allowed' : 'pointer',
             borderRadius: '15px 20px 12px 18px',
             transition: 'all 0.3s ease',
             boxShadow: '0 4px 15px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3)',
             textTransform: 'uppercase',
             letterSpacing: '1px',
             flex: 1,
-            transform: 'rotate(0.5deg)'
+            transform: 'rotate(0.5deg)',
+            opacity: loading ? 0.7 : 1
           }}
           onMouseEnter={(e) => {
-            e.target.style.background = 'linear-gradient(135deg, #d4af5a, #c5a059)';
-            e.target.style.boxShadow = '0 6px 20px rgba(197, 160, 89, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.5)';
-            e.target.style.transform = 'translateY(-2px)';
+            if (!loading) {
+              e.target.style.background = 'linear-gradient(135deg, #d4af5a, #c5a059)';
+              e.target.style.boxShadow = '0 6px 20px rgba(197, 160, 89, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.5)';
+              e.target.style.transform = 'translateY(-2px)';
+            }
           }}
           onMouseLeave={(e) => {
-            e.target.style.background = 'linear-gradient(135deg, #c5a059, #a68547)';
-            e.target.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3)';
-            e.target.style.transform = 'translateY(0)';
+            if (!loading) {
+              e.target.style.background = 'linear-gradient(135deg, #c5a059, #a68547)';
+              e.target.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3)';
+              e.target.style.transform = 'translateY(0)';
+            }
           }}
         >
-          Seal Entry
+          {loading ? 'Creating...' : 'Create Account'}
         </button>
       </div>
     </div>

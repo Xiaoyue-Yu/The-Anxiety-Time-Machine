@@ -26,4 +26,4 @@ CREATE TABLE users (
     --likes INT DEFAULT 0,  -- Optional: Count of likes for the message
     
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci; 
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
