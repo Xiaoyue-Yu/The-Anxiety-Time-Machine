@@ -2,13 +2,13 @@
 -- The Anxiety Time Machine - Create Schema (Focus on Anxiety Upload)
 -- ======================================================
 
-drop schema if exists `The Anxiety Time Machine` ;
+drop schema if exists `The_Anxiety_Time_Machine`;
 
-create schema `The Anxiety Time Machine` default character set utf8mb4 collate utf8mb4_unicode_ci;
+create schema `The_Anxiety_Time_Machine` default character set utf8mb4 collate utf8mb4_unicode_ci;
 
 -- ======================================================
 
-use `The Anxiety Time Machine`;
+use `The_Anxiety_Time_Machine`;
 
 -- ======================================================
 
