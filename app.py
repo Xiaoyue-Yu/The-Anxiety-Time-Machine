@@ -1,6 +1,8 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import pymysql  # Using pymysql because it is more stable on Windows than flask_mysqldb
+import pymysql
+import google.generativeai as genai
+import random
 
 app = Flask(__name__)
 CORS(app)  # Enables Cross-Origin Resource Sharing for React
@@ -11,10 +13,38 @@ CORS(app)  # Enables Cross-Origin Resource Sharing for React
 DB_CONFIG = {
     'host': 'localhost',
     'user': 'root',
-    'password': 'xxxx',  # Your MySQL Password
+    'password': 'xxxx',  # 🔴Your MySQL Password
     'database': 'The_Anxiety_Time_Machine',  # Database name with underscores
     'cursorclass': pymysql.cursors.DictCursor
 }
+
+# ========================================================
+# 🤖 Gemini API Configuration
+# ========================================================
+GOOGLE_API_KEY = "YOUR_GEMINI_API_KEY"     # 🔴 Your Gemini API Key
+genai.configure(api_key=GOOGLE_API_KEY)
+model = genai.GenerativeModel('gemini-pro')
+
+TAG_CATEGORIES = ["Career", "Family", "Love", "Health", "Self", "Money", "Future", "Life"]
+
+def analyze_tag_with_gemini(text):
+    try:
+        # Prompt design for Gemini AI
+        prompt = f"""
+        Analyze the emotional content of the following text and categorize it into exactly one of these tags: {TAG_CATEGORIES}.
+        Text: "{text}"
+        Return ONLY the tag name. If unsure, return 'Life'.
+        """
+        response = model.generate_content(prompt)
+        tag = response.text.strip()
+        
+        for valid_tag in TAG_CATEGORIES:
+            if valid_tag.lower() in tag.lower():
+                return valid_tag
+        return None 
+    except Exception as e:
+        print(f"Gemini AI Error: {e}")
+        return None
 
 # ========================================================
 # 🔌 Database Connection Helper
@@ -161,6 +191,93 @@ def get_all_cards():
     except Exception as e:
         print("Get Cards Error:", e)
         return jsonify({"cards": [], "error": str(e)}), 500
+    
+# ========================================================
+# Function 2
+# ========================================================
+@app.route('/api/pleasure/swap', methods=['POST'])
+def swap_pleasure():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    try:
+        data = request.json
+        user_id = data.get('user_id') 
+        content = data.get('content')
+        user_selected_tag = data.get('tag', 'Life')
+
+        if not user_id:
+            return jsonify({"error": "Identity missing. Please login."}), 401
+
+        cursor.execute("SELECT nickname, age, gender FROM users WHERE id = %s", (user_id,))
+        user_info = cursor.fetchone()
+
+        if not user_info:
+            return jsonify({"error": "User not found in archives."}), 404
+        
+        nickname = user_info['nickname']
+        age = user_info['age']
+        gender = user_info['gender']
+
+        final_tag = None
+        used_method = "Manual"
+        
+        # Method 1: Gemini AI Analysis
+        try:
+            ai_tag = analyze_tag_with_gemini(content)
+            if ai_tag:
+                final_tag = ai_tag
+                used_method = "AI"
+        except:
+            pass
+        
+        # Method 2: User-selected Tag
+        if not final_tag:
+            final_tag = user_selected_tag
+
+        query_insert = """
+            INSERT INTO users (nickname, age, gender, tag, description, message_id, password) 
+            VALUES (%s, %s, %s, %s, %s, 2, 'placeholder')
+        """
+        cursor.execute(query_insert, (nickname, age, gender, final_tag, content))
+        conn.commit()
+        
+        # Prevent self-matching 
+        current_msg_row_id = cursor.lastrowid
+
+        query_swap = """
+            SELECT nickname, age, gender, tag, description as content 
+            FROM users 
+            WHERE message_id = 2 
+            AND tag = %s 
+            AND id != %s 
+            ORDER BY RAND() 
+            LIMIT 1
+        """
+        cursor.execute(query_swap, (final_tag, current_msg_row_id))
+        match_result = cursor.fetchone()
+
+        response_data = {
+            "status": "success",
+            "used_method": used_method,
+            "final_tag": final_tag,
+            "match_found": False
+        }
+
+        if match_result:
+            response_data["match_found"] = True
+            response_data["data"] = match_result
+        else:
+            response_data["message"] = f"You are the first light in the {final_tag} nebula."
+
+        return jsonify(response_data), 201
+
+    except Exception as e:
+        print("Pleasure Swap Error:", e)
+        conn.rollback()
+        return jsonify({"error": str(e)}), 500
+    finally:
+        cursor.close()
+        conn.close()
 
 # ========================================================
 # 🚀 Main Execution
