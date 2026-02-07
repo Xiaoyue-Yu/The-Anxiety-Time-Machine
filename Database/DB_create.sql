@@ -12,27 +12,17 @@ use `The Anxiety Time Machine`;
 
 -- ======================================================
 
-CREATE TABLE IF NOT EXISTS User (
-  user_id INT NOT NULL AUTO_INCREMENT,
-  nickname VARCHAR(45) NOT NULL,
-  gender VARCHAR(20) NULL,
-  age INT NOT NULL,
-  PRIMARY KEY (user_id)
-) ENGINE = InnoDB;
-
-CREATE TABLE IF NOT EXISTS Tag (
-  tag_id INT NOT NULL AUTO_INCREMENT,
-  type VARCHAR(45) NOT NULL,            
-  tag_description VARCHAR(255) NULL,
-  PRIMARY KEY (tag_id)
-) ENGINE = InnoDB;
-
-CREATE TABLE IF NOT EXISTS Message (
-  message_id INT NOT NULL AUTO_INCREMENT,
-  user_id INT NOT NULL,
-  tag_id INT NOT NULL,
-  message_description TEXT NOT NULL,
-  PRIMARY KEY (message_id),
-  CONSTRAINT fk_Message_User FOREIGN KEY (user_id) REFERENCES User (user_id) ON DELETE CASCADE,
-  CONSTRAINT fk_Message_Tag FOREIGN KEY (tag_id) REFERENCES Tag (tag_id)
-) ENGINE = InnoDB;
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nickname VARCHAR(50) NOT NULL,
+    password VARCHAR(255) NOT NULL DEFAULT '123456', 
+    age INT NOT NULL,
+    gender VARCHAR(20),
+    tag VARCHAR(100),      
+    description TEXT,  
+  
+    anxiety_level INT DEFAULT 5,  -- Optional: 1-10 scale for anxiety level
+    likes INT DEFAULT 0,  -- Optional: Count of likes for the message
+    
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci; 
