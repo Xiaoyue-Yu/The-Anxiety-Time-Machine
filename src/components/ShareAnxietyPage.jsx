@@ -114,30 +114,28 @@ const ShareAnxietyPage = ({ onNavigate }) => {
                         padding: '12px 40px',
                         fontSize: '0.9em',
                         fontWeight: 'bold',
-                        backgroundColor: '#f5f0e8',
-                        color: '#8a6d3b',
-                        border: '3px solid #8a6d3b',
+                        backgroundColor: '#c9b892',
+                        color: '#3a3a3a',
+                        border: 'none',
                         cursor: loading ? 'not-allowed' : 'pointer',
-                        borderRadius: '18px 12px 20px 15px',
+                        borderRadius: '0',
                         transition: 'all 0.3s ease',
                         textTransform: 'uppercase',
                         letterSpacing: '1px',
                         flex: 1,
-                        transform: 'rotate(-0.5deg)',
+                        transform: 'none',
                         opacity: loading ? 0.6 : 1
                     }}
                     onMouseEnter={(e) => {
                         if (!loading) {
-                            e.target.style.backgroundColor = '#e8dbc1';
-                            e.target.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.3)';
-                            e.target.style.transform = 'translateY(-2px)';
+                            e.target.style.backgroundColor = '#b5a06f';
+                            e.target.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.3)';
                         }
                     }}
                     onMouseLeave={(e) => {
                         if (!loading) {
-                            e.target.style.backgroundColor = '#f5f0e8';
-                            e.target.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.2)';
-                            e.target.style.transform = 'translateY(0)';
+                            e.target.style.backgroundColor = '#c9b892';
+                            e.target.style.boxShadow = 'none';
                         }
                     }}
                 >
@@ -150,31 +148,29 @@ const ShareAnxietyPage = ({ onNavigate }) => {
                         padding: '12px 40px',
                         fontSize: '0.9em',
                         fontWeight: 'bold',
-                        background: loading ? '#b8956a' : 'linear-gradient(135deg, #c5a059, #a68547)',
-                        color: '#0f0b08',
-                        border: '3px solid #8a6d3b',
+                        background: loading ? '#6b5a47' : 'linear-gradient(135deg, #8a6d3b, #6b5a47)',
+                        color: '#f5f0e8',
+                        border: 'none',
                         cursor: loading ? 'not-allowed' : 'pointer',
-                        borderRadius: '15px 20px 12px 18px',
+                        borderRadius: '0',
                         transition: 'all 0.3s ease',
-                        boxShadow: '0 4px 15px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3)',
+                        boxShadow: 'none',
                         textTransform: 'uppercase',
                         letterSpacing: '1px',
                         flex: 1,
-                        transform: 'rotate(0.5deg)',
+                        transform: 'none',
                         opacity: loading ? 0.7 : 1
                     }}
                     onMouseEnter={(e) => {
                         if (!loading) {
-                            e.target.style.background = 'linear-gradient(135deg, #d4af5a, #c5a059)';
-                            e.target.style.boxShadow = '0 6px 20px rgba(197, 160, 89, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.5)';
-                            e.target.style.transform = 'translateY(-2px)';
+                            e.target.style.background = 'linear-gradient(135deg, #9a7d4b, #7b6a57)';
+                            e.target.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.4)';
                         }
                     }}
                     onMouseLeave={(e) => {
                         if (!loading) {
-                            e.target.style.background = 'linear-gradient(135deg, #c5a059, #a68547)';
-                            e.target.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3)';
-                            e.target.style.transform = 'translateY(0)';
+                            e.target.style.background = 'linear-gradient(135deg, #8a6d3b, #6b5a47)';
+                            e.target.style.boxShadow = 'none';
                         }
                     }}
                 >

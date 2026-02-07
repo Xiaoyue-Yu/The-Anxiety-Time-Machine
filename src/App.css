@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=UnifrakturMaguntia&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=UnifrakturMaguntia&family=IM+Fell+English+SC&display=swap');
 
 * {
   margin: 0;
@@ -8,24 +7,13 @@
 }
 
 body {
-  background-color: #0f0b08;
-  background-image: 
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(44, 30, 20, 0.1) 2px,
-      rgba(44, 30, 20, 0.1) 4px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      transparent,
-      transparent 2px,
-      rgba(44, 30, 20, 0.1) 2px,
-      rgba(44, 30, 20, 0.1) 4px
-    ),
-    radial-gradient(ellipse at 30% 60%, rgba(192, 160, 89, 0.08) 0%, transparent 60%),
-    radial-gradient(ellipse at 70% 40%, rgba(212, 196, 168, 0.05) 0%, transparent 60%);
+  background-color: #0a0a0a;
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(139, 90, 43, 0.03) 2px, rgba(139, 90, 43, 0.03) 4px),
+    repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(139, 90, 43, 0.03) 2px, rgba(139, 90, 43, 0.03) 4px),
+    radial-gradient(ellipse 3px 2px at 18% 32%, rgba(101, 67, 33, 0.05), transparent 4px),
+    radial-gradient(ellipse 2px 3px at 68% 72%, rgba(101, 67, 33, 0.04), transparent 3px),
+    linear-gradient(135deg, #0a0a0a 0%, #1a1410 50%, #0f0b08 100%);
   font-family: 'Playfair Display', 'IM Fell English SC', Georgia, serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -34,19 +22,19 @@ body {
   overflow-x: hidden;
 }
 
-/* 主容器装饰 */
+/* ========== APP CONTAINER ========== */
 .app-container {
   position: relative;
   min-height: 100vh;
   overflow: hidden;
 }
 
-/* 背景装饰 - 神秘光晕 */
+/* ========== COSMIC GLOW BACKGROUNDS ========== */
 .cosmic-glow {
   position: fixed;
   width: 800px;
   height: 800px;
-  background: radial-gradient(circle, rgba(139, 90, 43, 0.2) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(139, 90, 43, 0.1) 0%, transparent 70%);
   border-radius: 50%;
   pointer-events: none;
   z-index: 0;
@@ -65,87 +53,70 @@ body {
 }
 
 @keyframes glow-pulse {
-  0%, 100% { opacity: 0.6; }
-  50% { opacity: 1; }
+
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+
+  50% {
+    opacity: 1;
+  }
 }
 
-/* 内容区域 - 羊皮纸风格（古纸黄）*/
+/* ========== PARCHMENT CONTENT AREA ========== */
 .content-area {
   position: relative;
   z-index: 1;
-  background-color: #e8dbc1;
-  background-image: 
-    repeating-linear-gradient(
-      88deg,
-      transparent,
-      transparent 2px,
-      rgba(44, 30, 20, 0.03) 2px,
-      rgba(44, 30, 20, 0.03) 4px
-    ),
-    repeating-linear-gradient(
-      8deg,
-      transparent,
-      transparent 2px,
-      rgba(44, 30, 20, 0.03) 2px,
-      rgba(44, 30, 20, 0.03) 4px
-    ),
-    radial-gradient(ellipse 3px 2px at 18% 32%, rgba(101, 67, 33, 0.12), transparent 4px),
-    radial-gradient(ellipse 2px 3px at 68% 72%, rgba(101, 67, 33, 0.1), transparent 3px),
-    radial-gradient(ellipse 2px 2px at 85% 15%, rgba(101, 67, 33, 0.08), transparent 3px),
-    radial-gradient(ellipse at 50% 50%, #f0deb5 0%, #e8dbc1 100%);
-  box-shadow: 
-    inset 0 0 180px rgba(44, 30, 20, 0.35),
-    0 0 100px rgba(15, 11, 8, 0.85),
-    0 30px 80px rgba(0, 0, 0, 0.75);
-  border: 3px solid #3d2b1f;
-  border-radius: 8px 12px 6px 10px;
-  position: relative;
+  background-color: #0a0a0a;
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(139, 90, 43, 0.03) 2px, rgba(139, 90, 43, 0.03) 4px),
+    repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(139, 90, 43, 0.03) 2px, rgba(139, 90, 43, 0.03) 4px),
+    radial-gradient(ellipse 3px 2px at 18% 32%, rgba(101, 67, 33, 0.05), transparent 4px),
+    radial-gradient(ellipse 2px 3px at 68% 72%, rgba(101, 67, 33, 0.04), transparent 3px),
+    linear-gradient(135deg, #0a0a0a 0%, #1a1410 50%, #0f0b08 100%);
+  box-shadow: none;
+  border: none;
+  border-radius: 0;
   min-height: 100vh;
-  padding: 80px 40px 40px 40px;
-  transform: rotate(-0.3deg);
+  padding: 80px 40px 60px 40px;
+  transform: none;
 }
 
-/* 装饰边框 - 黄铜金色 */
-.ornamental-border {
-  position: absolute;
-  border: 2px solid #c5a059;
-  box-shadow: 
-    inset 0 0 20px rgba(197, 160, 89, 0.3),
-    0 0 30px rgba(197, 160, 89, 0.2);
-}
-
+/* ========== ORNAMENTAL BORDERS ========== */
 .ornament-top {
-  top: 15px;
-  left: 15px;
-  right: 15px;
-  height: 50px;
-  background: linear-gradient(to right, #8a6d3b, #c5a059, #8a6d3b);
-  border-bottom: 3px double #8a6d3b;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.85em;
-  color: #c5a059;
-  text-transform: uppercase;
-  letter-spacing: '3px';
-  font-weight: bold;
-  border-radius: 8px 8px 0 0;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+  display: none;
 }
 
 .ornament-bottom {
-  bottom: 15px;
-  left: 15px;
-  right: 15px;
-  height: 40px;
-  background: linear-gradient(to right, #8a6d3b, #c5a059, #8a6d3b);
-  border-top: 3px double #8a6d3b;
-  border-radius: 0 0 8px 8px;
-  box-shadow: 0 -3px 8px rgba(0, 0, 0, 0.3);
+  display: none;
 }
 
-/* 标题风格 */
-h1, h2, h3 {
+/* ========== VINTAGE PAPER CARD (Generic) ========== */
+.vintage-paper {
+  background-color: #e8dbc1;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%23e8dbc1'/%3E%3Crect width='1' height='1' fill='%23d4c4a8' opacity='0.15'/%3E%3C/svg%3E");
+  color: #2c1e14;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), inset 0 0 120px rgba(0, 0, 0, 0.15);
+  border: 2px solid #3d2b1f;
+  border-radius: 6px;
+}
+
+/* ========== TYPOGRAPHY ========== */
+.vintage-title {
+  font-family: 'UnifrakturMaguntia', cursive;
+  color: #c5a059;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  letter-spacing: 2px;
+}
+
+.vintage-sc {
+  font-family: 'IM Fell English SC', serif;
+}
+
+h1,
+h2,
+h3 {
   font-family: 'UnifrakturMaguntia', cursive;
   color: #8a6d3b;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
@@ -163,42 +134,62 @@ h2 {
   margin-bottom: 15px;
 }
 
-/* 按钮风格 */
-button {
+/* ========== BUTTONS ========== */
+.btn-brass {
   font-family: 'Playfair Display', serif;
-  background: linear-gradient(135deg, #c5a059, #a68547);
-  color: #0f0b08;
-  border: 2px solid #8a6d3b;
-  padding: 12px 30px;
+  background: linear-gradient(135deg, #8a6d3b, #6b5a47);
+  color: #f5f0e8;
+  border: none;
+  padding: 14px 30px;
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
-  border-radius: 4px;
+  border-radius: 0;
   transition: all 0.3s ease;
-  box-shadow: 
-    0 4px 15px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  box-shadow: none;
   text-transform: uppercase;
   letter-spacing: 1px;
+  transform: none;
 }
 
-button:hover {
-  background: linear-gradient(135deg, #d4af5a, #c5a059);
-  box-shadow: 
-    0 6px 20px rgba(197, 160, 89, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.5);
-  transform: translateY(-2px);
+.btn-brass:hover {
+  background: linear-gradient(135deg, #9a7d4b, #7b6a57);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  transform: none;
 }
 
-button:active {
-  transform: translateY(0);
-  box-shadow: 
-    0 2px 8px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+.btn-brass:active {
+  transform: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
-/* 输入框风格 */
-input, textarea, select {
+.btn-parchment {
+  font-family: 'Playfair Display', serif;
+  background: #c9b892;
+  color: #3a3a3a;
+  border: none;
+  padding: 14px 30px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 0;
+  transition: all 0.3s ease;
+  box-shadow: none;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transform: none;
+}
+
+.btn-parchment:hover {
+  background: #b5a06f;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transform: none;
+}
+
+/* ========== INPUTS ========== */
+input,
+textarea,
+select {
   font-family: 'Playfair Display', serif;
   background: linear-gradient(135deg, #f5f0e8, #e8dbc1);
   border: 2px solid #8a6d3b;
@@ -209,15 +200,33 @@ input, textarea, select {
   box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-input:focus, textarea:focus, select:focus {
+input:focus,
+textarea:focus,
+select:focus {
   outline: none;
   border-color: #c5a059;
-  box-shadow: 
-    inset 0 2px 5px rgba(0, 0, 0, 0.1),
-    0 0 10px rgba(197, 160, 89, 0.3);
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1), 0 0 10px rgba(197, 160, 89, 0.3);
 }
 
-/* 链接风格 */
+/* ========== ERROR MESSAGES ========== */
+.error-message {
+  background: linear-gradient(135deg, #8a4d4d, #6b3a3a);
+  border: 2px solid #a85555;
+  color: #f0e5d8;
+  padding: 15px;
+  border-radius: 15px 10px 18px 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transform: rotate(-0.3deg);
+}
+
+/* ========== DECORATIVE LINE ========== */
+.decorative-line {
+  height: 1px;
+  background: linear-gradient(to right, transparent, #c5a059, transparent);
+  margin: 30px 0;
+}
+
+/* ========== LINKS ========== */
 a {
   color: #8a6d3b;
   text-decoration: none;
@@ -230,17 +239,17 @@ a:hover {
   border-bottom: 1px solid #c5a059;
 }
 
-/* 错误提示风格 */
-.error-message {
-  background: linear-gradient(135deg, #8a4d4d, #6b3a3a);
-  border: 2px solid #a85555;
-  color: #f0e5d8;
-  padding: 15px;
-  border-radius: 2px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+/* ========== RANGE SLIDER ========== */
+input[type="range"] {
+  width: 100%;
+  height: 8px;
+  background: linear-gradient(to right, #8a6d3b, #c5a059, #8a6d3b);
+  border-radius: 4px;
+  outline: none;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
+  border: none;
 }
 
-/* 自定义滑块 */
 input[type="range"]::-webkit-slider-thumb {
   appearance: none;
   width: 20px;
@@ -262,11 +271,232 @@ input[type="range"]::-moz-range-thumb {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
-input[type="range"] {
-  width: 100%;
-  height: 8px;
-  background: linear-gradient(to right, #8a6d3b, #c5a059, #8a6d3b);
-  border-radius: 4px;
-  outline: none;
-  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
+/* ========== STEAMPUNK CLOCK ========== */
+.clock-container {
+  width: 280px;
+  height: 280px;
+  border: 6px solid #5a4a3a;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #f5f0e8, #e8dbc1);
+  box-shadow:
+    inset 0 0 25px rgba(0, 0, 0, 0.3),
+    0 15px 40px rgba(0, 0, 0, 0.6),
+    0 0 0 12px #0f0b08,
+    0 0 0 15px #8a6d3b,
+    0 0 0 18px #0f0b08;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin: 0 auto;
+  cursor: grab;
+  user-select: none;
+}
+
+.clock-container:active {
+  cursor: grabbing;
+}
+
+.clock-marker {
+  position: absolute;
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  color: #5a5a5a;
+  width: 35px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.clock-marker.active {
+  font-weight: bold;
+  color: #c5a059;
+  font-size: 14px;
+}
+
+.clock-hand {
+  position: absolute;
+  width: 4px;
+  height: 70px;
+  bottom: 50%;
+  left: 50%;
+  margin-left: -2px;
+  background: linear-gradient(to top, #c5a059, #8a6d3b);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4), 0 0 10px rgba(197, 160, 89, 0.6);
+  transition: transform 0.2s ease;
+  transform-origin: bottom center;
+  border-radius: 10px;
+}
+
+.clock-center {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background: #c5a059;
+  border-radius: 50%;
+  z-index: 5;
+  box-shadow: 0 0 15px rgba(197, 160, 89, 0.9);
+  border: 2px solid #8a6d3b;
+}
+
+/* ========== CARD STYLES ========== */
+.anxiety-card {
+  background: linear-gradient(142deg, #f5f0e8, #e8dbc1);
+  padding: 25px;
+  border: 3px solid #8a6d3b;
+  border-radius: 0;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1), 0 6px 15px rgba(0, 0, 0, 0.3);
+  transform: rotate(0deg);
+}
+
+.anxiety-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 15px;
+  border-bottom: 2px dashed #c5a059;
+  margin-bottom: 20px;
+}
+
+.avatar-circle {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #c5a059, #a68547);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #8a6d3b;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* ========== DASHBOARD CIRCLES ========== */
+.dashboard-circle {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 20px;
+  text-align: center;
+  border: 5px solid #8a6d3b;
+}
+
+.dashboard-circle:hover {
+  transform: scale(1.05);
+}
+
+.dashboard-circle .icon {
+  font-size: 3em;
+  margin-bottom: 10px;
+}
+
+.dashboard-circle .label {
+  font-size: 1.1em;
+  font-weight: bold;
+  font-family: 'Playfair Display', serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ========== LOADING STATE ========== */
+.loading-text {
+  text-align: center;
+  color: #c5a059;
+  font-size: 1.2em;
+  margin-top: 20px;
+  font-family: 'IM Fell English SC', serif;
+  letter-spacing: 2px;
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+/* ========== SCROLLBAR ========== */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1410;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4a3728;
+  border: 2px solid #1a1410;
+  border-radius: 5px;
+}
+
+/* ========== EMPTY STATE ========== */
+.empty-state {
+  background: linear-gradient(135deg, #f5f0e8, #e8dbc1);
+  padding: 40px;
+  text-align: center;
+  border: 2px solid #8a6d3b;
+  border-radius: 2px;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1), 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  .content-area {
+    padding: 80px 20px 60px 20px;
+    transform: none;
+  }
+
+  h1 {
+    font-size: 2.2em;
+  }
+}
+
+/* ================================================================
+   NEW: SHARP LETTER PAPER STYLE (FOR ARCHIVE CONTENT)
+   Use className="letter-paper-sharp" instead of "vintage-paper"
+   for the Temporal Pathways content area.
+   ================================================================
+*/
+.letter-paper-sharp {
+  background-color: #fdfbf7;
+  background-image:
+    repeating-linear-gradient(transparent,
+      transparent 31px,
+      rgba(44, 30, 20, 0.1) 31px,
+      rgba(44, 30, 20, 0.1) 32px);
+  color: #1a0f08;
+
+  border-radius: 0 !important;
+
+  border: 1px solid #2c1e14;
+
+  box-shadow: 10px 10px 0px rgba(44, 30, 20, 0.25);
+
+  position: relative;
+  transition: transform 0.3s ease;
+  overflow: hidden;
+}
+
+.letter-paper-sharp:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 12px 12px 0px rgba(44, 30, 20, 0.3);
+}
+
+.letter-paper-sharp h2,
+.letter-paper-sharp p.vintage-sc {
+  background-color: rgba(253, 251, 247, 0.9);
+  display: inline-block;
+  padding: 2px 10px;
+  box-shadow: 0 0 5px rgba(253, 251, 247, 0.8);
 }
