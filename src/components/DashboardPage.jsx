@@ -5,38 +5,24 @@ const DashboardPage = ({ onNavigate }) => {
 
     return (
         <div style={{
-            width: '100%',
-            textAlign: 'center',
-            marginTop: '60px',
-            minHeight: '100vh',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center'
+            width: '100%', textAlign: 'center', marginTop: '40px',
+            minHeight: '80vh', display: 'flex', flexDirection: 'column',
+            alignItems: 'center', justifyContent: 'center'
         }}>
-            <div style={{
-                maxWidth: '700px',
-                margin: '0 auto',
-                padding: '0 20px'
-            }}>
-                {/* Welcome message */}
-                <div style={{ marginBottom: '50px' }}>
+            <div style={{ maxWidth: '750px', margin: '0 auto', padding: '0 20px' }}>
+
+                {/* Welcome */}
+                <div style={{ marginBottom: '40px' }}>
                     <h2 style={{
-                        fontSize: '2.2em',
-                        color: '#c5a059',
-                        marginBottom: '15px',
+                        fontSize: '2.5em', color: '#8a6d3b', marginBottom: '12px',
                         fontFamily: "'UnifrakturMaguntia', cursive",
-                        letterSpacing: '2px',
-                        textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)'
+                        letterSpacing: '3px', textShadow: '2px 2px 4px rgba(0,0,0,0.2)'
                     }}>
                         Welcome, {userName}
                     </h2>
                     <p style={{
-                        fontSize: '1em',
-                        color: '#8a6d3b',
-                        fontStyle: 'italic',
-                        marginBottom: '10px',
-                        letterSpacing: '1px'
+                        fontSize: '1em', color: '#8a6d3b', fontStyle: 'italic',
+                        letterSpacing: '1px', fontFamily: "'IM Fell English SC', serif"
                     }}>
                         What would you like to do today?
                     </p>
@@ -44,167 +30,50 @@ const DashboardPage = ({ onNavigate }) => {
 
                 {/* Decorative line */}
                 <div style={{
-                    height: '1px',
-                    background: 'linear-gradient(to right, transparent, #c5a059, transparent)',
-                    margin: '30px 0'
-                }}></div>
-
-                {/* Circular buttons */}
-                <div style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    gap: '40px',
-                    justifyContent: 'center',
-                    marginTop: '50px',
-                    flexWrap: 'wrap'
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    gap: '15px', margin: '30px 0'
                 }}>
-                    {/* Share Anxiety Button */}
-                    <button
-                        onClick={() => onNavigate('anxiety')}
-                        style={{
-                            width: '200px',
-                            height: '200px',
-                            borderRadius: '50%',
-                            background: 'linear-gradient(135deg, #c5a059, #a68547)',
-                            color: '#0f0b08',
-                            border: '5px solid #8a6d3b',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            transition: 'all 0.3s ease',
-                            boxShadow: '0 4px 15px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3)',
-                            padding: '20px',
-                            textAlign: 'center'
-                        }}
-                        onMouseEnter={(e) => {
-                            e.target.style.background = 'linear-gradient(135deg, #d4af5a, #c5a059)';
-                            e.target.style.boxShadow = '0 6px 20px rgba(197, 160, 89, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.5)';
-                            e.target.style.transform = 'scale(1.05)';
-                        }}
-                        onMouseLeave={(e) => {
-                            e.target.style.background = 'linear-gradient(135deg, #c5a059, #a68547)';
-                            e.target.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3)';
-                            e.target.style.transform = 'scale(1)';
-                        }}
-                    >
-                        <div style={{
-                            fontSize: '3em',
-                            marginBottom: '10px'
-                        }}>
-                            💭
-                        </div>
-                        <div style={{
-                            fontSize: '1.1em',
-                            fontWeight: 'bold',
-                            fontFamily: "'Playfair Display', serif",
-                            textTransform: 'uppercase',
-                            letterSpacing: '1px'
-                        }}>
-                            Share My Anxiety
-                        </div>
+                    <div style={{ flex: 1, height: '1px', background: 'linear-gradient(to right, transparent, #c5a059)' }} />
+                    <span style={{ color: '#c5a059', fontFamily: "'UnifrakturMaguntia', cursive" }}>✦</span>
+                    <div style={{ flex: 1, height: '1px', background: 'linear-gradient(to left, transparent, #c5a059)' }} />
+                </div>
+
+                {/* Action circles */}
+                <div style={{
+                    display: 'flex', flexDirection: 'row', gap: '35px',
+                    justifyContent: 'center', marginTop: '40px', flexWrap: 'wrap'
+                }}>
+                    {/* Share Anxiety */}
+                    <button onClick={() => onNavigate('anxiety')} className="dashboard-circle" style={{
+                        background: 'linear-gradient(135deg, #c5a059, #a68547)', color: '#0f0b08',
+                        boxShadow: '0 8px 25px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.3)'
+                    }}>
+                        <div className="icon">💭</div>
+                        <div className="label">Share My Anxiety</div>
                     </button>
 
-                    {/* Share Happy Moments Button */}
-                    <button
-                        onClick={() => onNavigate('share_moments')}
-                        style={{
-                            width: '200px',
-                            height: '200px',
-                            borderRadius: '50%',
-                            background: 'linear-gradient(135deg, #f5f0e8, #e8dbc1)',
-                            color: '#8a6d3b',
-                            border: '5px solid #8a6d3b',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            transition: 'all 0.3s ease',
-                            boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)',
-                            padding: '20px',
-                            textAlign: 'center'
-                        }}
-                        onMouseEnter={(e) => {
-                            e.target.style.backgroundColor = '#e8dbc1';
-                            e.target.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.3)';
-                            e.target.style.transform = 'scale(1.05)';
-                        }}
-                        onMouseLeave={(e) => {
-                            e.target.style.backgroundColor = '#f5f0e8';
-                            e.target.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.2)';
-                            e.target.style.transform = 'scale(1)';
-                        }}
-                    >
-                        <div style={{
-                            fontSize: '3em',
-                            marginBottom: '10px'
-                        }}>
-                            ✨
-                        </div>
-                        <div style={{
-                            fontSize: '1.1em',
-                            fontWeight: 'bold',
-                            fontFamily: "'Playfair Display', serif",
-                            textTransform: 'uppercase',
-                            letterSpacing: '1px'
-                        }}>
-                            Share Happy Moment
-                        </div>
+                    {/* Share Happy Moments */}
+                    <button onClick={() => onNavigate('share_moments')} className="dashboard-circle" style={{
+                        background: 'linear-gradient(135deg, #f5f0e8, #e8dbc1)', color: '#8a6d3b',
+                        boxShadow: '0 8px 25px rgba(0,0,0,0.2)'
+                    }}>
+                        <div className="icon">✨</div>
+                        <div className="label">Share Happy Moment</div>
                     </button>
 
-                    {/* Browse Temporium Button */}
-                    <button
-                        onClick={() => onNavigate('browse')}
-                        style={{
-                            width: '200px',
-                            height: '200px',
-                            borderRadius: '50%',
-                            background: 'linear-gradient(135deg, #4a5568, #2d3748)',
-                            color: '#c5a059',
-                            border: '5px solid #c5a059',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            transition: 'all 0.3s ease',
-                            boxShadow: '0 4px 15px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
-                            padding: '20px',
-                            textAlign: 'center'
-                        }}
-                        onMouseEnter={(e) => {
-                            e.target.style.background = 'linear-gradient(135deg, #5a6578, #3d4758)';
-                            e.target.style.boxShadow = '0 6px 20px rgba(197, 160, 89, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)';
-                            e.target.style.transform = 'scale(1.05)';
-                        }}
-                        onMouseLeave={(e) => {
-                            e.target.style.background = 'linear-gradient(135deg, #4a5568, #2d3748)';
-                            e.target.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1)';
-                            e.target.style.transform = 'scale(1)';
-                        }}
-                    >
-                        <div style={{
-                            fontSize: '3em',
-                            marginBottom: '10px'
-                        }}>
-                            🕐
-                        </div>
-                        <div style={{
-                            fontSize: '1.1em',
-                            fontWeight: 'bold',
-                            fontFamily: "'Playfair Display', serif",
-                            textTransform: 'uppercase',
-                            letterSpacing: '1px'
-                        }}>
-                            Browse Temporium
-                        </div>
+                    {/* Browse Temporium */}
+                    <button onClick={() => onNavigate('browse')} className="dashboard-circle" style={{
+                        background: 'linear-gradient(135deg, #3d2b1f, #2c1e14)', color: '#c5a059',
+                        border: '5px solid #c5a059',
+                        boxShadow: '0 8px 25px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1)'
+                    }}>
+                        <div className="icon">🕰</div>
+                        <div className="label">Browse Temporium</div>
                     </button>
                 </div>
 
-                {/* Logout button */}
-                <div style={{ marginTop: '60px' }}>
+                {/* Logout */}
+                <div style={{ marginTop: '50px' }}>
                     <button
                         onClick={() => {
                             localStorage.removeItem('user_nickname');
@@ -214,28 +83,20 @@ const DashboardPage = ({ onNavigate }) => {
                             onNavigate('home');
                         }}
                         style={{
-                            padding: '12px 40px',
-                            fontSize: '0.9em',
-                            fontWeight: 'bold',
-                            backgroundColor: '#f5f0e8',
-                            color: '#8a6d3b',
-                            border: '3px dashed #c5a059',
-                            cursor: 'pointer',
-                            borderRadius: '20px',
-                            transition: 'all 0.3s ease',
-                            textTransform: 'uppercase',
-                            letterSpacing: '1px',
-                            fontFamily: "'Playfair Display', serif"
+                            padding: '12px 40px', fontSize: '0.85em', fontWeight: 'bold',
+                            backgroundColor: '#c9b892', color: '#3a3a3a',
+                            border: 'none', cursor: 'pointer',
+                            borderRadius: '0', transition: '0.3s ease',
+                            textTransform: 'uppercase', letterSpacing: '2px',
+                            fontFamily: "'IM Fell English SC', serif"
                         }}
                         onMouseEnter={(e) => {
-                            e.target.style.borderColor = '#8a6d3b';
-                            e.target.style.color = '#c5a059';
-                            e.target.style.backgroundColor = 'rgba(197, 160, 89, 0.05)';
+                            e.target.style.backgroundColor = '#b5a06f';
+                            e.target.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.3)';
                         }}
                         onMouseLeave={(e) => {
-                            e.target.style.borderColor = '#c5a059';
-                            e.target.style.color = '#8a6d3b';
-                            e.target.style.backgroundColor = '#f5f0e8';
+                            e.target.style.backgroundColor = '#c9b892';
+                            e.target.style.boxShadow = 'none';
                         }}
                     >
                         Logout
