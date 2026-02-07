@@ -47,323 +47,283 @@ const RegisterPage = ({ onNavigate }) => {
       setError('Unable to connect to the server.');
     }
   };
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 p-4 py-8">
-      <div className="max-w-2xl mx-auto bg-white rounded-2xl shadow-xl p-8">
-        <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">Share Your Anxiety</h2>
+    <div style={{ padding: '50px 20px 40px 20px', maxWidth: '900px', margin: '0 auto' }}>
+      <h2 style={{
+        fontSize: '2.2em',
+        textAlign: 'center',
+        marginBottom: '10px',
+        fontFamily: "'UnifrakturMaguntia', cursive",
+        color: '#c5a059',
+        textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)',
+        letterSpacing: '2px'
+      }}>
+        Record Your Confession
+      </h2>
 
-        {error && (
-          <div className="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
-            {error}
-          </div>
-        )}
+      <p style={{
+        textAlign: 'center',
+        color: '#8a6d3b',
+        marginBottom: '30px',
+        fontSize: '0.9em',
+        fontStyle: 'italic',
+        letterSpacing: '1px'
+      }}>
+        PERSPECTIVE: UNKNOWN ARCHIVER
+      </p>
 
-        <div className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label className="block text-gray-700 font-semibold mb-2">Nickname</label>
-              <input
-                type="text"
-                value={formData.nickname}
-                onChange={(e) => setFormData({ ...formData, nickname: e.target.value })}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                placeholder="Your name"
-              />
-            </div>
-
-            {/* Add a password input field */}
-            <div>
-              <label className="block text-gray-700 font-semibold mb-2">Password</label>
-              <input
-                type="password"
-                value={formData.password}
-                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                placeholder="Set a password"
-              />
-            </div>
-
-            <div>
-              <label className="block text-gray-700 font-semibold mb-2">Age</label>
-              <input
-                type="number"
-                value={formData.age}
-                onChange={(e) => setFormData({ ...formData, age: e.target.value })}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-              />
-            </div>
-
-            <div>
-              <label className="block text-gray-700 font-semibold mb-2">Gender</label>
-              <select
-                value={formData.gender}
-                onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-              >
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-          </div>
-
-          <div>
-            <label className="block text-gray-700 font-semibold mb-2">
-              Type of Anxiety <span className="text-sm text-gray-500">(Select up to 3)</span>
-            </label>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-              <label className={`flex items-center p-3 rounded-lg border-2 cursor-pointer transition duration-200 ${formData.tag.includes('Academic') ? 'border-purple-600 bg-purple-50 text-purple-700' : 'border-gray-200 hover:border-purple-200'}`}>
-                <input
-                  type="checkbox"
-                  value="Academic"
-                  checked={formData.tag.includes('Academic')}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    const newTags = formData.tag.includes(value)
-                      ? formData.tag.filter(t => t !== value)
-                      : formData.tag.length < 3
-                        ? [...formData.tag, value]
-                        : formData.tag;
-                    setFormData({ ...formData, tag: newTags });
-                  }}
-                  className="mr-2"
-                />
-                <BookOpen className="w-5 h-5 mr-1" />
-                <span>Academic</span>
-              </label>
-              
-              <label className={`flex items-center p-3 rounded-lg border-2 cursor-pointer transition duration-200 ${formData.tag.includes('Career') ? 'border-purple-600 bg-purple-50 text-purple-700' : 'border-gray-200 hover:border-purple-200'}`}>
-                <input
-                  type="checkbox"
-                  value="Career"
-                  checked={formData.tag.includes('Career')}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    const newTags = formData.tag.includes(value)
-                      ? formData.tag.filter(t => t !== value)
-                      : formData.tag.length < 3
-                        ? [...formData.tag, value]
-                        : formData.tag;
-                    setFormData({ ...formData, tag: newTags });
-                  }}
-                  className="mr-2"
-                />
-                <Briefcase className="w-5 h-5 mr-1" />
-                <span>Career</span>
-              </label>
-
-              <label className={`flex items-center p-3 rounded-lg border-2 cursor-pointer transition duration-200 ${formData.tag.includes('Relationship') ? 'border-purple-600 bg-purple-50 text-purple-700' : 'border-gray-200 hover:border-purple-200'}`}>
-                <input
-                  type="checkbox"
-                  value="Relationship"
-                  checked={formData.tag.includes('Relationship')}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    const newTags = formData.tag.includes(value)
-                      ? formData.tag.filter(t => t !== value)
-                      : formData.tag.length < 3
-                        ? [...formData.tag, value]
-                        : formData.tag;
-                    setFormData({ ...formData, tag: newTags });
-                  }}
-                  className="mr-2"
-                />
-                <Heart className="w-5 h-5 mr-1" />
-                <span>Relationship</span>
-              </label>
-
-              <label className={`flex items-center p-3 rounded-lg border-2 cursor-pointer transition duration-200 ${formData.tag.includes('Life') ? 'border-purple-600 bg-purple-50 text-purple-700' : 'border-gray-200 hover:border-purple-200'}`}>
-                <input
-                  type="checkbox"
-                  value="Life"
-                  checked={formData.tag.includes('Life')}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    const newTags = formData.tag.includes(value)
-                      ? formData.tag.filter(t => t !== value)
-                      : formData.tag.length < 3
-                        ? [...formData.tag, value]
-                        : formData.tag;
-                    setFormData({ ...formData, tag: newTags });
-                  }}
-                  className="mr-2"
-                />
-                <Home className="w-5 h-5 mr-1" />
-                <span>Life</span>
-              </label>
-
-              <label className={`flex items-center p-3 rounded-lg border-2 cursor-pointer transition duration-200 ${formData.tag.includes('Friendship') ? 'border-purple-600 bg-purple-50 text-purple-700' : 'border-gray-200 hover:border-purple-200'}`}>
-                <input
-                  type="checkbox"
-                  value="Friendship"
-                  checked={formData.tag.includes('Friendship')}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    const newTags = formData.tag.includes(value)
-                      ? formData.tag.filter(t => t !== value)
-                      : formData.tag.length < 3
-                        ? [...formData.tag, value]
-                        : formData.tag;
-                    setFormData({ ...formData, tag: newTags });
-                  }}
-                  className="mr-2"
-                />
-                <Users className="w-5 h-5 mr-1" />
-                <span>Friendship</span>
-              </label>
-
-              <label className={`flex items-center p-3 rounded-lg border-2 cursor-pointer transition duration-200 ${formData.tag.includes('Family') ? 'border-purple-600 bg-purple-50 text-purple-700' : 'border-gray-200 hover:border-purple-200'}`}>
-                <input
-                  type="checkbox"
-                  value="Family"
-                  checked={formData.tag.includes('Family')}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    const newTags = formData.tag.includes(value)
-                      ? formData.tag.filter(t => t !== value)
-                      : formData.tag.length < 3
-                        ? [...formData.tag, value]
-                        : formData.tag;
-                    setFormData({ ...formData, tag: newTags });
-                  }}
-                  className="mr-2"
-                />
-                <Home className="w-5 h-5 mr-1" />
-                <span>Family</span>
-              </label>
-
-              <label className={`flex items-center p-3 rounded-lg border-2 cursor-pointer transition duration-200 ${formData.tag.includes('Self-Identity') ? 'border-purple-600 bg-purple-50 text-purple-700' : 'border-gray-200 hover:border-purple-200'}`}>
-                <input
-                  type="checkbox"
-                  value="Self-Identity"
-                  checked={formData.tag.includes('Self-Identity')}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    const newTags = formData.tag.includes(value)
-                      ? formData.tag.filter(t => t !== value)
-                      : formData.tag.length < 3
-                        ? [...formData.tag, value]
-                        : formData.tag;
-                    setFormData({ ...formData, tag: newTags });
-                  }}
-                  className="mr-2"
-                />
-                <User className="w-5 h-5 mr-1" />
-                <span>Self-Identity</span>
-              </label>
-
-              <label className={`flex items-center p-3 rounded-lg border-2 cursor-pointer transition duration-200 ${formData.tag.includes('Health') ? 'border-purple-600 bg-purple-50 text-purple-700' : 'border-gray-200 hover:border-purple-200'}`}>
-                <input
-                  type="checkbox"
-                  value="Health"
-                  checked={formData.tag.includes('Health')}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    const newTags = formData.tag.includes(value)
-                      ? formData.tag.filter(t => t !== value)
-                      : formData.tag.length < 3
-                        ? [...formData.tag, value]
-                        : formData.tag;
-                    setFormData({ ...formData, tag: newTags });
-                  }}
-                  className="mr-2"
-                />
-                <Heart className="w-5 h-5 mr-1" />
-                <span>Health</span>
-              </label>
-
-              <label className={`flex items-center p-3 rounded-lg border-2 cursor-pointer transition duration-200 ${formData.tag.includes('Social Skills') ? 'border-purple-600 bg-purple-50 text-purple-700' : 'border-gray-200 hover:border-purple-200'}`}>
-                <input
-                  type="checkbox"
-                  value="Social Skills"
-                  checked={formData.tag.includes('Social Skills')}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    const newTags = formData.tag.includes(value)
-                      ? formData.tag.filter(t => t !== value)
-                      : formData.tag.length < 3
-                        ? [...formData.tag, value]
-                        : formData.tag;
-                    setFormData({ ...formData, tag: newTags });
-                  }}
-                  className="mr-2"
-                />
-                <MessageCircle className="w-5 h-5 mr-1" />
-                <span>Social Skills</span>
-              </label>
-
-              <label className={`flex items-center p-3 rounded-lg border-2 cursor-pointer transition duration-200 ${formData.tag.includes('Mental Health') ? 'border-purple-600 bg-purple-50 text-purple-700' : 'border-gray-200 hover:border-purple-200'}`}>
-                <input
-                  type="checkbox"
-                  value="Mental Health"
-                  checked={formData.tag.includes('Mental Health')}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    const newTags = formData.tag.includes(value)
-                      ? formData.tag.filter(t => t !== value)
-                      : formData.tag.length < 3
-                        ? [...formData.tag, value]
-                        : formData.tag;
-                    setFormData({ ...formData, tag: newTags });
-                  }}
-                  className="mr-2"
-                />
-                <Brain className="w-5 h-5 mr-1" />
-                <span>Mental Health</span>
-              </label>
-
-              <label className={`flex items-center p-3 rounded-lg border-2 cursor-pointer transition duration-200 ${formData.tag.includes('Money') ? 'border-purple-600 bg-purple-50 text-purple-700' : 'border-gray-200 hover:border-purple-200'}`}>
-                <input
-                  type="checkbox"
-                  value="Money"
-                  checked={formData.tag.includes('Money')}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    const newTags = formData.tag.includes(value)
-                      ? formData.tag.filter(t => t !== value)
-                      : formData.tag.length < 3
-                        ? [...formData.tag, value]
-                        : formData.tag;
-                    setFormData({ ...formData, tag: newTags });
-                  }}
-                  className="mr-2"
-                />
-                <DollarSign className="w-5 h-5 mr-1" />
-                <span>Money</span>
-              </label>
-            </div>
-            {formData.tag.length === 3 && (
-              <p className="mt-2 text-sm text-purple-600">Maximum of 3 types selected</p>
-            )}
-          </div>
-
-          <div>
-            <label className="block text-gray-700 font-semibold mb-2">Tell Us Your Anxiety</label>
-            <textarea
-              value={formData.description}
-              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              placeholder="Share your thoughts here, it's safe..."
-              rows="6"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
-            />
-          </div>
-
-          <div className="flex gap-4">
-            <button
-              onClick={() => onNavigate('home')}
-              className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-3 rounded-lg transition duration-200"
-            >
-              Back
-            </button>
-            <button
-              onClick={handleSubmit}
-              className="flex-1 bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 rounded-lg transition duration-200 shadow-md"
-            >
-              Register & Share
-            </button>
-          </div>
+      {error && (
+        <div style={{
+          marginBottom: '20px',
+          padding: '15px',
+          background: 'linear-gradient(138deg, #8a4d4d, #6b3a3a)',
+          border: '3px solid #a85555',
+          color: '#f0e5d8',
+          borderRadius: '15px 10px 18px 12px',
+          boxShadow: '0 4px 10px rgba(0, 0, 0, 0.3)',
+          transform: 'rotate(-0.3deg)'
+        }}>
+          {error}
         </div>
+      )}
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '20px', marginBottom: '30px' }}>
+        <div>
+          <label style={{ fontFamily: "'Playfair Display', serif", color: '#8a6d3b', fontWeight: '600', marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', fontSize: '0.9em' }}>Name</label>
+          <input
+            type="text"
+            value={formData.nickname}
+            onChange={(e) => setFormData({ ...formData, nickname: e.target.value })}
+            placeholder="Your name"
+            style={{
+              fontFamily: "'Playfair Display', serif",
+              background: 'linear-gradient(135deg, #f5f0e8, #e8dbc1)',
+              border: '2px solid #8a6d3b',
+              color: '#3a3a3a',
+              padding: '10px 15px',
+              borderRadius: '2px',
+              width: '100%',
+              transition: 'all 0.3s ease',
+              boxShadow: 'inset 0 2px 5px rgba(0, 0, 0, 0.1)'
+            }}
+          />
+        </div>
+
+        <div>
+          <label style={{ fontFamily: "'Playfair Display', serif", color: '#8a6d3b', fontWeight: '600', marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', fontSize: '0.9em' }}>Password</label>
+          <input
+            type="password"
+            value={formData.password}
+            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+            placeholder="Set password"
+            style={{
+              fontFamily: "'Playfair Display', serif",
+              background: 'linear-gradient(135deg, #f5f0e8, #e8dbc1)',
+              border: '2px solid #8a6d3b',
+              color: '#3a3a3a',
+              padding: '10px 15px',
+              borderRadius: '2px',
+              width: '100%',
+              transition: 'all 0.3s ease',
+              boxShadow: 'inset 0 2px 5px rgba(0, 0, 0, 0.1)'
+            }}
+          />
+        </div>
+
+        <div>
+          <label style={{ fontFamily: "'Playfair Display', serif", color: '#8a6d3b', fontWeight: '600', marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', fontSize: '0.9em' }}>Age</label>
+          <input
+            type="number"
+            value={formData.age}
+            onChange={(e) => setFormData({ ...formData, age: e.target.value })}
+            placeholder="18"
+            min="10"
+            max="100"
+            style={{
+              fontFamily: "'Playfair Display', serif",
+              background: 'linear-gradient(135deg, #f5f0e8, #e8dbc1)',
+              border: '2px solid #8a6d3b',
+              color: '#3a3a3a',
+              padding: '10px 15px',
+              borderRadius: '2px',
+              width: '100%',
+              transition: 'all 0.3s ease',
+              boxShadow: 'inset 0 2px 5px rgba(0, 0, 0, 0.1)'
+            }}
+          />
+        </div>
+
+        <div>
+          <label style={{ fontFamily: "'Playfair Display', serif", color: '#8a6d3b', fontWeight: '600', marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', fontSize: '0.9em' }}>Gender</label>
+          <select
+            value={formData.gender}
+            onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
+            style={{
+              fontFamily: "'Playfair Display', serif",
+              background: 'linear-gradient(135deg, #f5f0e8, #e8dbc1)',
+              border: '2px solid #8a6d3b',
+              color: '#3a3a3a',
+              padding: '10px 15px',
+              borderRadius: '2px',
+              width: '100%',
+              transition: 'all 0.3s ease',
+              boxShadow: 'inset 0 2px 5px rgba(0, 0, 0, 0.1)',
+              cursor: 'pointer'
+            }}
+          >
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+      </div>
+
+      <div style={{ marginBottom: '30px' }}>
+        <label style={{ fontFamily: "'Playfair Display', serif", color: '#c5a059', fontWeight: '600', marginBottom: '15px', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', fontSize: '1em' }}>
+          Category of Concern <span style={{ fontSize: '0.8em', color: '#8a6d3b' }}>(Select up to 3)</span>
+        </label>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '10px' }}>
+          {['Academic', 'Career', 'Relationship', 'Life', 'Friendship', 'Family', 'Self-Identity', 'Health', 'Social Skills', 'Mental Health', 'Money'].map((anxiety) => {
+            const icons = {
+              'Academic': <BookOpen className="w-4 h-4 mr-2" />,
+              'Career': <Briefcase className="w-4 h-4 mr-2" />,
+              'Relationship': <Heart className="w-4 h-4 mr-2" />,
+              'Life': <Home className="w-4 h-4 mr-2" />,
+              'Friendship': <Users className="w-4 h-4 mr-2" />,
+              'Family': <Home className="w-4 h-4 mr-2" />,
+              'Self-Identity': <User className="w-4 h-4 mr-2" />,
+              'Health': <Heart className="w-4 h-4 mr-2" />,
+              'Social Skills': <MessageCircle className="w-4 h-4 mr-2" />,
+              'Mental Health': <Brain className="w-4 h-4 mr-2" />,
+              'Money': <DollarSign className="w-4 h-4 mr-2" />
+            };
+
+            return (
+              <label key={anxiety} style={{
+                display: 'flex',
+                alignItems: 'center',
+                padding: '10px',
+                borderRadius: '2px',
+                border: `2px solid ${formData.tag.includes(anxiety) ? '#c5a059' : '#b8956a'}`,
+                backgroundColor: formData.tag.includes(anxiety) ? 'rgba(197, 160, 89, 0.25)' : 'transparent',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                color: formData.tag.includes(anxiety) ? '#8a6d3b' : '#5a5a5a',
+                fontSize: '0.85em'
+              }}>
+                <input
+                  type="checkbox"
+                  value={anxiety}
+                  checked={formData.tag.includes(anxiety)}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    const newTags = formData.tag.includes(value)
+                      ? formData.tag.filter(t => t !== value)
+                      : formData.tag.length < 3
+                        ? [...formData.tag, value]
+                        : formData.tag;
+                    setFormData({ ...formData, tag: newTags });
+                  }}
+                  style={{ marginRight: '6px', width: '14px', height: '14px', cursor: 'pointer' }}
+                />
+                {icons[anxiety]}
+                <span>{anxiety}</span>
+              </label>
+            );
+          })}
+        </div>
+        {formData.tag.length === 3 && (
+          <p style={{ marginTop: '12px', fontSize: '0.85em', color: '#8a6d3b', fontStyle: 'italic' }}>
+            Maximum entries recorded
+          </p>
+        )}
+      </div>
+
+      <div style={{ marginBottom: '30px' }}>
+        <label style={{ fontFamily: "'Playfair Display', serif", color: '#c5a059', fontWeight: '600', marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', fontSize: '0.95em' }}>Your Confession</label>
+        <textarea
+          value={formData.description}
+          onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+          placeholder="Let the archive hear your words..."
+          rows="10"
+          style={{
+            fontFamily: "'Playfair Display', serif",
+            background: 'linear-gradient(135deg, #f5f0e8, #e8dbc1)',
+            border: '2px solid #8a6d3b',
+            color: '#3a3a3a',
+            padding: '15px',
+            borderRadius: '2px',
+            width: '100%',
+            transition: 'all 0.3s ease',
+            boxShadow: 'inset 0 2px 5px rgba(0, 0, 0, 0.1)',
+            resize: 'vertical',
+            lineHeight: '1.6'
+          }}
+        />
+      </div>
+
+      <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', marginTop: '40px' }}>
+        <button
+          onClick={() => onNavigate('home')}
+          style={{
+            padding: '12px 40px',
+            fontSize: '0.9em',
+            fontWeight: 'bold',
+            backgroundColor: '#f5f0e8',
+            color: '#8a6d3b',
+            border: '3px solid #8a6d3b',
+            cursor: 'pointer',
+            borderRadius: '18px 12px 20px 15px',
+            transition: 'all 0.3s ease',
+            textTransform: 'uppercase',
+            letterSpacing: '1px',
+            flex: 1,
+            transform: 'rotate(-0.5deg)'
+          }}
+          onMouseEnter={(e) => {
+            e.target.style.backgroundColor = '#e8dbc1';
+            e.target.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.3)';
+            e.target.style.transform = 'translateY(-2px)';
+          }}
+          onMouseLeave={(e) => {
+            e.target.style.backgroundColor = '#f5f0e8';
+            e.target.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.2)';
+            e.target.style.transform = 'translateY(0)';
+          }}
+        >
+          Return
+        </button>
+        <button
+          onClick={handleSubmit}
+          style={{
+            padding: '12px 40px',
+            fontSize: '0.9em',
+            fontWeight: 'bold',
+            background: 'linear-gradient(135deg, #c5a059, #a68547)',
+            color: '#0f0b08',
+            border: '3px solid #8a6d3b',
+            cursor: 'pointer',
+            borderRadius: '15px 20px 12px 18px',
+            transition: 'all 0.3s ease',
+            boxShadow: '0 4px 15px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3)',
+            textTransform: 'uppercase',
+            letterSpacing: '1px',
+            flex: 1,
+            transform: 'rotate(0.5deg)'
+          }}
+          onMouseEnter={(e) => {
+            e.target.style.background = 'linear-gradient(135deg, #d4af5a, #c5a059)';
+            e.target.style.boxShadow = '0 6px 20px rgba(197, 160, 89, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.5)';
+            e.target.style.transform = 'translateY(-2px)';
+          }}
+          onMouseLeave={(e) => {
+            e.target.style.background = 'linear-gradient(135deg, #c5a059, #a68547)';
+            e.target.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3)';
+            e.target.style.transform = 'translateY(0)';
+          }}
+        >
+          Submit Confession
+        </button>
       </div>
     </div>
   );

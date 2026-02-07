@@ -2,36 +2,164 @@ import React from 'react';
 
 const HomePage = ({ onNavigate }) => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center p-4">
-      <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8">
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-800 mb-2">Anxiety Time Machine</h1>
-          <p className="text-gray-600">See what people of different ages are anxious about...</p>
+    <div style={{ 
+      width: '100%',
+      textAlign: 'center',
+      marginTop: '50px'
+    }}>
+      {/* 中心内容区 */}
+      <div style={{
+        maxWidth: '700px',
+        margin: '0 auto'
+      }}>
+        {/* 副标题 */}
+        <div style={{
+          marginBottom: '50px'
+        }}>
+          <h2 style={{
+            fontSize: '1.8em',
+            color: '#c5a059',
+            marginBottom: '15px',
+            fontFamily: "'Playfair Display', serif",
+            letterSpacing: '2px'
+          }}>
+            TEMPORAL DIAL
+          </h2>
+          <p style={{
+            fontSize: '0.95em',
+            color: '#8a6d3b',
+            fontStyle: 'italic',
+            marginBottom: '10px'
+          }}>
+            Witness the recorded echoes of human life.
+          </p>
+          <p style={{
+            fontSize: '0.85em',
+            color: '#b8956a',
+            letterSpacing: '2px'
+          }}>
+            Record Another Confession
+          </p>
         </div>
-        
-        <div className="space-y-4">
+
+        {/* 装饰线 */}
+        <div style={{
+          height: '1px',
+          background: 'linear-gradient(to right, transparent, #c5a059, transparent)',
+          margin: '30px 0'
+        }}></div>
+
+        {/* 按钮组 */}
+        <div style={{ 
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '20px',
+          marginTop: '40px'
+        }}>
           <button
             onClick={() => onNavigate('register')}
-            className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-4 rounded-lg transition duration-200 shadow-md"
+            style={{
+              padding: '12px 40px',
+              fontSize: '0.9em',
+              fontWeight: 'bold',
+              background: 'linear-gradient(135deg, #c5a059, #a68547)',
+              color: '#0f0b08',
+              border: '3px solid #8a6d3b',
+              cursor: 'pointer',
+              borderRadius: '18px 12px 20px 15px',
+              transition: 'all 0.3s ease',
+              boxShadow: '0 4px 15px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3)',
+              textTransform: 'uppercase',
+              letterSpacing: '1px',
+              width: '100%',
+              transform: 'rotate(-0.5deg)'
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.background = 'linear-gradient(135deg, #d4af5a, #c5a059)';
+              e.target.style.boxShadow = '0 6px 20px rgba(197, 160, 89, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.5)';
+              e.target.style.transform = 'translateY(-2px)';
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.background = 'linear-gradient(135deg, #c5a059, #a68547)';
+              e.target.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3)';
+              e.target.style.transform = 'translateY(0)';
+            }}
           >
-            Register New User
+            Begin Recording
           </button>
           
           <button
             onClick={() => onNavigate('login')}
-            className="w-full bg-white hover:bg-gray-50 text-purple-600 font-semibold py-4 rounded-lg border-2 border-purple-600 transition duration-200"
+            style={{
+              padding: '12px 40px',
+              fontSize: '0.9em',
+              fontWeight: 'bold',
+              backgroundColor: '#f5f0e8',
+              color: '#8a6d3b',
+              border: '3px solid #8a6d3b',
+              cursor: 'pointer',
+              borderRadius: '15px 20px 12px 18px',
+              transition: 'all 0.3s ease',
+              boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)',
+              textTransform: 'uppercase',
+              letterSpacing: '1px',
+              width: '100%',
+              transform: 'rotate(0.3deg)'
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.backgroundColor = '#e8dbc1';
+              e.target.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.3)';
+              e.target.style.transform = 'translateY(-2px)';
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.backgroundColor = '#f5f0e8';
+              e.target.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.2)';
+              e.target.style.transform = 'translateY(0)';
+            }}
           >
-            Already Have an Account
+            Access Archives
           </button>
-        </div>
-        
-        <div className="mt-6 text-center">
+
           <button
             onClick={() => onNavigate('browse')}
-            className="text-gray-500 hover:text-gray-700 text-sm underline"
+            style={{
+              padding: '12px 40px',
+              fontSize: '0.85em',
+              color: '#8a6d3b',
+              background: 'transparent',
+              border: '3px dashed #8a6d3b',
+              cursor: 'pointer',
+              borderRadius: '20px 15px 18px 12px',
+              transition: 'all 0.3s ease',
+              textTransform: 'uppercase',
+              letterSpacing: '1px',
+              width: '100%',
+              transform: 'rotate(-0.3deg)'
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.borderColor = '#c5a059';
+              e.target.style.color = '#c5a059';
+              e.target.style.backgroundColor = 'rgba(197, 160, 89, 0.05)';
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.borderColor = '#8a6d3b';
+              e.target.style.color = '#8a6d3b';
+              e.target.style.backgroundColor = 'transparent';
+            }}
           >
-            Just Browse
+            Browse Confessions
           </button>
+        </div>
+
+        {/* 底部装饰文本 */}
+        <div style={{
+          marginTop: '60px',
+          fontSize: '0.8em',
+          color: '#5a5a5a',
+          letterSpacing: '2px',
+          textTransform: 'uppercase'
+        }}>
+          Where Time Meets Truth
         </div>
       </div>
     </div>

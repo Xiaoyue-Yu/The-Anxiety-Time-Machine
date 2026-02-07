@@ -1,8 +1,154 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { User, Heart, BookOpen, Briefcase } from 'lucide-react';
 import { mockData } from '../data/mockData';
 
-const BrowsePage = ({ onNavigate }) => {
+function SteampunkClock({ age = 25, onAgeChange }) {
+  const [isDragging, setIsDragging] = useState(false);
+
+  const handleClockClick = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const clickX = e.clientX - rect.left;
+    const clickY = e.clientY - rect.top;
+    
+    let angle = Math.atan2(clickY - centerY, clickX - centerX) * 180 / Math.PI + 90;
+    if (angle < 0) angle += 360;
+    
+    // Convert angle to age (0° = 10, 360° = 100)
+    const newAge = Math.min(100, Math.max(10, Math.round(10 + (angle / 360) * 90)));
+    if (onAgeChange) onAgeChange(newAge);
+  };
+
+  const handleMouseDown = () => {
+    setIsDragging(true);
+  };
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      if (!isDragging) return;
+      const clock = document.querySelector('.age-selector-clock');
+      if (clock) {
+        const rect = clock.getBoundingClientRect();
+        handleClockClick({ currentTarget: clock, clientX: e.clientX, clientY: e.clientY, target: clock });
+      }
+    };
+
+    const handleMouseUp = () => {
+      setIsDragging(false);
+    };
+
+    if (isDragging) {
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
+    }
+
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [isDragging]);
+
+  // Generate age markers (10, 20, 30, ... 100)
+  const ageMarkers = Array.from({ length: 10 }, (_, i) => 10 + i * 10);
+  
+  // Convert age to degrees (10 = 0°, 100 = 360°)
+  const ageDegrees = ((age - 10) / 90) * 360;
+
+  return (
+    <div 
+      className="age-selector-clock"
+      onClick={handleClockClick}
+      onMouseDown={handleMouseDown}
+      style={{ 
+        cursor: isDragging ? 'grabbing' : 'grab', 
+        userSelect: 'none',
+        width: '250px',
+        height: '250px',
+        border: '5px solid #5a4a3a',
+        borderRadius: '50%',
+        background: 'radial-gradient(circle at 30% 30%, #f5f0e8, #e8dbc1)',
+        boxShadow: 'inset 0 0 25px rgba(0, 0, 0, 0.3), 0 15px 40px rgba(0, 0, 0, 0.6), 0 0 0 12px #0f0b08, 0 0 0 15px #8a6d3b',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'relative',
+        margin: '0 auto'
+      }}
+    >
+      {/* 年龄刻度标记 */}
+      {ageMarkers.map((ageMarker, index) => {
+        const angle = (index * 36 - 90) * Math.PI / 180;
+        const radius = 35;
+        const x = 50 + radius * Math.cos(angle);
+        const y = 50 + radius * Math.sin(angle);
+        return (
+          <div
+            key={ageMarker}
+            style={{
+              position: 'absolute',
+              left: `${x}%`,
+              top: `${y}%`,
+              transform: 'translate(-50%, -50%)',
+              fontSize: '12px',
+              fontWeight: 'bold',
+              color: Math.abs(age - ageMarker) < 8 ? '#c5a059' : '#5a5a5a',
+              fontFamily: "'Playfair Display', serif",
+              width: '25px',
+              textAlign: 'center',
+              transition: 'color 0.3s ease'
+            }}
+          >
+            {ageMarker}
+          </div>
+        );
+      })}
+
+      {/* 年龄指针 */}
+      <div 
+        style={{
+          position: 'absolute',
+          width: '4px',
+          height: '60px',
+          bottom: '50%',
+          left: '50%',
+          marginLeft: '-2px',
+          background: 'linear-gradient(to top, #c5a059, #8a6d3b)',
+          boxShadow: '0 2px 8px rgba(0, 0, 0, 0.4), 0 0 10px rgba(197, 160, 89, 0.6)',
+          transition: 'transform 0.2s ease',
+          transformOrigin: 'bottom center',
+          transform: `rotate(${ageDegrees}deg)`,
+          borderRadius: '10px'
+        }}
+      ></div>
+      
+      {/* 中心圆点 */}
+      <div 
+        style={{
+          position: 'absolute',
+          width: '45px',
+          height: '45px',
+          background: '#c5a059',
+          borderRadius: '50%',
+          zIndex: 5,
+          boxShadow: '0 0 15px rgba(197, 160, 89, 0.9)',
+          border: '2px solid #8a6d3b',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: '16px',
+          fontWeight: 'bold',
+          color: '#0f0b08',
+          fontFamily: "'Playfair Display', serif"
+        }}
+      >
+        {age}
+      </div>
+    </div>
+  );
+}
+
+const BrowsePage = ({ onNavigate, selectedAge, onAgeChange }) => {
   const [age, setAge] = useState(25);
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -13,8 +159,7 @@ const BrowsePage = ({ onNavigate }) => {
 
   const currentAnxiety = filteredAnxieties[currentIndex] || null;
 
-  const handleAgeChange = (e) => {
-    const newAge = parseInt(e.target.value);
+  const handleAgeChange = (newAge) => {
     setAge(newAge);
     setCurrentIndex(0);
   };
@@ -36,115 +181,325 @@ const BrowsePage = ({ onNavigate }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 p-4 py-8">
-      <div className="max-w-3xl mx-auto">
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-800 mb-2">Anxiety Time Machine</h1>
-          <p className="text-gray-600">See what people of different ages are anxious about...</p>
+    <div style={{ padding: '80px 20px 40px 20px', maxWidth: '800px', margin: '0 auto' }}>
+      <div style={{ textAlign: 'center', marginBottom: '30px' }}>
+        <h1 style={{
+          fontSize: '2.2em',
+          fontFamily: "'UnifrakturMaguntia', cursive",
+          color: '#c5a059',
+          marginBottom: '10px',
+          textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)',
+          letterSpacing: '2px'
+        }}>
+          Browse Archives
+        </h1>
+        <p style={{
+          color: '#8a6d3b',
+          fontSize: '0.95em',
+          fontStyle: 'italic',
+          letterSpacing: '1px'
+        }}>
+          Explore temporal records across the ages
+        </p>
+      </div>
+
+      {/* 时钟年龄选择器 */}
+      <div style={{
+        background: 'linear-gradient(138deg, #f5f0e8, #e8dbc1)',
+        padding: '30px',
+        marginBottom: '20px',
+        border: '3px solid #8a6d3b',
+        borderRadius: '20px 15px 25px 18px',
+        boxShadow: 'inset 0 2px 5px rgba(0, 0, 0, 0.1), 0 4px 15px rgba(0, 0, 0, 0.2)',
+        transform: 'rotate(-0.2deg)'
+      }}>
+        <div style={{
+          textAlign: 'center',
+          marginBottom: '25px'
+        }}>
+          <span style={{
+            color: '#8a6d3b',
+            fontWeight: '600',
+            fontSize: '1em',
+            textTransform: 'uppercase',
+            letterSpacing: '2px',
+            fontFamily: "'Playfair Display', serif"
+          }}>
+            Select Age
+          </span>
         </div>
+        
+        <SteampunkClock age={age} onAgeChange={handleAgeChange} />
 
-        <div className="bg-white rounded-2xl shadow-xl p-8 mb-6">
-          <div className="flex items-center justify-between mb-4">
-            <span className="text-gray-600 font-semibold">Select Age Range:</span>
-            <span className="text-3xl font-bold text-purple-600">{age} years old</span>
+        <div style={{
+          textAlign: 'center',
+          marginTop: '20px',
+          fontSize: '0.85em',
+          color: '#8a6d3b',
+          fontStyle: 'italic'
+        }}>
+          Click or drag the dial to select age
+        </div>
+      </div>
+
+      {currentAnxiety ? (
+        <div style={{
+          background: 'linear-gradient(142deg, #f5f0e8, #e8dbc1)',
+          padding: '25px',
+          marginBottom: '20px',
+          border: '3px solid #8a6d3b',
+          borderRadius: '18px 22px 15px 20px',
+          boxShadow: 'inset 0 2px 5px rgba(0, 0, 0, 0.1), 0 4px 15px rgba(0, 0, 0, 0.2)',
+          transform: 'rotate(0.3deg)'
+        }}>
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            marginBottom: '20px',
+            paddingBottom: '15px',
+            borderBottom: '2px dashed #c5a059'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+              <div style={{
+                width: '50px',
+                height: '50px',
+                background: 'linear-gradient(135deg, #c5a059, #a68547)',
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                border: '2px solid #8a6d3b',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.2)'
+              }}>
+                <User style={{ width: '26px', height: '26px', color: '#0f0b08' }} />
+              </div>
+              <div>
+                <h3 style={{
+                  fontWeight: 'bold',
+                  color: '#0f0b08',
+                  fontSize: '1.1em',
+                  fontFamily: "'Playfair Display', serif",
+                  marginBottom: '3px'
+                }}>
+                  {currentAnxiety.nickname}
+                </h3>
+                <p style={{
+                  fontSize: '0.85em',
+                  color: '#8a6d3b'
+                }}>
+                  {currentAnxiety.age} years · {
+                    currentAnxiety.gender === 'male' ? 'Male' : 
+                    currentAnxiety.gender === 'female' ? 'Female' : 'Other'
+                  }
+                </p>
+              </div>
+            </div>
+            
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              background: 'linear-gradient(135deg, #c5a059, #a68547)',
+              padding: '8px 15px',
+              borderRadius: '20px',
+              border: '1px solid #8a6d3b'
+            }}>
+              {currentAnxiety.tag === 'Academic' ? 
+                <BookOpen style={{ width: '16px', height: '16px', color: '#0f0b08' }} /> : 
+                <Briefcase style={{ width: '16px', height: '16px', color: '#0f0b08' }} />
+              }
+              <span style={{
+                fontSize: '0.85em',
+                fontWeight: 'bold',
+                color: '#0f0b08',
+                fontFamily: "'Playfair Display', serif"
+              }}>
+                {currentAnxiety.tag}
+              </span>
+            </div>
           </div>
-          
-          <input
-            type="range"
-            min="10"
-            max="100"
-            step="5"
-            value={age}
-            onChange={handleAgeChange}
-            className="w-full h-2 bg-purple-200 rounded-lg appearance-none cursor-pointer"
-          />
-          
-          <div className="flex justify-between text-xs text-gray-500 mt-2">
-            <span>10</span>
-            <span>30</span>
-            <span>50</span>
-            <span>70</span>
-            <span>100</span>
+
+          <div style={{ marginBottom: '20px' }}>
+            <p style={{
+              color: '#3a3a3a',
+              lineHeight: '1.6',
+              fontSize: '0.95em',
+              fontFamily: "'Playfair Display', serif"
+            }}>
+              {currentAnxiety.description}
+            </p>
+          </div>
+
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            marginTop: '20px'
+          }}>
+            <button
+              onClick={handlePrev}
+              style={{
+                padding: '10px 20px',
+                background: '#f5f0e8',
+                color: '#8a6d3b',
+                border: '3px solid #8a6d3b',
+                cursor: 'pointer',
+                borderRadius: '12px 18px 10px 15px',
+                fontWeight: 'bold',
+                fontSize: '0.85em',
+                transition: 'all 0.3s ease',
+                textTransform: 'uppercase',
+                letterSpacing: '0.5px',
+                transform: 'rotate(-0.5deg)'
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.backgroundColor = '#e8dbc1';
+                e.target.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.2)';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.backgroundColor = '#f5f0e8';
+                e.target.style.boxShadow = 'none';
+              }}
+            >
+              Previous
+            </button>
+            
+            <div style={{
+              fontSize: '0.85em',
+              color: '#8a6d3b',
+              fontWeight: '600'
+            }}>
+              {currentIndex + 1} / {filteredAnxieties.length}
+            </div>
+            
+            <button
+              onClick={handleNext}
+              style={{
+                padding: '10px 20px',
+                background: 'linear-gradient(135deg, #c5a059, #a68547)',
+                color: '#0f0b08',
+                border: '3px solid #8a6d3b',
+                cursor: 'pointer',
+                borderRadius: '15px 10px 18px 12px',
+                fontWeight: 'bold',
+                fontSize: '0.85em',
+                transition: 'all 0.3s ease',
+                boxShadow: '0 4px 15px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3)',
+                textTransform: 'uppercase',
+                letterSpacing: '0.5px',
+                transform: 'rotate(0.5deg)'
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.background = 'linear-gradient(135deg, #d4af5a, #c5a059)';
+                e.target.style.boxShadow = '0 6px 20px rgba(197, 160, 89, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.5)';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.background = 'linear-gradient(135deg, #c5a059, #a68547)';
+                e.target.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3)';
+              }}
+            >
+              Next
+            </button>
           </div>
         </div>
-
-        {currentAnxiety ? (
-          <div className="bg-white rounded-2xl shadow-xl p-8 mb-6">
-            <div className="flex items-center justify-between mb-6 pb-4 border-b">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
-                  <User className="w-6 h-6 text-purple-600" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-gray-800">{currentAnxiety.nickname}</h3>
-                  <p className="text-sm text-gray-500">
-                    {currentAnxiety.age} years old · {
-                      currentAnxiety.gender === 'male' ? 'Male' : 
-                      currentAnxiety.gender === 'female' ? 'Female' : 'Other'
-                    }
-                  </p>
-                </div>
-              </div>
-              
-              <div className="flex items-center gap-2 bg-purple-100 px-4 py-2 rounded-full">
-                {currentAnxiety.tag === 'Academic' ? 
-                  <BookOpen className="w-4 h-4 text-purple-600" /> : 
-                  <Briefcase className="w-4 h-4 text-purple-600" />
-                }
-                <span className="text-sm font-semibold text-purple-600">{currentAnxiety.tag}</span>
-              </div>
-            </div>
-
-            <div className="mb-6">
-              <p className="text-gray-700 leading-relaxed text-lg">
-                {currentAnxiety.description}
-              </p>
-            </div>
-
-            <div className="flex items-center justify-between">
-              <button
-                onClick={handlePrev}
-                className="px-6 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition duration-200"
-              >
-                Previous
-              </button>
-              
-              <div className="text-sm text-gray-500">
-                {currentIndex + 1} / {filteredAnxieties.length}
-              </div>
-              
-              <button
-                onClick={handleNext}
-                className="px-6 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition duration-200"
-              >
-                Next
-              </button>
-            </div>
+      ) : (
+        <div style={{
+          background: 'linear-gradient(135deg, #f5f0e8, #e8dbc1)',
+          padding: '40px',
+          textAlign: 'center',
+          border: '2px solid #8a6d3b',
+          borderRadius: '2px',
+          boxShadow: 'inset 0 2px 5px rgba(0, 0, 0, 0.1), 0 4px 15px rgba(0, 0, 0, 0.2)'
+        }}>
+          <div style={{
+            width: '60px',
+            height: '60px',
+            background: '#c5a059',
+            borderRadius: '50%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            margin: '0 auto 20px',
+            border: '2px solid #8a6d3b'
+          }}>
+            <Heart style={{ width: '32px', height: '32px', color: '#f5f0e8' }} />
           </div>
-        ) : (
-          <div className="bg-white rounded-2xl shadow-xl p-12 text-center">
-            <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Heart className="w-10 h-10 text-gray-400" />
-            </div>
-            <h3 className="text-xl font-bold text-gray-800 mb-2">No anxieties for this age range</h3>
-            <p className="text-gray-600">Try a different age range~</p>
-          </div>
-        )}
-
-        <div className="flex gap-4">
-          <button
-            onClick={() => onNavigate('home')}
-            className="flex-1 bg-white hover:bg-gray-50 text-gray-700 font-semibold py-3 rounded-lg border-2 border-gray-300 transition duration-200"
-          >
-            Back to Home
-          </button>
-          <button
-            onClick={() => onNavigate('register')}
-            className="flex-1 bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 rounded-lg transition duration-200 shadow-md"
-          >
-            Share My Anxiety
-          </button>
+          <h3 style={{
+            fontSize: '1.1em',
+            fontWeight: 'bold',
+            color: '#0f0b08',
+            marginBottom: '10px',
+            fontFamily: "'Playfair Display', serif"
+          }}>
+            No records found
+          </h3>
+          <p style={{ color: '#8a6d3b', fontSize: '0.9em' }}>
+            Try adjusting the age range
+          </p>
         </div>
+      )}
+
+      <div style={{ display: 'flex', gap: '15px', marginTop: '30px' }}>
+        <button
+          onClick={() => onNavigate('home')}
+          style={{
+            flex: 1,
+            padding: '12px 20px',
+            background: '#f5f0e8',
+            color: '#8a6d3b',
+            border: '3px dashed #c5a059',
+            cursor: 'pointer',
+            borderRadius: '18px 12px 20px 15px',
+            fontWeight: 'bold',
+            fontSize: '0.9em',
+            transition: 'all 0.3s ease',
+            textTransform: 'uppercase',
+            letterSpacing: '1px',
+            fontFamily: "'Playfair Display', serif",
+            transform: 'rotate(-0.4deg)'
+          }}
+          onMouseEnter={(e) => {
+            e.target.style.backgroundColor = '#e8dbc1';
+            e.target.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.2)';
+          }}
+          onMouseLeave={(e) => {
+            e.target.style.backgroundColor = '#f5f0e8';
+            e.target.style.boxShadow = 'none';
+          }}
+        >
+          Return Home
+        </button>
+        <button
+          onClick={() => onNavigate('register')}
+          style={{
+            flex: 1,
+            padding: '12px 20px',
+            background: 'linear-gradient(135deg, #c5a059, #a68547)',
+            color: '#0f0b08',
+            border: '3px solid #8a6d3b',
+            cursor: 'pointer',
+            borderRadius: '15px 20px 12px 18px',
+            fontWeight: 'bold',
+            fontSize: '0.9em',
+            transition: 'all 0.3s ease',
+            boxShadow: '0 4px 15px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3)',
+            textTransform: 'uppercase',
+            letterSpacing: '1px',
+            fontFamily: "'Playfair Display', serif",
+            transform: 'rotate(0.4deg)'
+          }}
+          onMouseEnter={(e) => {
+            e.target.style.background = 'linear-gradient(135deg, #d4af5a, #c5a059)';
+            e.target.style.boxShadow = '0 6px 20px rgba(197, 160, 89, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.5)';
+          }}
+          onMouseLeave={(e) => {
+            e.target.style.background = 'linear-gradient(135deg, #c5a059, #a68547)';
+            e.target.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3)';
+          }}
+        >
+          Share Your Story
+        </button>
       </div>
     </div>
   );
