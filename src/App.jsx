@@ -20,21 +20,33 @@ function App() {
   };
 
   return (
-    <div>
-      {currentPage === 'home' && <HomePage onNavigate={setCurrentPage} />}
-      {currentPage === 'register' && (
-        <RegisterPage 
-          onNavigate={setCurrentPage} 
-          onRegister={handleRegister}
-        />
-      )}
-      {currentPage === 'login' && (
-        <LoginPage 
-          onNavigate={setCurrentPage} 
-          onLogin={handleLogin}
-        />
-      )}
-      {currentPage === 'browse' && <BrowsePage onNavigate={setCurrentPage} />}
+    <div className="app-container">
+      {/* 背景装饰光晕 */}
+      <div className="cosmic-glow"></div>
+      <div className="cosmic-glow"></div>
+
+      {/* 内容区域 */}
+      <div className="content-area">
+        {/* 装饰边框 */}
+        <div className="ornament-top">ESTABLISHED 1892</div>
+        <div className="ornament-bottom"></div>
+
+        {/* 页面内容 */}
+        {currentPage === 'home' && <HomePage onNavigate={setCurrentPage} />}
+        {currentPage === 'register' && (
+          <RegisterPage 
+            onNavigate={setCurrentPage} 
+            onRegister={handleRegister}
+          />
+        )}
+        {currentPage === 'login' && (
+          <LoginPage 
+            onNavigate={setCurrentPage} 
+            onLogin={handleLogin}
+          />
+        )}
+        {currentPage === 'browse' && <BrowsePage onNavigate={setCurrentPage} />}
+      </div>
     </div>
   );
 }
