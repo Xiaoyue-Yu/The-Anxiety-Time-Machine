@@ -50,8 +50,8 @@ def import_data():
                 # Insert new data
                 for index, row in df.iterrows():
                     insert_sql = text("""
-                        INSERT INTO users (nickname, age, password, gender, tag, description) 
-                        VALUES (:nick, :age, :pwd, :gen, :tag, :desc)
+                        INSERT INTO users (nickname, age, password, gender, tag, description, message_id) 
+                        VALUES (:nick, :age, :pwd, :gen, :tag, :desc, :message_id)
                     """)
                     
                     conn.execute(insert_sql, {
@@ -60,7 +60,8 @@ def import_data():
                         "pwd": str(row['password']), 
                         "gen": row['gender'],
                         "tag": row['tag'],          
-                        "desc": row['description']
+                        "desc": row['description'],
+                        "message_id": row['message_id']
                     })
 
                 trans.commit()
