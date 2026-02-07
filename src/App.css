@@ -8,29 +8,30 @@
 }
 
 body {
-  background-color: #2b1f17;
+  background-color: #0f0b08;
   background-image: 
     repeating-linear-gradient(
-      45deg,
+      0deg,
       transparent,
-      transparent 3px,
-      rgba(139, 90, 43, 0.05) 3px,
-      rgba(139, 90, 43, 0.05) 6px
+      transparent 2px,
+      rgba(44, 30, 20, 0.1) 2px,
+      rgba(44, 30, 20, 0.1) 4px
     ),
     repeating-linear-gradient(
-      -45deg,
+      90deg,
       transparent,
-      transparent 3px,
-      rgba(139, 90, 43, 0.05) 3px,
-      rgba(139, 90, 43, 0.05) 6px
+      transparent 2px,
+      rgba(44, 30, 20, 0.1) 2px,
+      rgba(44, 30, 20, 0.1) 4px
     ),
-    radial-gradient(circle at 20% 80%, rgba(139, 90, 43, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(197, 160, 89, 0.1) 0%, transparent 50%);
+    radial-gradient(ellipse at 30% 60%, rgba(192, 160, 89, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 40%, rgba(212, 196, 168, 0.05) 0%, transparent 60%);
   font-family: 'Playfair Display', 'IM Fell English SC', Georgia, serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #3a3a3a;
+  color: #d4c4a8;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 /* 主容器装饰 */
@@ -68,36 +69,35 @@ body {
   50% { opacity: 1; }
 }
 
-/* 内容区域 - 羊皮纸风格 */
+/* 内容区域 - 羊皮纸风格（古纸黄）*/
 .content-area {
   position: relative;
   z-index: 1;
-  background-color: #d4c4a8;
+  background-color: #e8dbc1;
   background-image: 
     repeating-linear-gradient(
-      92deg,
+      88deg,
       transparent,
-      transparent 1px,
-      rgba(139, 119, 101, 0.04) 1px,
-      rgba(139, 119, 101, 0.04) 2px
+      transparent 2px,
+      rgba(44, 30, 20, 0.03) 2px,
+      rgba(44, 30, 20, 0.03) 4px
     ),
     repeating-linear-gradient(
-      2deg,
+      8deg,
       transparent,
-      transparent 1px,
-      rgba(139, 119, 101, 0.04) 1px,
-      rgba(139, 119, 101, 0.04) 2px
+      transparent 2px,
+      rgba(44, 30, 20, 0.03) 2px,
+      rgba(44, 30, 20, 0.03) 4px
     ),
-    radial-gradient(ellipse 2px 2px at 15% 25%, rgba(101, 67, 33, 0.15), transparent 3px),
-    radial-gradient(ellipse 1px 1px at 65% 65%, rgba(101, 67, 33, 0.12), transparent 2px),
-    radial-gradient(ellipse 2px 1px at 85% 15%, rgba(101, 67, 33, 0.1), transparent 2px),
-    radial-gradient(ellipse at 50% 50%, #ddc9ad 0%, #d4c4a8 100%);
+    radial-gradient(ellipse 3px 2px at 18% 32%, rgba(101, 67, 33, 0.12), transparent 4px),
+    radial-gradient(ellipse 2px 3px at 68% 72%, rgba(101, 67, 33, 0.1), transparent 3px),
+    radial-gradient(ellipse 2px 2px at 85% 15%, rgba(101, 67, 33, 0.08), transparent 3px),
+    radial-gradient(ellipse at 50% 50%, #f0deb5 0%, #e8dbc1 100%);
   box-shadow: 
-    inset 0 0 150px rgba(43, 31, 23, 0.4),
-    0 0 120px rgba(43, 31, 23, 0.9),
-    0 25px 70px rgba(0, 0, 0, 0.7);
-  border: 4px solid;
-  border-color: #8a6d3b #7a5d2b #8a6d3b #9a7d4b;
+    inset 0 0 180px rgba(44, 30, 20, 0.35),
+    0 0 100px rgba(15, 11, 8, 0.85),
+    0 30px 80px rgba(0, 0, 0, 0.75);
+  border: 3px solid #3d2b1f;
   border-radius: 8px 12px 6px 10px;
   position: relative;
   min-height: 100vh;

@@ -202,7 +202,7 @@ const BrowsePage = ({ onNavigate, selectedAge, onAgeChange }) => {
           textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)',
           letterSpacing: '2px'
         }}>
-          Browse Archives
+          The Archive: Temporal Pathways
         </h1>
         <p style={{
           color: '#8a6d3b',
@@ -210,7 +210,7 @@ const BrowsePage = ({ onNavigate, selectedAge, onAgeChange }) => {
           fontStyle: 'italic',
           letterSpacing: '1px'
         }}>
-          Explore temporal records across the ages
+          Journey through the confessions of souls across time
         </p>
       </div>
 
@@ -236,7 +236,7 @@ const BrowsePage = ({ onNavigate, selectedAge, onAgeChange }) => {
             letterSpacing: '2px',
             fontFamily: "'Playfair Display', serif"
           }}>
-            Select Age
+            Turn the Temporal Dial
           </span>
         </div>
 
@@ -249,7 +249,7 @@ const BrowsePage = ({ onNavigate, selectedAge, onAgeChange }) => {
           color: '#8a6d3b',
           fontStyle: 'italic'
         }}>
-          Click or drag the dial to select age
+          Engage with the dial to navigate temporal epochs
         </div>
       </div>
 
@@ -298,7 +298,7 @@ const BrowsePage = ({ onNavigate, selectedAge, onAgeChange }) => {
                   fontFamily: "'Playfair Display', serif",
                   marginBottom: '3px'
                 }}>
-                  {currentAnxiety.nickname}
+                  {currentAnxiety.pseudonym}
                 </h3>
                 <p style={{
                   fontSize: '0.85em',
@@ -331,7 +331,7 @@ const BrowsePage = ({ onNavigate, selectedAge, onAgeChange }) => {
                 color: '#0f0b08',
                 fontFamily: "'Playfair Display', serif"
               }}>
-                {currentAnxiety.tag}
+                {currentAnxiety.tags && currentAnxiety.tags.length > 0 ? currentAnxiety.tags[0] : 'Unsordered'}
               </span>
             </div>
           </div>

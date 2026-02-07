@@ -17,28 +17,32 @@ const HomePage = ({ onNavigate }) => {
           marginBottom: '50px'
         }}>
           <h2 style={{
-            fontSize: '1.8em',
+            fontSize: '2.2em',
             color: '#c5a059',
             marginBottom: '15px',
-            fontFamily: "'Playfair Display', serif",
-            letterSpacing: '2px'
+            fontFamily: "'UnifrakturMaguntia', cursive",
+            letterSpacing: '2px',
+            textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)'
           }}>
-            TEMPORAL DIAL
+            The Anxiety Temporium
           </h2>
           <p style={{
-            fontSize: '0.95em',
+            fontSize: '1em',
             color: '#8a6d3b',
             fontStyle: 'italic',
-            marginBottom: '10px'
+            marginBottom: '10px',
+            letterSpacing: '1px'
           }}>
-            Witness the recorded echoes of human life.
+            A Sanctuary for Temporal Confessions
           </p>
           <p style={{
-            fontSize: '0.85em',
-            color: '#b8956a',
-            letterSpacing: '2px'
+            fontSize: '0.9em',
+            color: '#d4c4a8',
+            letterSpacing: '1px',
+            lineHeight: '1.6'
           }}>
-            Record Another Confession
+            Within these hallowed chambers, time itself becomes witness to your deepest solicitudes.<br />
+            The great temporal dial awaits your story.
           </p>
         </div>
 
@@ -85,7 +89,7 @@ const HomePage = ({ onNavigate }) => {
               e.target.style.transform = 'translateY(0)';
             }}
           >
-            Begin Recording
+            New Soul: Sign the Registry
           </button>
           
           <button
@@ -117,7 +121,7 @@ const HomePage = ({ onNavigate }) => {
               e.target.style.transform = 'translateY(0)';
             }}
           >
-            Access Archives
+            Returning Soul: Access Records
           </button>
 
           <button
@@ -147,7 +151,7 @@ const HomePage = ({ onNavigate }) => {
               e.target.style.backgroundColor = 'transparent';
             }}
           >
-            Browse Confessions
+            The Archive: Browse Souls
           </button>
         </div>
 
