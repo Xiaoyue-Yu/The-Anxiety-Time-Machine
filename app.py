@@ -42,24 +42,30 @@ def register():
         password = data.get('password')
         age = data.get('age')
         gender = data.get('gender')
-        tag = data.get('tag')
-        description = data.get('description')
 
         conn = get_db_connection()
         cursor = conn.cursor()
         
         # Insert user into database
         query = """
-            INSERT INTO users (nickname, password, age, gender, tag, description) 
-            VALUES (%s, %s, %s, %s, %s, %s)
+            INSERT INTO users (nickname, password, age, gender) 
+            VALUES (%s, %s, %s, %s)
         """
-        cursor.execute(query, (nickname, password, age, gender, tag, description))
-        
+        cursor.execute(query, (nickname, password, age, gender))
         conn.commit()
+        
+        # Get the ID of the newly created user
+        user_id = cursor.lastrowid
+        
         cursor.close()
         conn.close()
 
-        return jsonify({"message": "Registration successful!", "status": "success"}), 201
+        return jsonify({
+            "message": "Registration successful!", 
+            "status": "success", 
+            "user_id": user_id,
+            "user_nickname": nickname
+        }), 201
 
     except Exception as e:
         print("Register Error:", e)
@@ -100,7 +106,41 @@ def login():
         return jsonify({"message": "Internal server error", "error": str(e)}), 500
 
 # ========================================================
-# 🃏 Get All Cards Route
+# 💭 Post Anxiety Message Route
+# ========================================================
+@app.route('/api/post_anxiety', methods=['POST'])
+def post_anxiety():
+    try:
+        data = request.json
+        user_id = data.get('user_id')
+        description = data.get('description')
+
+        # Validate required fields
+        if not user_id or not description:
+            return jsonify({"message": "Missing required fields: user_id or description"}), 400
+
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        
+        # Update user's anxiety message (description field)
+        query = """
+            UPDATE users SET description = %s 
+            WHERE id = %s
+        """
+        cursor.execute(query, (description, user_id))
+        
+        conn.commit()
+        cursor.close()
+        conn.close()
+
+        return jsonify({"message": "Anxiety message posted successfully!", "status": "success"}), 201
+
+    except Exception as e:
+        print("Post Anxiety Error:", e)
+        return jsonify({"message": "Failed to post anxiety message.", "error": str(e)}), 500
+
+# ========================================================
+# 🃏 Get All Anxiety Cards Route
 # ========================================================
 @app.route('/api/get_all_cards', methods=['GET'])
 def get_all_cards():
@@ -108,9 +148,8 @@ def get_all_cards():
         conn = get_db_connection()
         cursor = conn.cursor()
         
-        # Fetch relevant fields. 
-        # Note: Renaming 'description' to 'content' for Frontend compatibility if needed
-        query = "SELECT id, nickname, age, tag, description as content, gender FROM users"
+        # Fetch users with anxiety messages
+        query = "SELECT id, nickname, age, gender, description as content FROM users WHERE description IS NOT NULL"
         cursor.execute(query)
         cards = cursor.fetchall()
         

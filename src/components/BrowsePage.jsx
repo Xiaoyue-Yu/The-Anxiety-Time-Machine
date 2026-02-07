@@ -1,8 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { User, Heart, BookOpen, Briefcase } from 'lucide-react';
+import { User, Heart } from 'lucide-react';
 
 function SteampunkClock({ age = 25, onAgeChange }) {
   const [isDragging, setIsDragging] = useState(false);
+
+  // Convert age to age range (0-9, 10-19, 20-29, etc)
+  const getAgeRange = (value) => {
+    return Math.floor(value / 10) * 10;
+  };
+
+  // Convert age range back to center value for display
+  const getRangeDisplay = (rangeStart) => {
+    if (rangeStart < 10) return '0-9';
+    if (rangeStart >= 100) return '90-99';
+    return `${rangeStart}-${rangeStart + 9}`;
+  };
 
   const handleClockClick = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -14,9 +26,11 @@ function SteampunkClock({ age = 25, onAgeChange }) {
     let angle = Math.atan2(clickY - centerY, clickX - centerX) * 180 / Math.PI + 90;
     if (angle < 0) angle += 360;
 
-    // Convert angle to age (0° = 10, 360° = 100)
-    const newAge = Math.min(100, Math.max(10, Math.round(10 + (angle / 360) * 90)));
-    if (onAgeChange) onAgeChange(newAge);
+    // Convert angle to age range (0-99 total ages, mapped to 9 ranges of 10 years each)
+    const newAge = Math.min(99, Math.max(0, Math.round((angle / 360) * 99)));
+    const ageRange = getAgeRange(newAge);
+    const centerOfRange = ageRange + 5;
+    if (onAgeChange) onAgeChange(centerOfRange);
   };
 
   const handleMouseDown = () => {
@@ -47,8 +61,22 @@ function SteampunkClock({ age = 25, onAgeChange }) {
     };
   }, [isDragging]);
 
-  const ageMarkers = Array.from({ length: 10 }, (_, i) => 10 + i * 10);
-  const ageDegrees = ((age - 10) / 90) * 360;
+  // Age range markers (10-year increments)
+  const ageRangeMarkers = [
+    { range: 0, label: '0' },
+    { range: 10, label: '10' },
+    { range: 20, label: '20' },
+    { range: 30, label: '30' },
+    { range: 40, label: '40' },
+    { range: 50, label: '50' },
+    { range: 60, label: '60' },
+    { range: 70, label: '70' },
+    { range: 80, label: '80' },
+    { range: 90, label: '90' }
+  ];
+
+  const currentRange = getAgeRange(age);
+  const ageDegrees = ((age - 0) / 99) * 360;
 
   return (
     <div
@@ -71,29 +99,30 @@ function SteampunkClock({ age = 25, onAgeChange }) {
         margin: '0 auto'
       }}
     >
-      {ageMarkers.map((ageMarker, index) => {
+      {ageRangeMarkers.map((marker, index) => {
         const angle = (index * 36 - 90) * Math.PI / 180;
         const radius = 35;
         const x = 50 + radius * Math.cos(angle);
         const y = 50 + radius * Math.sin(angle);
+        const isNear = Math.abs(currentRange - marker.range) < 15;
         return (
           <div
-            key={ageMarker}
+            key={marker.label}
             style={{
               position: 'absolute',
               left: `${x}%`,
               top: `${y}%`,
               transform: 'translate(-50%, -50%)',
-              fontSize: '12px',
-              fontWeight: 'bold',
-              color: Math.abs(age - ageMarker) < 8 ? '#c5a059' : '#5a5a5a',
+              fontSize: isNear ? '13px' : '11px',
+              fontWeight: isNear ? 'bold' : '600',
+              color: isNear ? '#c5a059' : '#5a5a5a',
               fontFamily: "'Playfair Display', serif",
-              width: '25px',
+              width: '35px',
               textAlign: 'center',
-              transition: 'color 0.3s ease'
+              transition: 'all 0.3s ease'
             }}
           >
-            {ageMarker}
+            {marker.label}
           </div>
         );
       })}
@@ -118,23 +147,15 @@ function SteampunkClock({ age = 25, onAgeChange }) {
       <div
         style={{
           position: 'absolute',
-          width: '45px',
-          height: '45px',
+          width: '14px',
+          height: '14px',
           background: '#c5a059',
           borderRadius: '50%',
           zIndex: 5,
           boxShadow: '0 0 15px rgba(197, 160, 89, 0.9)',
-          border: '2px solid #8a6d3b',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          fontSize: '16px',
-          fontWeight: 'bold',
-          color: '#0f0b08',
-          fontFamily: "'Playfair Display', serif"
+          border: '2px solid #8a6d3b'
         }}
       >
-        {age}
       </div>
     </div>
   );
@@ -164,9 +185,10 @@ const BrowsePage = ({ onNavigate, selectedAge, onAgeChange }) => {
       });
   }, []);
 
-  const filteredAnxieties = anxieties.filter(item =>
-    Math.abs(item.age - age) <= 3
-  );
+  const filteredAnxieties = anxieties.filter(item => {
+    const ageRange = Math.floor(age / 10) * 10;
+    return item.age >= ageRange && item.age < ageRange + 10;
+  });
 
   const currentAnxiety = filteredAnxieties[currentIndex] || null;
 
@@ -298,7 +320,7 @@ const BrowsePage = ({ onNavigate, selectedAge, onAgeChange }) => {
                   fontFamily: "'Playfair Display', serif",
                   marginBottom: '3px'
                 }}>
-                  {currentAnxiety.pseudonym}
+                  {currentAnxiety.nickname}
                 </h3>
                 <p style={{
                   fontSize: '0.85em',
@@ -312,28 +334,6 @@ const BrowsePage = ({ onNavigate, selectedAge, onAgeChange }) => {
               </div>
             </div>
 
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              background: 'linear-gradient(135deg, #c5a059, #a68547)',
-              padding: '8px 15px',
-              borderRadius: '20px',
-              border: '1px solid #8a6d3b'
-            }}>
-              {currentAnxiety.tag === 'Academic' ?
-                <BookOpen style={{ width: '16px', height: '16px', color: '#0f0b08' }} /> :
-                <Briefcase style={{ width: '16px', height: '16px', color: '#0f0b08' }} />
-              }
-              <span style={{
-                fontSize: '0.85em',
-                fontWeight: 'bold',
-                color: '#0f0b08',
-                fontFamily: "'Playfair Display', serif"
-              }}>
-                {currentAnxiety.tags && currentAnxiety.tags.length > 0 ? currentAnxiety.tags[0] : 'Unsordered'}
-              </span>
-            </div>
           </div>
 
           <div style={{ marginBottom: '20px' }}>
@@ -488,7 +488,7 @@ const BrowsePage = ({ onNavigate, selectedAge, onAgeChange }) => {
           Return Home
         </button>
         <button
-          onClick={() => onNavigate('register')}
+          onClick={() => onNavigate('anxiety')}
           style={{
             flex: 1,
             padding: '12px 20px',

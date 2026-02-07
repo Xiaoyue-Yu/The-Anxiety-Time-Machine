@@ -26,7 +26,7 @@ const LoginPage = ({ onNavigate }) => {
       if (response.ok) {
         localStorage.setItem('user_nickname', pseudonym);
         localStorage.setItem('user_id', data.user_id);
-        onNavigate('browse');
+        onNavigate('dashboard');
       } else {
         setError(data.message || 'The cipher thou hast provided doth not align with our records.');
       }

@@ -2,7 +2,11 @@ import React, { useState } from 'react';
 import HomePage from './components/HomePage';
 import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
+import AnxietyPage from './components/AnxietyPage';
+import DashboardPage from './components/DashboardPage';
 import BrowsePage from './components/BrowsePage';
+import ShareAnxietyPage from './components/ShareAnxietyPage';
+import ShareMomentsPage from './components/ShareMomentsPage';
 import './App.css';
 
 function App() {
@@ -21,30 +25,38 @@ function App() {
 
   return (
     <div className="app-container">
-      {/* 背景装饰光晕 */}
+      {/* Background decorative glow */}
       <div className="cosmic-glow"></div>
       <div className="cosmic-glow"></div>
 
-      {/* 内容区域 */}
+      {/* Content area */}
       <div className="content-area">
-        {/* 装饰边框 */}
+        {/* Decorative borders */}
         <div className="ornament-top">ESTABLISHED 1892</div>
         <div className="ornament-bottom"></div>
 
-        {/* 页面内容 */}
+        {/* Page content */}
         {currentPage === 'home' && <HomePage onNavigate={setCurrentPage} />}
         {currentPage === 'register' && (
-          <RegisterPage 
-            onNavigate={setCurrentPage} 
+          <RegisterPage
+            onNavigate={setCurrentPage}
             onRegister={handleRegister}
           />
         )}
+        {currentPage === 'anxiety' && (
+          <AnxietyPage
+            onNavigate={setCurrentPage}
+          />
+        )}
         {currentPage === 'login' && (
-          <LoginPage 
-            onNavigate={setCurrentPage} 
+          <LoginPage
+            onNavigate={setCurrentPage}
             onLogin={handleLogin}
           />
         )}
+        {currentPage === 'dashboard' && <DashboardPage onNavigate={setCurrentPage} />}
+        {currentPage === 'share_anxiety' && <ShareAnxietyPage onNavigate={setCurrentPage} />}
+        {currentPage === 'share_moments' && <ShareMomentsPage onNavigate={setCurrentPage} />}
         {currentPage === 'browse' && <BrowsePage onNavigate={setCurrentPage} />}
       </div>
     </div>
