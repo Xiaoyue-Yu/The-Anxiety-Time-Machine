@@ -459,7 +459,7 @@ const BrowsePage = ({ onNavigate, selectedAge, onAgeChange }) => {
 
       <div style={{ display: 'flex', gap: '15px', marginTop: '30px' }}>
         <button
-          onClick={() => onNavigate('home')}
+          onClick={() => onNavigate('dashboard')}
           style={{
             flex: 1,
             padding: '12px 20px',
