@@ -6,7 +6,7 @@ import os
 # 1. Database Configuration
 # ==================================
 DB_USER = 'root'
-DB_PASSWORD = 'xxxx'            # Your password
+DB_PASSWORD = '0523'            # Your password
 DB_HOST = 'localhost'
 DB_NAME = 'The_Anxiety_Time_Machine'  # Your database name 
 

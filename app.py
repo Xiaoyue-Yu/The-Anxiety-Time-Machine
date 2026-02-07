@@ -11,7 +11,7 @@ CORS(app)  # Enables Cross-Origin Resource Sharing for React
 DB_CONFIG = {
     'host': 'localhost',
     'user': 'root',
-    'password': 'xxxx',  # Your MySQL Password
+    'password': '0523',  # Your MySQL Password
     'database': 'The_Anxiety_Time_Machine',  # Database name with underscores
     'cursorclass': pymysql.cursors.DictCursor
 }

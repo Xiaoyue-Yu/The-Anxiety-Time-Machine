@@ -3,137 +3,91 @@ import React from 'react';
 const HomePage = ({ onNavigate }) => {
   return (
     <div style={{
-      width: '100%',
-      textAlign: 'center',
-      marginTop: '50px'
+      width: '100%', textAlign: 'center',
+      marginTop: '50px', minHeight: '80vh',
+      display: 'flex', flexDirection: 'column',
+      alignItems: 'center', justifyContent: 'center'
     }}>
-      {/* 中心内容区 */}
-      <div style={{
-        maxWidth: '700px',
-        margin: '0 auto'
-      }}>
-        {/* 副标题 */}
-        <div style={{
-          marginBottom: '50px'
-        }}>
+      <div style={{ maxWidth: '900px', margin: '0 auto', padding: '0 20px' }}>
+
+        {/* Title */}
+        <div style={{ marginBottom: '40px' }}>
           <h2 style={{
-            fontSize: '2.2em',
-            color: '#c5a059',
+            fontSize: '3.8em', color: '#8a6d3b',
             marginBottom: '15px',
             fontFamily: "'UnifrakturMaguntia', cursive",
-            letterSpacing: '2px',
-            textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)'
+            letterSpacing: '3px',
+            textShadow: '2px 2px 6px rgba(0,0,0,0.2)'
           }}>
-            The Anxiety Temporium
+            The Anxiety Time Machine
           </h2>
           <p style={{
-            fontSize: '1em',
-            color: '#8a6d3b',
-            fontStyle: 'italic',
-            marginBottom: '10px',
-            letterSpacing: '1px'
+            fontSize: '1.05em', color: '#8a6d3b',
+            fontStyle: 'italic', marginBottom: '12px',
+            letterSpacing: '1px',
+            fontFamily: "'IM Fell English SC', serif"
           }}>
             A Sanctuary for Temporal Confessions
           </p>
           <p style={{
-            fontSize: '0.9em',
-            color: '#d4c4a8',
-            letterSpacing: '1px',
-            lineHeight: '1.6'
+            fontSize: '0.9em', color: '#5a4a3a',
+            letterSpacing: '1px', lineHeight: '1.8',
+            fontFamily: "'Playfair Display', serif", maxWidth: '500px',
+            margin: '0 auto'
           }}>
-            Within these hallowed chambers, time itself becomes witness to your deepest solicitudes.<br />
+            Within these hallowed chambers, time itself becomes witness
+            to your deepest solicitudes.<br />
             The great temporal dial awaits your story.
           </p>
         </div>
 
-        {/* 装饰线 */}
+        {/* Decorative ornament */}
         <div style={{
-          height: '1px',
-          background: 'linear-gradient(to right, transparent, #c5a059, transparent)',
-          margin: '30px 0'
-        }}></div>
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          gap: '15px', margin: '35px 0'
+        }}>
+          <div style={{
+            flex: 1, height: '1px',
+            background: 'linear-gradient(to right, transparent, #c5a059)'
+          }} />
+          <span style={{
+            color: '#c5a059', fontSize: '1.2em', fontFamily: "'UnifrakturMaguntia', cursive"
+          }}>✦</span>
+          <div style={{
+            flex: 1, height: '1px',
+            background: 'linear-gradient(to left, transparent, #c5a059)'
+          }} />
+        </div>
 
-        {/* 按钮组 */}
+        {/* Buttons */}
         <div style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '20px',
-          marginTop: '40px'
+          display: 'flex', flexDirection: 'column',
+          gap: '20px', marginTop: '30px'
         }}>
           <button
             onClick={() => onNavigate('register')}
-            style={{
-              padding: '12px 40px',
-              fontSize: '0.9em',
-              fontWeight: 'bold',
-              background: 'linear-gradient(135deg, #c5a059, #a68547)',
-              color: '#0f0b08',
-              border: '3px solid #8a6d3b',
-              cursor: 'pointer',
-              borderRadius: '18px 12px 20px 15px',
-              transition: 'all 0.3s ease',
-              boxShadow: '0 4px 15px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3)',
-              textTransform: 'uppercase',
-              letterSpacing: '1px',
-              width: '100%',
-              transform: 'rotate(-0.5deg)'
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.background = 'linear-gradient(135deg, #d4af5a, #c5a059)';
-              e.target.style.boxShadow = '0 6px 20px rgba(197, 160, 89, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.5)';
-              e.target.style.transform = 'translateY(-2px)';
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.background = 'linear-gradient(135deg, #c5a059, #a68547)';
-              e.target.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3)';
-              e.target.style.transform = 'translateY(0)';
-            }}
+            className="btn-brass"
+            style={{ width: '100%', padding: '16px 40px', fontSize: '1em' }}
           >
-            New Soul: Sign the Registry
+            New Soul Registry
           </button>
 
           <button
             onClick={() => onNavigate('login')}
-            style={{
-              padding: '12px 40px',
-              fontSize: '0.9em',
-              fontWeight: 'bold',
-              backgroundColor: '#f5f0e8',
-              color: '#8a6d3b',
-              border: '3px solid #8a6d3b',
-              cursor: 'pointer',
-              borderRadius: '15px 20px 12px 18px',
-              transition: 'all 0.3s ease',
-              boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)',
-              textTransform: 'uppercase',
-              letterSpacing: '1px',
-              width: '100%',
-              transform: 'rotate(0.3deg)'
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.backgroundColor = '#e8dbc1';
-              e.target.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.3)';
-              e.target.style.transform = 'translateY(-2px)';
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.backgroundColor = '#f5f0e8';
-              e.target.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.2)';
-              e.target.style.transform = 'translateY(0)';
-            }}
+            className="btn-parchment"
+            style={{ width: '100%', padding: '16px 40px', fontSize: '1em' }}
           >
-            Returning Soul: Access Records
+            Returning Soul Access
           </button>
         </div>
 
-        {/* Bottom decorative text */}
+        {/* Footer text */}
         <div style={{
-          marginTop: '60px',
-          fontSize: '0.8em',
-          color: '#5a5a5a',
-          letterSpacing: '2px',
-          textTransform: 'uppercase'
+          marginTop: '60px', fontSize: '0.75em', color: '#8a6d3b',
+          letterSpacing: '3px', textTransform: 'uppercase',
+          fontFamily: "'IM Fell English SC', serif", opacity: 0.5
         }}>
-          Where Time Meets Truth
+          ✦ Where Time Meets Truth ✦
         </div>
       </div>
     </div>
