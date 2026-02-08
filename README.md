@@ -142,7 +142,7 @@ Open your browser and navigate to `http://localhost:3000`
 - gender 
 - tag      
 - description 
-- message_id -- distinguish btween anxiety message and happiness message
+- message_id -- distinguish between anxiety message and happiness message
 ##  User Flow
 
 ```
