@@ -13,7 +13,7 @@ CORS(app)  # Enables Cross-Origin Resource Sharing for React
 DB_CONFIG = {
     'host': 'localhost',
     'user': 'root',
-    'password': 'xxxx',  # 🔴Your MySQL Password
+    'password': 'Lucy0401()',  # 🔴Your MySQL Password
     'database': 'The_Anxiety_Time_Machine',  # Database name with underscores
     'cursorclass': pymysql.cursors.DictCursor
 }
@@ -152,24 +152,28 @@ def post_anxiety():
         conn = get_db_connection()
         cursor = conn.cursor()
         
+        # Get user info (nickname, age, gender)
+        cursor.execute("SELECT nickname, age, gender FROM users WHERE id = %s", (user_id,))
+        user_info = cursor.fetchone()
+        
+        if not user_info:
+            return jsonify({"message": "User not found"}), 404
+        
+        nickname = user_info['nickname']
+        age = user_info['age']
+        gender = user_info['gender']
+        
         # Analyze tag using Gemini AI
         tag = analyze_tag_with_gemini(description)
         if not tag:
             tag = 'Life'  # Default tag
         
-        # Update user's latest anxiety message (description field)
-        query_update = """
-            UPDATE users SET description = %s, tag = %s
-            WHERE id = %s
-        """
-        cursor.execute(query_update, (description, tag, user_id))
-        
-        # Insert into user_messages for history tracking
+        # Insert new anxiety record (message_id = 1)
         query_insert = """
-            INSERT INTO user_messages (user_id, description, tag)
-            VALUES (%s, %s, %s)
+            INSERT INTO users (nickname, age, gender, tag, description, message_id, password) 
+            VALUES (%s, %s, %s, %s, %s, 1, 'placeholder')
         """
-        cursor.execute(query_insert, (user_id, description, tag))
+        cursor.execute(query_insert, (nickname, age, gender, tag, description))
         
         conn.commit()
         cursor.close()
@@ -231,22 +235,14 @@ def get_user_messages(user_id):
         
         nickname = user['nickname']
         
-        # Get the base user_id for this nickname (earliest one)
-        cursor.execute(
-            "SELECT id FROM users WHERE nickname = %s ORDER BY id ASC LIMIT 1",
-            (nickname,)
-        )
-        base_user = cursor.fetchone()
-        base_user_id = base_user['id']
-        
-        # Get all messages for this nickname (from user_messages)
+        # Get all messages for this nickname (from users table directly)
         query = """
             SELECT id, description, tag, message_id, created_at
-            FROM user_messages
-            WHERE user_id = %s
+            FROM users
+            WHERE nickname = %s AND description IS NOT NULL
             ORDER BY created_at DESC
         """
-        cursor.execute(query, (base_user_id,))
+        cursor.execute(query, (nickname,))
         messages = cursor.fetchall()
         
         cursor.close()
@@ -281,14 +277,6 @@ def get_user_stats(user_id):
         
         nickname = user['nickname']
         
-        # Get base user_id for this nickname
-        cursor.execute(
-            "SELECT id FROM users WHERE nickname = %s ORDER BY id ASC LIMIT 1",
-            (nickname,)
-        )
-        base_user = cursor.fetchone()
-        base_user_id = base_user['id']
-        
         # Build time filter
         time_filter = ""
         if period == 'week':
@@ -301,34 +289,34 @@ def get_user_stats(user_id):
         # Get tag statistics
         query = f"""
             SELECT tag, COUNT(*) as count
-            FROM user_messages
-            WHERE user_id = %s {time_filter}
+            FROM users
+            WHERE nickname = %s {time_filter}
             AND tag IS NOT NULL
             GROUP BY tag
             ORDER BY count DESC
         """
-        cursor.execute(query, (base_user_id,))
+        cursor.execute(query, (nickname,))
         tag_stats = cursor.fetchall()
         
         # Get time series data (messages per day)
         query_timeline = f"""
             SELECT DATE(created_at) as date, COUNT(*) as count
-            FROM user_messages
-            WHERE user_id = %s {time_filter}
+            FROM users
+            WHERE nickname = %s {time_filter}
             GROUP BY DATE(created_at)
             ORDER BY date ASC
         """
-        cursor.execute(query_timeline, (base_user_id,))
+        cursor.execute(query_timeline, (nickname,))
         timeline = cursor.fetchall()
         
         # Get message type breakdown
         query_message_types = f"""
             SELECT message_id, COUNT(*) as count
-            FROM user_messages
-            WHERE user_id = %s {time_filter}
+            FROM users
+            WHERE nickname = %s {time_filter}
             GROUP BY message_id
         """
-        cursor.execute(query_message_types, (base_user_id,))
+        cursor.execute(query_message_types, (nickname,))
         message_types = cursor.fetchall()
         
         cursor.close()
