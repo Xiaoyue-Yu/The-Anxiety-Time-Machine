@@ -1,1 +1,18 @@
+# Node modules
 node_modules
+
+# Python virtual environment
+.venv
+venv
+env
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+
+# IDE
+.vscode
+.idea
+
+# Environment variables
+.env
