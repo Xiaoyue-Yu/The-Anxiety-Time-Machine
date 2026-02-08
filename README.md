@@ -180,7 +180,18 @@ Home Page → Register/Login → Main Page → Select Topic → Share/Browse Emo
 
 2. Given the constraints on time and project scope, we conducted a targeted literature review to curate a high-quality, representative dataset.
 
+## Data Source:
+- Articles:
 
+https://www.bilibili.com/video/BV1jw4m1X73G?vd_source=7ec1163e22daf4515c09a5b6d9b99bae
+https://miramontbh.com/anxiety-across-the-ages/
+https://pmc.ncbi.nlm.nih.gov/articles/PMC4028428/
+https://www.worldhappiness.report/
+
+- Audio:
+
+https://pixabay.com/music/main-title-ancient-wind-112528/
+https://pixabay.com/sound-effects/film-special-effects-mouse-click-290204/
 
 ---
 
