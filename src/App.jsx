@@ -7,6 +7,7 @@ import DashboardPage from './components/DashboardPage';
 import BrowsePage from './components/BrowsePage';
 import ShareAnxietyPage from './components/ShareAnxietyPage';
 import ShareMomentsPage from './components/ShareMomentsPage';
+import PersonalPage from './components/PersonalPage';
 import { playClickSound, playBackgroundMusic, stopBackgroundMusic } from './utils/soundUtils';
 import './App.css';
 
@@ -112,6 +113,7 @@ function App() {
         {currentPage === 'share_anxiety' && <ShareAnxietyPage onNavigate={handleNavigation} />}
         {currentPage === 'share_moments' && <ShareMomentsPage onNavigate={handleNavigation} />}
         {currentPage === 'browse' && <BrowsePage onNavigate={handleNavigation} />}
+        {currentPage === 'personal' && <PersonalPage onNavigate={handleNavigation} />}
       </div>
     </div>
   );

@@ -13,7 +13,7 @@ CORS(app)  # Enables Cross-Origin Resource Sharing for React
 DB_CONFIG = {
     'host': 'localhost',
     'user': 'root',
-    'password': 'xxxx',  # 🔴Your MySQL Password
+    'password': 'Lucy0401()',  # 🔴Your MySQL Password
     'database': 'The_Anxiety_Time_Machine',  # Database name with underscores
     'cursorclass': pymysql.cursors.DictCursor
 }
@@ -21,7 +21,7 @@ DB_CONFIG = {
 # ========================================================
 # 🤖 Gemini API Configuration
 # ========================================================
-GOOGLE_API_KEY = "xxxx"     # 🔴 Your Gemini API Key
+GOOGLE_API_KEY = "AIzaSyBUS0pdu4d2T-UCxpnOVq2vDzKZ_5AciDE"     # 🔴 Your Gemini API Key
 genai.configure(api_key=GOOGLE_API_KEY)
 model = genai.GenerativeModel('gemini-3-flash-preview')
 
@@ -152,18 +152,34 @@ def post_anxiety():
         conn = get_db_connection()
         cursor = conn.cursor()
         
-        # Update user's anxiety message (description field)
-        query = """
-            UPDATE users SET description = %s 
+        # Analyze tag using Gemini AI
+        tag = analyze_tag_with_gemini(description)
+        if not tag:
+            tag = 'Life'  # Default tag
+        
+        # Update user's latest anxiety message (description field)
+        query_update = """
+            UPDATE users SET description = %s, tag = %s
             WHERE id = %s
         """
-        cursor.execute(query, (description, user_id))
+        cursor.execute(query_update, (description, tag, user_id))
+        
+        # Insert into user_messages for history tracking
+        query_insert = """
+            INSERT INTO user_messages (user_id, description, tag)
+            VALUES (%s, %s, %s)
+        """
+        cursor.execute(query_insert, (user_id, description, tag))
         
         conn.commit()
         cursor.close()
         conn.close()
 
-        return jsonify({"message": "Anxiety message posted successfully!", "status": "success"}), 201
+        return jsonify({
+            "message": "Anxiety message posted successfully!", 
+            "status": "success",
+            "tag": tag
+        }), 201
 
     except Exception as e:
         print("Post Anxiety Error:", e)
@@ -191,6 +207,138 @@ def get_all_cards():
     except Exception as e:
         print("Get Cards Error:", e)
         return jsonify({"cards": [], "error": str(e)}), 500
+
+# ========================================================
+# 📚 Get User Message History Route
+# ========================================================
+@app.route('/api/user/messages/<int:user_id>', methods=['GET'])
+def get_user_messages(user_id):
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        
+        # Get user info (nickname)
+        cursor.execute("SELECT nickname FROM users WHERE id = %s", (user_id,))
+        user = cursor.fetchone()
+        
+        if not user:
+            return jsonify({"error": "User not found"}), 404
+        
+        nickname = user['nickname']
+        
+        # Get the base user_id for this nickname (earliest one)
+        cursor.execute(
+            "SELECT id FROM users WHERE nickname = %s ORDER BY id ASC LIMIT 1",
+            (nickname,)
+        )
+        base_user = cursor.fetchone()
+        base_user_id = base_user['id']
+        
+        # Get all messages for this nickname (from user_messages)
+        query = """
+            SELECT id, description, tag, message_id, created_at
+            FROM user_messages
+            WHERE user_id = %s
+            ORDER BY created_at DESC
+        """
+        cursor.execute(query, (base_user_id,))
+        messages = cursor.fetchall()
+        
+        cursor.close()
+        conn.close()
+
+        return jsonify({
+            "nickname": nickname,
+            "messages": messages
+        }), 200
+
+    except Exception as e:
+        print("Get User Messages Error:", e)
+        return jsonify({"error": str(e)}), 500
+
+# ========================================================
+# 📊 Get User Keyword Statistics Route
+# ========================================================
+@app.route('/api/user/stats/<int:user_id>', methods=['GET'])
+def get_user_stats(user_id):
+    try:
+        period = request.args.get('period', 'all')  # all, year, month, week
+        
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        
+        # Get user nickname
+        cursor.execute("SELECT nickname FROM users WHERE id = %s", (user_id,))
+        user = cursor.fetchone()
+        
+        if not user:
+            return jsonify({"error": "User not found"}), 404
+        
+        nickname = user['nickname']
+        
+        # Get base user_id for this nickname
+        cursor.execute(
+            "SELECT id FROM users WHERE nickname = %s ORDER BY id ASC LIMIT 1",
+            (nickname,)
+        )
+        base_user = cursor.fetchone()
+        base_user_id = base_user['id']
+        
+        # Build time filter
+        time_filter = ""
+        if period == 'week':
+            time_filter = "AND created_at >= DATE_SUB(NOW(), INTERVAL 1 WEEK)"
+        elif period == 'month':
+            time_filter = "AND created_at >= DATE_SUB(NOW(), INTERVAL 1 MONTH)"
+        elif period == 'year':
+            time_filter = "AND created_at >= DATE_SUB(NOW(), INTERVAL 1 YEAR)"
+        
+        # Get tag statistics
+        query = f"""
+            SELECT tag, COUNT(*) as count
+            FROM user_messages
+            WHERE user_id = %s {time_filter}
+            AND tag IS NOT NULL
+            GROUP BY tag
+            ORDER BY count DESC
+        """
+        cursor.execute(query, (base_user_id,))
+        tag_stats = cursor.fetchall()
+        
+        # Get time series data (messages per day)
+        query_timeline = f"""
+            SELECT DATE(created_at) as date, COUNT(*) as count
+            FROM user_messages
+            WHERE user_id = %s {time_filter}
+            GROUP BY DATE(created_at)
+            ORDER BY date ASC
+        """
+        cursor.execute(query_timeline, (base_user_id,))
+        timeline = cursor.fetchall()
+        
+        # Get message type breakdown
+        query_message_types = f"""
+            SELECT message_id, COUNT(*) as count
+            FROM user_messages
+            WHERE user_id = %s {time_filter}
+            GROUP BY message_id
+        """
+        cursor.execute(query_message_types, (base_user_id,))
+        message_types = cursor.fetchall()
+        
+        cursor.close()
+        conn.close()
+
+        return jsonify({
+            "period": period,
+            "tag_stats": tag_stats,
+            "timeline": timeline,
+            "message_types": message_types
+        }), 200
+
+    except Exception as e:
+        print("Get User Stats Error:", e)
+        return jsonify({"error": str(e)}), 500
     
 # ========================================================
 # Function 2

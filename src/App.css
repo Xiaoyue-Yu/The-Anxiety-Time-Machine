@@ -186,6 +186,95 @@ h2 {
   transform: none;
 }
 
+/* ========== PERSONAL PAGE (VINTAGE BROWN) ========== */
+.personal-page {
+  color: #d4c4a8;
+}
+
+.personal-title {
+  color: #8a6d3b;
+  font-family: 'UnifrakturMaguntia', cursive;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  letter-spacing: 2px;
+}
+
+.personal-subtitle {
+  color: #b5a06f;
+  font-family: 'IM Fell English SC', serif;
+}
+
+.personal-card {
+  background: rgba(26, 20, 16, 0.85);
+  border: 1px solid #3d2b1f;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.personal-panel {
+  background: rgba(44, 30, 20, 0.7);
+  border: 1px solid rgba(197, 160, 89, 0.3);
+}
+
+.personal-button {
+  background: #2c1e14;
+  color: #d4c4a8;
+  border: 2px solid #8a6d3b;
+}
+
+.personal-button:hover {
+  background: #3d2b1f;
+}
+
+.personal-back-button {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.personal-button.active {
+  background: #c5a059;
+  color: #0f0b08;
+}
+
+.personal-chip {
+  background: #3d2b1f;
+  color: #f5f0e8;
+  border: 1px solid #8a6d3b;
+}
+
+.personal-track {
+  background: rgba(197, 160, 89, 0.2);
+}
+
+.personal-muted {
+  color: #9c8a6a;
+}
+
+.personal-timeline-border {
+  border-color: rgba(197, 160, 89, 0.5);
+}
+
+.personal-timeline-dot {
+  background: #c5a059;
+  border-color: #3d2b1f;
+  box-shadow: 0 0 0 2px rgba(197, 160, 89, 0.2);
+}
+
+.message-anxiety {
+  background: #6b4b3e;
+}
+
+.message-happy {
+  background: #8a6d3b;
+}
+
+.message-unknown {
+  background: #5a4a3a;
+}
+
 /* ========== INPUTS ========== */
 input,
 textarea,
