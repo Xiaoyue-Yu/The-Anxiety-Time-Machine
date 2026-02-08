@@ -21,6 +21,18 @@ function App() {
     playBackgroundMusic();
   }, []);
 
+  const fullScreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.error(`Error attempting to enable full-screen mode: ${err.message}`);
+      });
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    }
+  };
+
   const handleNavigation = (page) => {
     playClickSound();
     setIsTransitioning(true);
@@ -83,6 +95,41 @@ function App() {
         }}
       >
         {musicEnabled ? '🔊' : '🔇'}
+      </button>
+
+      <button
+        onClick={fullScreen}
+        title="Toggle Fullscreen"
+        style={{
+          position: 'fixed',
+          top: '20px',
+          right: '70px', 
+          width: '40px',
+          height: '40px',
+          borderRadius: '50%',
+          border: '2px solid #c5a059',
+          background: 'rgba(10, 10, 10, 0.8)',
+          color: '#c5a059',
+          cursor: 'pointer',
+          fontSize: '22px', 
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 1000,
+          transition: 'all 0.3s ease',
+          boxShadow: '0 4px 12px rgba(197, 160, 89, 0.3)',
+          outline: 'none'
+        }}
+        onMouseEnter={(e) => {
+          e.target.style.background = 'rgba(10, 10, 10, 0.95)';
+          e.target.style.boxShadow = '0 6px 16px rgba(197, 160, 89, 0.5)';
+        }}
+        onMouseLeave={(e) => {
+          e.target.style.background = 'rgba(10, 10, 10, 0.8)';
+          e.target.style.boxShadow = '0 4px 12px rgba(197, 160, 89, 0.3)';
+        }}
+      >
+        ⛶
       </button>
 
       {/* Background decorative glows */}

@@ -179,7 +179,12 @@ def get_all_cards():
         cursor = conn.cursor()
         
         # Fetch users with anxiety messages
-        query = "SELECT id, nickname, age, gender, description as content FROM users WHERE description IS NOT NULL"
+        query = """
+            SELECT id, nickname, age, gender, description as content 
+            FROM users 
+            WHERE description IS NOT NULL
+            AND message_id = 1
+        """
         cursor.execute(query)
         cards = cursor.fetchall()
         
