@@ -1,4 +1,5 @@
 import React from 'react';
+import { playClickSound } from '../utils/soundUtils';
 
 const HomePage = ({ onNavigate }) => {
   return (
@@ -65,7 +66,7 @@ const HomePage = ({ onNavigate }) => {
           gap: '20px', marginTop: '30px'
         }}>
           <button
-            onClick={() => onNavigate('register')}
+            onClick={() => { playClickSound(); onNavigate('register'); }}
             className="btn-brass"
             style={{ width: '100%', padding: '16px 40px', fontSize: '1em' }}
           >
@@ -73,7 +74,7 @@ const HomePage = ({ onNavigate }) => {
           </button>
 
           <button
-            onClick={() => onNavigate('login')}
+            onClick={() => { playClickSound(); onNavigate('login'); }}
             className="btn-parchment"
             style={{ width: '100%', padding: '16px 40px', fontSize: '1em' }}
           >

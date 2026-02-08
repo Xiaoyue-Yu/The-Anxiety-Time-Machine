@@ -1,4 +1,5 @@
 import React from 'react';
+import { playClickSound } from '../utils/soundUtils';
 
 const DashboardPage = ({ onNavigate }) => {
     const userName = localStorage.getItem('user_nickname') || 'Friend';
@@ -44,7 +45,7 @@ const DashboardPage = ({ onNavigate }) => {
                     justifyContent: 'center', marginTop: '40px', flexWrap: 'wrap'
                 }}>
                     {/* Share Anxiety */}
-                    <button onClick={() => onNavigate('anxiety')} className="dashboard-circle" style={{
+                    <button onClick={() => { playClickSound(); onNavigate('anxiety'); }} className="dashboard-circle" style={{
                         background: 'linear-gradient(135deg, #c5a059, #a68547)', color: '#0f0b08',
                         boxShadow: '0 8px 25px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.3)'
                     }}>
@@ -53,7 +54,7 @@ const DashboardPage = ({ onNavigate }) => {
                     </button>
 
                     {/* Share Happy Moments */}
-                    <button onClick={() => onNavigate('share_moments')} className="dashboard-circle" style={{
+                    <button onClick={() => { playClickSound(); onNavigate('share_moments'); }} className="dashboard-circle" style={{
                         background: 'linear-gradient(135deg, #f5f0e8, #e8dbc1)', color: '#8a6d3b',
                         boxShadow: '0 8px 25px rgba(0,0,0,0.2)'
                     }}>
@@ -62,7 +63,7 @@ const DashboardPage = ({ onNavigate }) => {
                     </button>
 
                     {/* Browse Temporium */}
-                    <button onClick={() => onNavigate('browse')} className="dashboard-circle" style={{
+                    <button onClick={() => { playClickSound(); onNavigate('browse'); }} className="dashboard-circle" style={{
                         background: 'linear-gradient(135deg, #3d2b1f, #2c1e14)', color: '#c5a059',
                         border: '5px solid #c5a059',
                         boxShadow: '0 8px 25px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1)'
@@ -76,6 +77,7 @@ const DashboardPage = ({ onNavigate }) => {
                 <div style={{ marginTop: '50px' }}>
                     <button
                         onClick={() => {
+                            playClickSound();
                             localStorage.removeItem('user_nickname');
                             localStorage.removeItem('user_id');
                             localStorage.removeItem('user_age');
