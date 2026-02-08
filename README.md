@@ -176,8 +176,10 @@ Home Page → Register/Login → Main Page → Select Topic → Share/Browse Emo
 
 ## Challenges we ran into
 
+1. How to create a reasonable and effective schema for the whole system. To simplify the process of retriving data, we only use one table to store data points. In long term use, we would decomposite the huge table into small tables.
 
-## What's next for The Anxiety Time Machine
+2. Given the constraints on time and project scope, we conducted a targeted literature review to curate a high-quality, representative dataset.
+
 
 
 ---
