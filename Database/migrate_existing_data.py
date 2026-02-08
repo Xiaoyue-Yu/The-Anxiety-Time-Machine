@@ -8,7 +8,7 @@ import pymysql
 DB_CONFIG = {
     'host': 'localhost',
     'user': 'root',
-    'password': 'Lucy0401()',  # Your MySQL Password
+    'password': 'xxxx',  # Your MySQL Password
     'database': 'The_Anxiety_Time_Machine',
 }
 
