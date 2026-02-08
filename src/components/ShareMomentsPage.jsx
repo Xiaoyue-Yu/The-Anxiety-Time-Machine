@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { playClickSound } from '../utils/soundUtils';
 
-const TAG_CATEGORIES = ["Career", "Family", "Love", "Health", "Self", "Money", "Future", "Life","None"];
+const TAG_CATEGORIES = ["Life", "Family", "Friendship", "Mental Health", "Self-Identity", "Money", "Health", "Social Skills","Academics","None"];
 
 const ShareMomentsPage = ({ onNavigate }) => {
     const [description, setDescription] = useState('');

@@ -21,7 +21,6 @@ CREATE TABLE users (
     tag VARCHAR(100),      
     description TEXT, 
     message_id INT,  
-    -- light INT DEFAULT 0,  
-    
+
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

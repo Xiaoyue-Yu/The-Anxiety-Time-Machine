@@ -21,11 +21,11 @@ DB_CONFIG = {
 # ========================================================
 # 🤖 Gemini API Configuration
 # ========================================================
-GOOGLE_API_KEY = "xxxx"     # 🔴 Your Gemini API Key
+GOOGLE_API_KEY = "AIzaSyBUS0pdu4d2T-UCxpnOVq2vDzKZ_5AciDE"     # 🔴 Your Gemini API Key
 genai.configure(api_key=GOOGLE_API_KEY)
 model = genai.GenerativeModel('gemini-3-flash-preview')
 
-TAG_CATEGORIES = ["Career", "Family", "Love", "Health", "Self", "Money", "Future", "Life"]
+TAG_CATEGORIES = ["Life", "Family", "Friendship", "Mental Health", "Self-Identity", "Money", "Health", "Social Skills","Academics"]
 
 def analyze_tag_with_gemini(text):
     try:
