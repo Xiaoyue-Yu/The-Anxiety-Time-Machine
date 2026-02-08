@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { playClickSound } from '../utils/soundUtils';
 
 const ConfessionPage = ({ onNavigate }) => {
     const [description, setDescription] = useState('');
@@ -6,6 +7,7 @@ const ConfessionPage = ({ onNavigate }) => {
     const [loading, setLoading] = useState(false);
 
     const handleSubmit = async () => {
+        playClickSound();
         if (!description.trim()) {
             setError('Please enter your anxiety message');
             return;
@@ -107,7 +109,7 @@ const ConfessionPage = ({ onNavigate }) => {
 
             <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', marginTop: '40px' }}>
                 <button
-                    onClick={() => onNavigate('home')}
+                    onClick={() => { playClickSound(); onNavigate('home'); }}
                     disabled={loading}
                     style={{
                         padding: '12px 40px',

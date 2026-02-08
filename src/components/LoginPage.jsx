@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { playClickSound } from '../utils/soundUtils';
 
 const LoginPage = ({ onNavigate }) => {
   const [pseudonym, setPseudonym] = useState('');
@@ -6,6 +7,7 @@ const LoginPage = ({ onNavigate }) => {
   const [error, setError] = useState('');
 
   const handleLogin = async () => {
+    playClickSound();
     if (!pseudonym || !cipher) {
       setError('Your pseudonym and cipher must be provided to access the archives.');
       return;

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { playClickSound } from '../utils/soundUtils';
 
 const ShareMomentsPage = ({ onNavigate }) => {
     const [description, setDescription] = useState('');
@@ -6,6 +7,7 @@ const ShareMomentsPage = ({ onNavigate }) => {
     const [loading, setLoading] = useState(false);
 
     const handleSubmit = async () => {
+        playClickSound();
         if (!description.trim()) { setError('Please enter your happy moment'); return; }
         setLoading(true);
         try {
@@ -54,7 +56,7 @@ const ShareMomentsPage = ({ onNavigate }) => {
             </div>
 
             <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', marginTop: '40px' }}>
-                <button onClick={() => onNavigate('dashboard')} disabled={loading}
+                <button onClick={() => { playClickSound(); onNavigate('dashboard'); }} disabled={loading}
                     className="btn-parchment" style={{ flex: 1, opacity: loading ? 0.6 : 1 }}>
                     Back
                 </button>
