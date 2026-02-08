@@ -21,7 +21,7 @@ DB_CONFIG = {
 # ========================================================
 # 🤖 Gemini API Configuration
 # ========================================================
-GOOGLE_API_KEY = "AIzaSyBUS0pdu4d2T-UCxpnOVq2vDzKZ_5AciDE"     # 🔴 Your Gemini API Key
+GOOGLE_API_KEY = "XXXX"     # 🔴 Your Gemini API Key
 genai.configure(api_key=GOOGLE_API_KEY)
 model = genai.GenerativeModel('gemini-3-flash-preview')
 
