@@ -133,9 +133,16 @@ Open your browser and navigate to `http://localhost:3000`
 
 ##  Database Design
 
-### Main Tables
-- 
+### Main Tables - User Table
 
+- id 
+- nickname 
+- password 
+- age 
+- gender 
+- tag      
+- description 
+- message_id -- distinguish btween anxiety message and happiness message
 ##  User Flow
 
 ```

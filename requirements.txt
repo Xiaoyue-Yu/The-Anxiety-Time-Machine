@@ -1,0 +1,7 @@
+flask
+flask-cors
+pymysql
+google-generativeai
+pandas
+sqlalchemy
+openpyxl
