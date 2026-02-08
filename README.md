@@ -21,7 +21,8 @@ The Anxiety Time Machine is a web-based emotional sharing platform that helps us
 
 2. **Happiness Sharing Channel:** A positive environment where you can celebrate and share your happy moments and achievements. The platform provides insights into happiness patterns across various age groups, revealing how sources of joy and fulfillment shift and transform over time.
 
-3. **Visiting Channel:** A browsing mode that lets you explore without posting. Simply visit around to read others' shared experiences, gain perspective on diverse emotional journeys, and find comfort in the collective human experience—all while maintaining your privacy and observing at your own pace.
+3. **Personal Journey:** A personalized dashboard where you can track and reflect on your own emotional history. View your complete timeline of shared anxieties and happy moments, analyze your most frequent emotional themes through interactive statistics, and filter your experiences by time period or message type. This feature helps you recognize patterns in your own emotional journey and see how your concerns and joys have evolved over time.
+
 The platform transforms personal emotional experiences into a collective narrative, helping users understand that anxiety and happiness are shared human conditions that connect us all.
 
 ## ✨ Key Features
@@ -31,49 +32,62 @@ The platform transforms personal emotional experiences into a collective narrati
 
 ### User Features
 - **User Registration & Login**: Secure user authentication system
-- **Emotional Topic Selection**: Users can choose from three topics:
+- **Emotional Topic Selection**: Users can choose from three main features:
   - 😰 Anxiety - Share your anxiety and see others' anxiety
   - 😊 Happiness - Share your happy moments and see others' happiness
-  - 👀 Just Visit Around - Browse different emotional shares
+  - 👀 Browse - View shared emotional experiences without posting
+- **Personal Journey**: Track your emotional history with timeline and statistics
 
 ### Core Pages
 - **Home Page**: Application entry point
 - **Register Page**: New user registration
 - **Login Page**: Returning user login
-- **Main Page**: Three topic selection hub
+- **Dashboard Page**: Main hub for emotional sharing and navigation
 - **Share Anxiety Page**: Share and browse anxiety emotions
 - **Share Moments Page**: Share and browse happy moments
+- **Browse Page**: Explore shared emotional experiences
+- **Personal Journey Page**: View your emotional history, timeline, and statistics
 
 ## 🗂️ Project Structure
 
 ```
 THE-ANXIETY-TIME-MACHINE/
-├── Database/                    # Database related files
-│   ├── Anxiety_Table.xlsx      # Anxiety data table
-│   ├── AnxietyvsHappiness_Table.xlsx  # Emotion comparison table
-│   ├── DB_create.sql           # Database creation script
-│   └── DB_import_data.py       # Data import script
-├── public/                      # Static resources
-│   └── index.html              # Main HTML file
-├── src/                         # Source code
-│   ├── components/             # React components
-│   │   ├── AnxietyPage.jsx    # Anxiety page component
-│   │   ├── BrowsePage.jsx     # Browse page component
-│   │   ├── ConfessionPage.jsx # Confession page component
-│   │   ├── DashboardPage.jsx  # Dashboard page component
-│   │   ├── HomePage.jsx       # Home page component
-│   │   ├── LoginPage.jsx      # Login page component
-│   │   ├── RegisterPage.jsx   # Register page component
-│   │   ├── ShareAnxietyPage.jsx    # Share anxiety page component
-│   │   └── ShareMomentsPage.jsx    # Share moments page component
-│   ├── data/                   # Data files
-│   │   └── mockData.js        # Mock data
-│   ├── App.css                 # Application styles
-│   ├── App.jsx                 # Main application component
-│   └── index.js                # Application entry point
-├── app.py                       # Flask backend server
-├── package.json                 # Project dependencies
-└── README.md                    # Project documentation
+├── Database/                        # Database related files
+│   ├── Anxiety_Table.xlsx          # Anxiety data table
+│   ├── DB_create.sql               # Database creation script
+│   ├── DB_add_messages_table.sql   # Add message history table
+│   ├── DB_import_data.py           # Data import script
+│   ├── create_messages_table.py    # Create user messages table
+│   ├── migrate_existing_data.py    # Migrate existing data script
+│   └── update_and_migrate.py       # Update and migrate script
+├── public/                          # Static resources
+│   ├── index.html                  # Main HTML file
+│   ├── background_music.mp3        # Background music
+│   └── click.mp3                   # Click sound effect
+├── src/                             # Source code
+│   ├── components/                 # React components
+│   │   ├── AnxietyPage.jsx        # Anxiety page component
+│   │   ├── BrowsePage.jsx         # Browse page component
+│   │   ├── ConfessionPage.jsx     # Confession page component
+│   │   ├── DashboardPage.jsx      # Dashboard page component
+│   │   ├── HomePage.jsx           # Home page component
+│   │   ├── LoginPage.jsx          # Login page component
+│   │   ├── PersonalPage.jsx       # Personal journey page component
+│   │   ├── RegisterPage.jsx       # Register page component
+│   │   ├── ShareAnxietyPage.jsx   # Share anxiety page component
+│   │   └── ShareMomentsPage.jsx   # Share moments page component
+│   ├── data/                       # Data files
+│   │   └── mockData.js            # Mock data
+│   ├── utils/                      # Utility functions
+│   │   └── soundUtils.js          # Sound effects utilities
+│   ├── App.css                     # Application styles
+│   ├── App.jsx                     # Main application component
+│   └── index.js                    # Application entry point
+├── images/                          # README images
+├── app.py                           # Flask backend server
+├── package.json                     # Frontend dependencies
+├── requirements.txt                 # Python dependencies
+└── README.md                        # Project documentation
 ```
 
 ## 🛠️ Tech Stack
