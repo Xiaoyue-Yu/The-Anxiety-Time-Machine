@@ -199,15 +199,6 @@ function SteampunkClock({ age = 25, onAgeChange }) {
           </div>
         </div>
       </div>
-
-      {/* Subtitle */}
-      <p style={{
-        marginTop: '16px', fontSize: '0.8em', color: '#8a6d3b',
-        fontStyle: 'italic', fontFamily: "'IM Fell English SC', serif",
-        letterSpacing: '2px', opacity: 0.7
-      }}>
-        Turn the dial to traverse temporal epochs
-      </p>
     </div>
   );
 }
@@ -245,22 +236,12 @@ const BrowsePage = ({ onNavigate }) => {
       {/* Title */}
       <div style={{ textAlign: 'center', marginBottom: '35px' }}>
         <h1 style={{
-          fontSize: '2.5em', fontFamily: "'UnifrakturMaguntia', cursive",
+          fontSize: '4em', fontFamily: "'UnifrakturMaguntia', cursive",
           color: '#8a6d3b', marginBottom: '10px',
           textShadow: '2px 2px 4px rgba(0,0,0,0.2)', letterSpacing: '3px'
         }}>
-          The Archive: Temporal Pathways
+          Turn the Temporal Dial 
         </h1>
-        <p style={{
-          color: '#8a6d3b', fontSize: '0.95em', fontStyle: 'italic',
-          letterSpacing: '1px', fontFamily: "'IM Fell English SC', serif", opacity: 0.7
-        }}>
-          Journey through the confessions of souls across time
-        </p>
-        <div style={{
-          height: '1px', margin: '20px auto', maxWidth: '300px',
-          background: 'linear-gradient(to right, transparent, #c5a059, transparent)'
-        }} />
       </div>
 
       {/* Clock Section */}
@@ -272,15 +253,7 @@ const BrowsePage = ({ onNavigate }) => {
         boxShadow: 'none',
         transform: 'none'
       }}>
-        <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-          <span style={{
-            color: '#8a6d3b', fontWeight: '600', fontSize: '0.9em',
-            textTransform: 'uppercase', letterSpacing: '3px',
-            fontFamily: "'IM Fell English SC', serif"
-          }}>
-            ✦ Turn the Temporal Dial ✦
-          </span>
-        </div>
+
         <SteampunkClock age={age} onAgeChange={handleAgeChange} />
       </div>
 
