@@ -133,6 +133,49 @@ function App() {
         ⛶
       </button>
 
+      {/* Personal Journey Button */}
+      <button
+        onClick={() => {
+          const userId = localStorage.getItem('user_id');
+          const nickname = localStorage.getItem('user_nickname');
+          if (userId && nickname) {
+            handleNavigation('personal');
+          } else {
+            handleNavigation('login');
+          }
+        }}
+        title="My Journey"
+        style={{
+          position: 'fixed',
+          top: '20px',
+          right: '120px',
+          width: '40px',
+          height: '40px',
+          borderRadius: '50%',
+          border: '2px solid #c5a059',
+          background: 'rgba(10, 10, 10, 0.8)',
+          color: '#c5a059',
+          cursor: 'pointer',
+          fontSize: '20px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 1000,
+          transition: 'all 0.3s ease',
+          boxShadow: '0 4px 12px rgba(197, 160, 89, 0.3)'
+        }}
+        onMouseEnter={(e) => {
+          e.target.style.background = 'rgba(10, 10, 10, 0.95)';
+          e.target.style.boxShadow = '0 6px 16px rgba(197, 160, 89, 0.5)';
+        }}
+        onMouseLeave={(e) => {
+          e.target.style.background = 'rgba(10, 10, 10, 0.8)';
+          e.target.style.boxShadow = '0 4px 12px rgba(197, 160, 89, 0.3)';
+        }}
+      >
+        👤
+      </button>
+
       {/* Background decorative glows */}
       <div className="cosmic-glow"></div>
       <div className="cosmic-glow"></div>

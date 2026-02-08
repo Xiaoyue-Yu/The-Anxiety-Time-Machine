@@ -10,8 +10,10 @@ As college students, we often feel overwhelmed by anxiety—whether it relates t
 We built **The Anxiety Time Machine** to bridge the gap between generations. Our goal is to provide perspective and relief to anxious minds by showing how priorities and viewpoints shift over a lifetime.
 
 ## 📋 What it does
+![alt text](image-2.png)
 ![alt text](image-1.png)
-![alt text](image-5.png)
+![alt text](image-3.png)
+![alt text](image-4.png)
 
 The Anxiety Time Machine is a web-based emotional sharing platform that helps users express and process their feelings while discovering they're not alone in their experiences. The platform provides a safe space for emotional expression through three distinct pathways:
 
