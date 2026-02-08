@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { playClickSound } from '../utils/soundUtils';
 
 const RegisterPage = ({ onNavigate }) => {
   const [formData, setFormData] = useState({
@@ -8,6 +9,7 @@ const RegisterPage = ({ onNavigate }) => {
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
+    playClickSound();
     if (!formData.name || !formData.password || !formData.age) {
       setError('Please complete all required fields');
       return;

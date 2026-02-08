@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { User, Heart } from 'lucide-react';
+import { playClickSound } from '../utils/soundUtils';
 
 /* =============================================
    STEAMPUNK CLOCK COMPONENT
@@ -235,8 +236,8 @@ const BrowsePage = ({ onNavigate }) => {
   const cur = filteredAnxieties[currentIndex] || null;
 
   const handleAgeChange = (v) => { setAge(v); setCurrentIndex(0); };
-  const handleNext = () => setCurrentIndex(i => i < filteredAnxieties.length - 1 ? i + 1 : 0);
-  const handlePrev = () => setCurrentIndex(i => i > 0 ? i - 1 : filteredAnxieties.length - 1);
+  const handleNext = () => { playClickSound(); setCurrentIndex(i => i < filteredAnxieties.length - 1 ? i + 1 : 0); };
+  const handlePrev = () => { playClickSound(); setCurrentIndex(i => i > 0 ? i - 1 : filteredAnxieties.length - 1); };
 
   return (
     <div style={{ padding: '60px 20px 40px', maxWidth: '850px', margin: '0 auto' }}>
@@ -368,10 +369,10 @@ const BrowsePage = ({ onNavigate }) => {
 
       {/* Bottom Buttons */}
       <div style={{ display: 'flex', gap: '15px', marginTop: '30px' }}>
-        <button onClick={() => onNavigate('dashboard')} className="btn-parchment" style={{ flex: 1 }}>
+        <button onClick={() => { playClickSound(); onNavigate('dashboard'); }} className="btn-parchment" style={{ flex: 1 }}>
           Return Home
         </button>
-        <button onClick={() => onNavigate('anxiety')} className="btn-brass" style={{ flex: 1 }}>
+        <button onClick={() => { playClickSound(); onNavigate('anxiety'); }} className="btn-brass" style={{ flex: 1 }}>
           Share Your Story
         </button>
       </div>

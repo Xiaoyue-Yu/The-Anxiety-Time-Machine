@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { playClickSound } from '../utils/soundUtils';
 
 const AnxietyPage = ({ onNavigate }) => {
     const [description, setDescription] = useState('');
@@ -6,6 +7,7 @@ const AnxietyPage = ({ onNavigate }) => {
     const [loading, setLoading] = useState(false);
 
     const handleSubmit = async () => {
+        playClickSound();
         if (!description.trim()) { setError('Please enter your anxiety message'); return; }
         setLoading(true);
         try {
