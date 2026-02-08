@@ -28,7 +28,7 @@ The platform transforms personal emotional experiences into a collective narrati
 ## ✨ Key Features
 
 ### The logic of the application:
-![alt text](image.png)
+![alt text](images/image.png)
 
 ### User Features
 - **User Registration & Login**: Secure user authentication system
