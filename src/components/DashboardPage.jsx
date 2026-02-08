@@ -62,14 +62,14 @@ const DashboardPage = ({ onNavigate }) => {
                         <div className="label">Share Happy Moment</div>
                     </button>
 
-                    {/* Browse Temporium */}
-                    <button onClick={() => { playClickSound(); onNavigate('browse'); }} className="dashboard-circle" style={{
-                        background: 'linear-gradient(135deg, #3d2b1f, #2c1e14)', color: '#c5a059',
-                        border: '5px solid #c5a059',
-                        boxShadow: '0 8px 25px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1)'
+                    {/* Personal Journey */}
+                    <button onClick={() => { playClickSound(); onNavigate('personal'); }} className="dashboard-circle" style={{
+                        background: 'linear-gradient(135deg, #453333, #3f3434)', color: '#f5f0e8',
+                        border: '3px solid #c5a059',
+                        boxShadow: '0 8px 25px rgba(7, 1, 15, 0.4), inset 0 1px 0 rgba(255,255,255,0.2)'
                     }}>
-                        <div className="icon">🕰</div>
-                        <div className="label">Browse Temporium</div>
+                        <div className="icon">📊</div>
+                        <div className="label">My Journey</div>
                     </button>
                 </div>
 
