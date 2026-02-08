@@ -21,9 +21,9 @@ DB_CONFIG = {
 # ========================================================
 # 🤖 Gemini API Configuration
 # ========================================================
-GOOGLE_API_KEY = "YOUR_GEMINI_API_KEY"     # 🔴 Your Gemini API Key
+GOOGLE_API_KEY = "xxxx"     # 🔴 Your Gemini API Key
 genai.configure(api_key=GOOGLE_API_KEY)
-model = genai.GenerativeModel('gemini-pro')
+model = genai.GenerativeModel('gemini-3-flash-preview')
 
 TAG_CATEGORIES = ["Career", "Family", "Love", "Health", "Self", "Money", "Future", "Life"]
 
@@ -248,12 +248,15 @@ def swap_pleasure():
             SELECT nickname, age, gender, tag, description as content 
             FROM users 
             WHERE message_id = 2 
-            AND tag = %s 
-            AND id != %s 
+            AND tag LIKE %s 
+            AND nickname != %s 
+            AND id != %s
             ORDER BY RAND() 
             LIMIT 1
         """
-        cursor.execute(query_swap, (final_tag, current_msg_row_id))
+        search_tag_param = f"%{final_tag}%"
+        
+        cursor.execute(query_swap, (search_tag_param,nickname, current_msg_row_id))
         match_result = cursor.fetchone()
 
         response_data = {
