@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { playClickSound } from '../utils/soundUtils';
 
-const TAG_CATEGORIES = ["Career", "Family", "Love", "Health", "Self", "Money", "Future", "Life"];
+const TAG_CATEGORIES = ["Career", "Family", "Love", "Health", "Self", "Money", "Future", "Life","None"];
 
 const ShareMomentsPage = ({ onNavigate }) => {
     const [description, setDescription] = useState('');
-    const [selectedTag, setSelectedTag] = useState('Life'); 
+    const [selectedTag, setSelectedTag] = useState('None'); 
     const [swapResult, setSwapResult] = useState(null); 
 
     const [error, setError] = useState('');
@@ -112,10 +112,6 @@ const ShareMomentsPage = ({ onNavigate }) => {
                     )}
                 </div>
 
-                <div style={{ fontSize: '0.8em', color: '#b8956a', marginBottom: '30px', fontFamily: "'Playfair Display', serif" }}>
-                    (Method: {swapResult.used_method === 'AI' ? '🔮 Gemini Oracle' : '🏷️ Manual Tagging'})
-                </div>
-
                 <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', marginTop: '30px' }}>
                     <button 
                         onClick={handleReset}
@@ -162,7 +158,7 @@ const ShareMomentsPage = ({ onNavigate }) => {
                     fontWeight: '600', marginBottom: '10px', textTransform: 'uppercase', 
                     letterSpacing: '2px', display: 'block', fontSize: '0.85em' 
                 }}>
-                    Choose a Realm (Tag)
+                    Choose a Realm (Optional)
                 </label>
                 <select
                     value={selectedTag}
@@ -185,7 +181,7 @@ const ShareMomentsPage = ({ onNavigate }) => {
                     ))}
                 </select>
                 <p style={{ fontSize: '0.8em', color: '#8a6d3b', marginTop: '8px', fontStyle: 'italic', fontFamily: "'Playfair Display', serif" }}>
-                    * The Gemini Oracle will also try to sense your intent automatically.
+                    * The Gemini Oracle will try to sense your intent automatically.
                 </p>
             </div>
 
