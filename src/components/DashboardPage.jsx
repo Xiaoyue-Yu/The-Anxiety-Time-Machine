@@ -15,14 +15,14 @@ const DashboardPage = ({ onNavigate }) => {
                 {/* Welcome */}
                 <div style={{ marginBottom: '40px' }}>
                     <h2 style={{
-                        fontSize: '2.5em', color: '#8a6d3b', marginBottom: '12px',
+                        fontSize: '4.5em', color: '#8a6d3b', marginBottom: '12px',
                         fontFamily: "'UnifrakturMaguntia', cursive",
                         letterSpacing: '3px', textShadow: '2px 2px 4px rgba(0,0,0,0.2)'
                     }}>
                         Welcome, {userName}
                     </h2>
                     <p style={{
-                        fontSize: '1em', color: '#8a6d3b', fontStyle: 'italic',
+                        fontSize: '1.5em', color: '#8a6d3b', fontStyle: 'italic',
                         letterSpacing: '1px', fontFamily: "'IM Fell English SC', serif"
                     }}>
                         What would you like to do today?
@@ -42,7 +42,8 @@ const DashboardPage = ({ onNavigate }) => {
                 {/* Action circles */}
                 <div style={{
                     display: 'flex', flexDirection: 'row', gap: '35px',
-                    justifyContent: 'center', marginTop: '40px', flexWrap: 'wrap'
+                    justifyContent: 'center', marginTop: '40px',
+                    alignItems: 'center'
                 }}>
                     {/* Share Anxiety */}
                     <button onClick={() => { playClickSound(); onNavigate('anxiety'); }} className="dashboard-circle" style={{
@@ -60,16 +61,6 @@ const DashboardPage = ({ onNavigate }) => {
                     }}>
                         <div className="icon">✨</div>
                         <div className="label">Share Happy Moment</div>
-                    </button>
-
-                    {/* Personal Journey */}
-                    <button onClick={() => { playClickSound(); onNavigate('personal'); }} className="dashboard-circle" style={{
-                        background: 'linear-gradient(135deg, #453333, #3f3434)', color: '#f5f0e8',
-                        border: '3px solid #c5a059',
-                        boxShadow: '0 8px 25px rgba(7, 1, 15, 0.4), inset 0 1px 0 rgba(255,255,255,0.2)'
-                    }}>
-                        <div className="icon">📊</div>
-                        <div className="label">My Journey</div>
                     </button>
                 </div>
 
